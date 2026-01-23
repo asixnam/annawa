@@ -129,8 +129,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold mb-2">PPDB PAUD</h3>
-              <p class="text-gray-600 mb-4">Pendaftaran Peserta Didik Baru PAUD</p>
+              <h3 class="text-2xl font-bold mb-2">SPMB PAUD</h3>
+              <p class="text-gray-600 mb-4">Sistem Penerimaan Murid Baru PAUD</p>
               <div class="flex items-center text-sm font-bold text-brand-600 group-hover:translate-x-2 transition-transform uppercase tracking-wider">
                 Daftar Sekarang
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -150,8 +150,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold mb-2">PPDB SD</h3>
-              <p class="text-gray-600 mb-4">Pendaftaran Peserta Didik Baru SD</p>
+              <h3 class="text-2xl font-bold mb-2">SPMB SD</h3>
+              <p class="text-gray-600 mb-4">Sistem Penerimaan Murid Baru SD</p>
               <div class="flex items-center text-sm font-bold text-brand-600 group-hover:translate-x-2 transition-transform uppercase tracking-wider">
                 Daftar Sekarang
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

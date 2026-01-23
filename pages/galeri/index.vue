@@ -15,7 +15,7 @@
             Goresan Pena <span class="text-brand-500">Santri</span>
           </h1>
           <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Wadah kreativitas santri Pondok Pesantren Annawa dalam berbagai karya sastra, seni visual, dan pemikiran islami.
+            Wadah kreativitas santri Pondok Pesantren Khozinatul Ulum An-Nawa dalam berbagai karya sastra, seni visual, dan pemikiran islami.
           </p>
         </div>
       </div>
@@ -51,7 +51,7 @@
           class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
         >
           <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
-          <div v-if="item.category === 'Karikatur'" class="relative h-64 overflow-hidden">
+          <div v-if="item.category === 'Kesenian' || item.category === 'Juara'" class="relative h-64 overflow-hidden">
              <div v-if="!item.image" class="w-full h-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -121,74 +121,92 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-const categories = ref(['Semua', 'Puisi', 'Cerpen', 'Karikatur', 'Teks Ceramah', 'Pantun'])
+const categories = ref(['Semua', 'Juara', 'Literasi', 'Kesenian', 'Khitobah'])
 const selectedCategory = ref('Semua')
 
 // Data galeri (Work samples)
 const galleryList = ref([
   {
     id: 1,
+    title: 'Juara 1 MTQ Nasional',
+    excerpt: 'Prestasi gemilang santri Annawa dalam ajang Musabaqah Tilawatil Quran tingkat nasional tahun 2025.',
+    author: 'Majid Al-Fatih',
+    date: '20 Jan 2026',
+    category: 'Juara',
+    image: 'https://images.unsplash.com/photo-1577894780451-9f144e87d2bc?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    id: 2,
+    title: 'Pemenang Lomba Pidato Bahasa Arab',
+    excerpt: 'Keberhasilan meraih podium utama dalam kompetisi pidato antar pesantren se-Jawa Barat.',
+    author: 'Zaskia Nurul',
+    date: '18 Jan 2026',
+    category: 'Juara',
+    image: 'https://images.unsplash.com/photo-1533256621371-d4e5ff04226f?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    id: 3,
     title: 'Rindu Cahaya Wahyu',
     excerpt: 'Di hening malam aku bersimpuh, mencari setitik embun dalam kalbu yang lusuh...',
     author: 'Ahmad Fauzan',
     date: '15 Jan 2026',
-    category: 'Puisi'
+    category: 'Literasi'
   },
   {
-    id: 2,
+    id: 4,
     title: 'Santri dan Sepatu Tua',
     excerpt: 'Sepatu itu telah menemaninya melewati ribuan langkah menuju majelis ilmu, meski solnya mulai menipis...',
     author: 'Siti Aminah',
     date: '14 Jan 2026',
-    category: 'Cerpen'
+    category: 'Literasi'
   },
   {
-    id: 3,
+    id: 5,
     title: 'Adab Sebelum Ilmu',
     image: '',
     author: 'Zaid Al-Khoiri',
     date: '10 Jan 2026',
-    category: 'Karikatur'
+    category: 'Kesenian'
   },
   {
-    id: 4,
+    id: 6,
     title: 'Urgensi Menjaga Lisan',
     excerpt: 'Lisan adalah pedang bermata dua. Ia bisa menjadi jalan ke surga, atau justru menyeret ke jurang celaka...',
     author: 'Muhammad Ridwan',
     date: '08 Jan 2026',
-    category: 'Teks Ceramah'
+    category: 'Khitobah'
   },
   {
-    id: 5,
+    id: 7,
     title: 'Pantun Nasihat Santri',
     excerpt: 'Pergi berlayar ke pulau Jawa, membawa bekal keripik kentang. Belajarlah dengan sepenuh jiwa, agar masa depan terang benderang.',
     author: 'Luthfi Hakim',
     date: '07 Jan 2026',
-    category: 'Pantun'
+    category: 'Literasi'
   },
   {
-    id: 6,
+    id: 8,
     title: 'Goresan Senyum Kiai',
     image: '',
     author: 'Rahmat Hidayat',
     date: '05 Jan 2026',
-    category: 'Karikatur'
+    category: 'Kesenian'
   },
   {
-    id: 7,
+    id: 9,
     title: 'Fajar di Gerbang Pesantren',
     excerpt: 'Ketika surya belum menampakkan wajahnya, sayup-sayup lantunan ayat suci mulai membelah kesunyian...',
     author: 'Annisa Fitri',
     date: '03 Jan 2026',
-    category: 'Puisi'
+    category: 'Literasi'
   },
   {
-    id: 8,
+    id: 10,
     title: 'Misteri Kitab Kuning',
     excerpt: 'Lembaran usang itu menyimpan rahasia besar yang belum terpecahkan selama puluhan tahun...',
     author: 'Umar Khalid',
     date: '01 Jan 2026',
-    category: 'Cerpen'
+    category: 'Literasi'
   }
 ])
 

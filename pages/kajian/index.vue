@@ -75,64 +75,64 @@
 import { ref, computed } from 'vue'
 import KajianCard from '../../components/KajianCard.vue'
 
-const categories = ref(['Semua', 'Tafsir', 'Hadits', 'Fiqih', 'Akhlaq', 'Sirah'])
+const categories = ref(['Semua', 'Sorogan', 'Tahfidzul Quran', 'Bahtsul Masail', 'Bandongan'])
 const selectedCategory = ref('Semua')
 
 // Data kajian (nanti bisa diganti dengan API)
 const kajianList = ref([
   {
     id: 1,
-    title: 'Kajian Tafsir Al-Qur\'an',
-    ustadz: 'Ustadz Ahmad Fauzi',
+    title: 'Kajian Kitab Fathul Qorib',
+    ustadz: 'Kiai Ahmad Fauzi',
     time: 'Senin & Kamis, 19:30 - 21:00 WIB',
     location: 'Masjid Utama',
-    description: 'Kajian mendalam tentang tafsir Al-Qur\'an dengan pendekatan kontekstual dan klasik. Membahas ayat-ayat pilihan dengan metode yang mudah dipahami.',
-    category: 'Tafsir'
+    description: 'Metode kajian tatap muka langsung (sorogan) untuk membedah kitab fiqih klasik dengan bimbingan intensif.',
+    category: 'Sorogan'
   },
   {
     id: 2,
-    title: 'Kajian Hadits Arba\'in',
+    title: 'Setoran Hafalan Juz Amma',
     ustadz: 'Ustadz Muhammad Ridwan',
     time: 'Rabu, 20:00 - 21:30 WIB',
     location: 'Aula Pondok',
-    description: 'Mempelajari 40 hadits pilihan Imam Nawawi yang mencakup berbagai aspek kehidupan muslim sehari-hari.',
-    category: 'Hadits'
+    description: 'Program tahfidz terpadu untuk penguatan hafalan Al-Qur\'an dengan metode mutqin.',
+    category: 'Tahfidzul Quran'
   },
   {
     id: 3,
-    title: 'Fiqih Muamalah Kontemporer',
-    ustadz: 'Ustadz Abdul Hakim',
+    title: 'Diskusi Hukum Islam Tematik',
+    ustadz: 'Tim Bahtsul Masail',
     time: 'Selasa, 19:00 - 20:30 WIB',
     location: 'Ruang Kajian',
-    description: 'Membahas hukum-hukum muamalah dalam konteks modern, termasuk transaksi digital, e-commerce, dan ekonomi syariah.',
-    category: 'Fiqih'
+    description: 'Forum diskusi ilmiah membahas persoalan hukum kontemporer dari perspektif fiqih lintas madzhab.',
+    category: 'Bahtsul Masail'
   },
   {
     id: 4,
-    title: 'Akhlaq dan Tasawuf',
+    title: 'Kajian Umum Riyadus Shalihin',
     ustadz: 'Ustadz Hasan Basri',
     time: 'Jum\'at, 15:00 - 16:30 WIB',
     location: 'Masjid Utama',
-    description: 'Kajian tentang pembinaan akhlaq dan tasawuf untuk membentuk kepribadian muslim yang baik dan beradab.',
-    category: 'Akhlaq'
+    description: 'Penyampaian materi secara klasikal (bandongan) yang diikuti oleh seluruh santri dan jamaah umum.',
+    category: 'Bandongan'
   },
   {
     id: 5,
-    title: 'Sirah Nabawiyah',
+    title: 'Muroja\'ah Akbar',
     ustadz: 'Ustadz Ibrahim Khalil',
     time: 'Sabtu, 16:00 - 17:30 WIB',
     location: 'Aula Pondok',
-    description: 'Mempelajari sejarah kehidupan Rasulullah SAW sebagai teladan dalam kehidupan sehari-hari.',
-    category: 'Sirah'
+    description: 'Kegiatan rutin mengulang hafalan secara berkelompok untuk menjaga kelancaran bacaan.',
+    category: 'Tahfidzul Quran'
   },
   {
     id: 6,
-    title: 'Kajian Kitab Kuning',
+    title: 'Kajian Kitab Jurumiyah',
     ustadz: 'Ustadz Zainal Abidin',
     time: 'Ahad, 08:00 - 10:00 WIB',
     location: 'Ruang Kajian',
-    description: 'Mengkaji kitab-kitab klasik (kitab kuning) dengan metode sorogan dan bandongan untuk santri tingkat lanjut.',
-    category: 'Fiqih'
+    description: 'Mengkaji dasar-dasar ilmu nahwu secara mendetail dengan metode bandongan.',
+    category: 'Bandongan'
   }
 ])
 
