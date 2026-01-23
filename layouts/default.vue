@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col bg-white">
     <HeaderNav />
-    <main class="flex-1">
+    <main class="flex-1 pt-20">
       <slot />
     </main>
     <footer class="bg-gray-50 border-t mt-8">
