@@ -1,37 +1,48 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-[#F9FAFB] font-sans">
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-teal-600 via-teal-700 to-emerald-800 text-white pt-20 pb-24 overflow-hidden">
-      <!-- Background Pattern -->
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-      </div>
+    <section class="relative pt-16 pb-20 lg:pt-32 lg:pb-40 overflow-hidden bg-white">
+      <!-- Decoration Circles (like plai style) -->
+      <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-30"></div>
+      <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-20"></div>
 
       <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-            Selamat Datang di<br />
-            <span class="text-teal-200">Pondok Pesantren Khozinatul Ulum An-Nawa</span>
-          </h1>
-          <p class="text-lg md:text-xl text-teal-50 mb-8 max-w-2xl mx-auto">
-            Lembaga pendidikan Islam yang menggabungkan tradisi pesantren dengan pendidikan modern untuk membentuk generasi Qur'ani yang berakhlak mulia
-          </p>
-          <div class="flex flex-wrap justify-center gap-4">
-            <NuxtLink to="/psb/putra" class="px-8 py-4 bg-white text-teal-700 rounded-full font-bold hover:bg-teal-50 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-              Daftar Santri Putra
-            </NuxtLink>
-            <NuxtLink to="/psb/putri" class="px-8 py-4 bg-teal-500 text-white rounded-full font-bold hover:bg-teal-400 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-              Daftar Santri Putri
-            </NuxtLink>
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+          <div class="flex-1 text-left">
+            <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+              Official Website
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
+              Pesantren <span class="text-brand-500">Khozinatul Ulum</span> An-Nawa
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
+              Lembaga pendidikan Islam yang menggabungkan tradisi pesantren dengan pendidikan modern untuk membentuk generasi Qur'ani yang berakhlak mulia.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <NuxtLink to="/psb/putra" class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1">
+                Daftar Sekarang
+              </NuxtLink>
+              <NuxtLink to="/profil" class="px-8 py-4 border-2 border-gray-200 text-gray-800 rounded font-black uppercase text-sm tracking-widest hover:border-brand-500 hover:text-brand-500 transition-all transform hover:-translate-y-1">
+                Profil Pondok
+              </NuxtLink>
+            </div>
+          </div>
+          <div class="flex-1 relative">
+            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white">
+              <img src="https://images.unsplash.com/photo-1577416416829-d4334f31c841?auto=format&fit=crop&q=80&w=800" alt="Santri" class="w-full h-auto object-cover" />
+            </div>
+            <!-- Floating badge -->
+            <div class="absolute -bottom-6 -left-6 z-20 bg-white p-6 rounded-xl shadow-xl flex items-center gap-4 border border-gray-100">
+              <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-black font-bold">
+                500+
+              </div>
+              <div class="text-sm">
+                <span class="block font-bold text-gray-900 leading-none">Santri Aktif</span>
+                <span class="text-gray-500 text-xs">Tahun Ajaran 2024/2025</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Wave Decoration -->
-      <div class="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#F9FAFB"/>
-        </svg>
       </div>
     </section>
 
@@ -74,15 +85,15 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           <!-- PSB Putra -->
           <NuxtLink to="/psb/putra" class="group">
-            <div class="bg-gradient-to-br from-teal-500 to-teal-700 rounded-2xl p-8 text-white shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+            <div class="bg-white rounded-2xl p-8 text-gray-800 shadow-lg border border-gray-100 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2">
               <div class="mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
               <h3 class="text-2xl font-bold mb-2">PSB Putra</h3>
-              <p class="text-teal-100 mb-4">Pendaftaran Santri Baru untuk Putra</p>
-              <div class="flex items-center text-sm font-semibold group-hover:translate-x-2 transition-transform">
+              <p class="text-gray-600 mb-4">Pendaftaran Santri Baru untuk Putra</p>
+              <div class="flex items-center text-sm font-bold text-brand-600 group-hover:translate-x-2 transition-transform uppercase tracking-wider">
                 Daftar Sekarang
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -93,15 +104,15 @@
 
           <!-- PSB Putri -->
           <NuxtLink to="/psb/putri" class="group">
-            <div class="bg-gradient-to-br from-pink-500 to-pink-700 rounded-2xl p-8 text-white shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+            <div class="bg-white rounded-2xl p-8 text-gray-800 shadow-lg border border-gray-100 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2">
               <div class="mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
               <h3 class="text-2xl font-bold mb-2">PSB Putri</h3>
-              <p class="text-pink-100 mb-4">Pendaftaran Santri Baru untuk Putri</p>
-              <div class="flex items-center text-sm font-semibold group-hover:translate-x-2 transition-transform">
+              <p class="text-gray-600 mb-4">Pendaftaran Santri Baru untuk Putri</p>
+              <div class="flex items-center text-sm font-bold text-brand-600 group-hover:translate-x-2 transition-transform uppercase tracking-wider">
                 Daftar Sekarang
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -112,15 +123,15 @@
 
           <!-- PPDB PAUD -->
           <NuxtLink to="/ppdb/paud" class="group">
-            <div class="bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl p-8 text-white shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+            <div class="bg-white rounded-2xl p-8 text-gray-800 shadow-lg border border-gray-100 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2">
               <div class="mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <h3 class="text-2xl font-bold mb-2">PPDB PAUD</h3>
-              <p class="text-amber-100 mb-4">Pendaftaran Peserta Didik Baru PAUD</p>
-              <div class="flex items-center text-sm font-semibold group-hover:translate-x-2 transition-transform">
+              <p class="text-gray-600 mb-4">Pendaftaran Peserta Didik Baru PAUD</p>
+              <div class="flex items-center text-sm font-bold text-brand-600 group-hover:translate-x-2 transition-transform uppercase tracking-wider">
                 Daftar Sekarang
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -131,17 +142,17 @@
 
           <!-- PPDB SD -->
           <NuxtLink to="/ppdb/sd" class="group">
-            <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-8 text-white shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+            <div class="bg-white rounded-2xl p-8 text-gray-800 shadow-lg border border-gray-100 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2">
               <div class="mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M12 14l9-5-9-5-9 5 9 5z" />
                   <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                 </svg>
               </div>
               <h3 class="text-2xl font-bold mb-2">PPDB SD</h3>
-              <p class="text-blue-100 mb-4">Pendaftaran Peserta Didik Baru SD</p>
-              <div class="flex items-center text-sm font-semibold group-hover:translate-x-2 transition-transform">
+              <p class="text-gray-600 mb-4">Pendaftaran Peserta Didik Baru SD</p>
+              <div class="flex items-center text-sm font-bold text-brand-600 group-hover:translate-x-2 transition-transform uppercase tracking-wider">
                 Daftar Sekarang
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -160,7 +171,7 @@
           <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Kajian Rutin</h2>
           <p class="text-gray-600">Ikuti kajian-kajian ilmiah untuk menambah wawasan keislaman</p>
         </div>
-        <NuxtLink to="/kajian" class="hidden md:flex items-center text-teal-600 font-semibold hover:text-teal-700">
+        <NuxtLink to="/kajian" class="hidden md:flex items-center text-brand-600 font-bold uppercase tracking-wider text-xs hover:text-black">
           Lihat Semua
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -182,7 +193,7 @@
       </div>
 
       <div class="text-center mt-8 md:hidden">
-        <NuxtLink to="/kajian" class="inline-flex items-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700">
+        <NuxtLink to="/kajian" class="inline-flex items-center px-6 py-3 bg-brand-500 text-black rounded font-bold uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all">
           Lihat Semua Kajian
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -199,7 +210,7 @@
             <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Berita Terbaru</h2>
             <p class="text-gray-600">Informasi dan kegiatan terkini dari Pondok Annawa</p>
           </div>
-          <NuxtLink to="/berita" class="hidden md:flex items-center text-teal-600 font-semibold hover:text-teal-700">
+          <NuxtLink to="/berita" class="hidden md:flex items-center text-brand-600 font-bold uppercase tracking-wider text-xs hover:text-black">
             Lihat Semua
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -220,7 +231,7 @@
         </div>
 
         <div class="text-center mt-8 md:hidden">
-          <NuxtLink to="/berita" class="inline-flex items-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700">
+          <NuxtLink to="/berita" class="inline-flex items-center px-6 py-3 bg-brand-500 text-black rounded font-bold uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all">
             Lihat Semua Berita
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -231,17 +242,17 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="bg-gradient-to-r from-teal-600 to-emerald-700 py-16">
+    <section class="bg-[#F5F5F5] py-20">
       <div class="container mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Bergabunglah dengan Kami</h2>
-        <p class="text-teal-50 text-lg mb-8 max-w-2xl mx-auto">
-          Daftarkan putra-putri Anda untuk mendapatkan pendidikan Islam yang berkualitas dan berakhlak mulia
+        <h2 class="text-4xl font-black text-gray-900 mb-6 uppercase tracking-tight">Bergabunglah dengan Kami</h2>
+        <p class="text-gray-600 text-lg mb-10 max-w-2xl mx-auto">
+          Daftarkan putra-putri Anda untuk mendapatkan pendidikan Islam yang berkualitas dan berakhlak mulia di Pondok Pesantren Khozinatul Ulum An-Nawa.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
-          <NuxtLink to="/psb/putra" class="px-8 py-4 bg-white text-teal-700 rounded-full font-bold hover:bg-teal-50 transition-all shadow-lg">
+          <NuxtLink to="/psb/putra" class="px-10 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-xl shadow-brand-500/10">
             Daftar Sekarang
           </NuxtLink>
-          <NuxtLink to="/galeri" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-teal-700 transition-all">
+          <NuxtLink to="/galeri" class="px-10 py-4 border-2 border-gray-300 text-gray-700 rounded font-black uppercase text-sm tracking-widest hover:border-black hover:text-black transition-all">
             Lihat Galeri
           </NuxtLink>
         </div>
