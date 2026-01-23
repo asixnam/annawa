@@ -241,6 +241,45 @@
       </div>
     </section>
 
+    <!-- Testimoni Alumni -->
+    <section class="py-16 overflow-hidden">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Apa Kata Alumni!</h2>
+          <p class="text-gray-600 text-lg">Apa kata mereka yang telah menempuh pendidikan di Pondok Pesantren Khozinatul Ulum An-Nawa</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="testi in testimonials" :key="testi.id" class="bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col relative transition-all hover:shadow-2xl hover:-translate-y-1">
+            <!-- Quote Icon -->
+            <div class="absolute -top-4 -left-4 bg-brand-500 w-10 h-10 rounded-full flex items-center justify-center text-black shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+            </div>
+
+            <p class="text-gray-600 italic mb-8 leading-relaxed flex-grow">
+              "{{ testi.quote }}"
+            </p>
+
+            <div class="flex items-center gap-4 border-t border-gray-50 pt-6">
+              <div class="w-14 h-14 rounded-full bg-brand-100 overflow-hidden border-2 border-brand-500 flex-shrink-0">
+                <img v-if="testi.image" :src="testi.image" :alt="testi.name" class="w-full h-full object-cover">
+                <div v-else class="w-full h-full flex items-center justify-center text-brand-700 font-bold bg-gray-100 uppercase">
+                  {{ testi.name.charAt(0) }}
+                </div>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-900 leading-tight">{{ testi.name }}</h4>
+                <p class="text-brand-600 text-xs font-bold uppercase tracking-wider mb-1">{{ testi.batch }}</p>
+                <p class="text-gray-500 text-sm">{{ testi.profession }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="bg-[#F5F5F5] py-20">
       <div class="container mx-auto px-6 text-center">
@@ -320,6 +359,34 @@ const featuredBerita = ref([
     image: '',
     date: '2026-01-05',
     slug: 'pembukaan-pendaftaran-2026'
+  }
+])
+
+// Testimonials Data
+const testimonials = ref([
+  {
+    id: 1,
+    name: 'Ahmad Muzaki',
+    batch: 'Alumni 2018',
+    profession: 'Mahasiswa Al-Azhar, Kairo',
+    quote: 'Belajar di Annawa memberikan pondasi keagamaan yang kuat sekaligus memotivasi saya untuk terus mengejar ilmu hingga ke negeri para nabi.',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop'
+  },
+  {
+    id: 2,
+    name: 'Siti Fatimah',
+    batch: 'Alumni 2019',
+    profession: 'Pendidik & Hafidzah',
+    quote: 'Metode hafalan yang diterapkan sangat sistematis. Kekeluargaan antar santri dan ustadz membuat lingkungan belajar terasa sangat nyaman.',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&h=150&auto=format&fit=crop'
+  },
+  {
+    id: 3,
+    name: 'Budi Santoso',
+    batch: 'Alumni 2017',
+    profession: 'Wirausaha Muda',
+    quote: 'Nilai-nilai kemandirian dan kedisiplinan yang diajarkan di pesantren sangat membantu saya dalam membangun usaha dari nol.',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&h=150&auto=format&fit=crop'
   }
 ])
 </script>
