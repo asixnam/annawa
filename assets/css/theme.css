@@ -1,0 +1,25 @@
+/* 
+  PONDOK ANNAWA THEME CONFIGURATION
+  ---------------------------------
+  Ubah kode warna HEX di bawah ini untuk mengganti warna seluruh website secara otomatis.
+*/
+
+:root {
+    /* Warna Utama (Primary/Brand) */
+    --color-brand-50: #f0fdf4;
+    --color-brand-100: #dcfce7;
+    --color-brand-200: #bbf7d0;
+    --color-brand-300: #86efac;
+    --color-brand-400: #4ade80;
+    --color-brand-500: #22c55e;
+    /* Warna Inti - tombol, aksen aktif */
+    --color-brand-600: #16a34a;
+    /* Warna Hover/Gelap */
+    --color-brand-700: #166534;
+    /* Header/Footer Text */
+    --color-brand-800: #14532d;
+    --color-brand-900: #0f3d21;
+
+    /* Anda juga bisa menambahkan variabel kustom lainnya di sini */
+    --site-max-width: 1280px;
+}

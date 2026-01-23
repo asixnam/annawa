@@ -11,7 +11,7 @@
         <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
             Selamat Datang di<br />
-            <span class="text-teal-200">Pondok Pesantren Annawa</span>
+            <span class="text-teal-200">Pondok Pesantren Khozinatul Ulum An-Nawa</span>
           </h1>
           <p class="text-lg md:text-xl text-teal-50 mb-8 max-w-2xl mx-auto">
             Lembaga pendidikan Islam yang menggabungkan tradisi pesantren dengan pendidikan modern untuk membentuk generasi Qur'ani yang berakhlak mulia

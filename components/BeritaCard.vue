@@ -9,7 +9,7 @@
           :alt="title" 
           class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
-        <div v-else class="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-400 to-teal-600">
+        <div v-else class="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-400 to-brand-600">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
           </svg>
@@ -24,7 +24,7 @@
       <!-- Content -->
       <div class="p-5 flex-1 flex flex-col">
         <!-- Title -->
-        <h3 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-teal-600 transition-colors line-clamp-2">
+        <h3 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-brand-600 transition-colors line-clamp-2">
           {{ title }}
         </h3>
 
@@ -34,7 +34,7 @@
         </p>
 
         <!-- Read More -->
-        <div class="flex items-center text-teal-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+        <div class="flex items-center text-brand-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
           Baca Selengkapnya
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
