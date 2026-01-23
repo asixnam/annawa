@@ -1,38 +1,39 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50/50">
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-purple-600 via-purple-700 to-pink-800 text-white pt-20 pb-20">
-      <div class="absolute inset-0 bg-black/10"></div>
+    <section class="relative bg-white pt-16 pb-24 overflow-hidden border-b border-gray-100">
+      <!-- Artistic Background Decorations -->
+      <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
+      <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-30"></div>
+      
       <div class="container mx-auto px-6 relative z-10">
         <div class="max-w-3xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Galeri Santri</h1>
-          <p class="text-lg md:text-xl text-purple-50">
-            Dokumentasi kegiatan dan momen berharga di Pondok Pesantren Annawa
+          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+            Kreativitas & Inspirasi
+          </div>
+          <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
+            Goresan Pena <span class="text-brand-500">Santri</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Wadah kreativitas santri Pondok Pesantren Annawa dalam berbagai karya sastra, seni visual, dan pemikiran islami.
           </p>
         </div>
-      </div>
-      
-      <!-- Decorative wave -->
-      <div class="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#F9FAFB"/>
-        </svg>
       </div>
     </section>
 
     <!-- Filter Categories -->
     <section class="container mx-auto px-6 -mt-8 relative z-20">
-      <div class="bg-white rounded-2xl shadow-lg p-6">
-        <div class="flex flex-wrap gap-3">
+      <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-4 max-w-4xl mx-auto">
+        <div class="flex flex-wrap justify-center gap-2">
           <button 
             v-for="cat in categories" 
             :key="cat"
             @click="selectedCategory = cat"
             :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
+              'px-5 py-2.5 rounded-xl font-bold transition-all text-sm uppercase tracking-wider',
               selectedCategory === cat 
-                ? 'bg-purple-600 text-white shadow-md' 
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-brand-500 text-black shadow-lg shadow-brand-500/20' 
+                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
             ]"
           >
             {{ cat }}
@@ -42,51 +43,76 @@
     </section>
 
     <!-- Gallery Grid -->
-    <section class="container mx-auto px-6 py-12">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <section class="container mx-auto px-6 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div 
           v-for="item in filteredGallery" 
           :key="item.id"
-          class="group relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer"
+          class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
         >
-          <!-- Image -->
-          <div class="relative h-64 bg-gradient-to-br from-purple-400 to-pink-500 overflow-hidden">
-            <img 
-              v-if="item.image" 
-              :src="item.image" 
-              :alt="item.title" 
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            <div v-else class="w-full h-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            
-            <!-- Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <h3 class="text-white font-bold text-lg mb-1">{{ item.title }}</h3>
-                <p class="text-gray-200 text-sm">{{ item.date }}</p>
-              </div>
-            </div>
+          <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
+          <div v-if="item.category === 'Karikatur'" class="relative h-64 overflow-hidden">
+             <div v-if="!item.image" class="w-full h-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+               </svg>
+             </div>
+             <img 
+               v-else 
+               :src="item.image" 
+               :alt="item.title" 
+               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             />
+             <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+          </div>
+          
+          <div v-else class="h-12 bg-brand-50/50 border-b border-gray-50 flex items-center px-6">
+            <div class="w-2 h-2 rounded-full bg-brand-500 mr-2"></div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-brand-600">{{ item.category }}</span>
+          </div>
 
-            <!-- Category Badge -->
-            <div class="absolute top-3 right-3">
-              <span class="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-purple-700">
-                {{ item.category }}
-              </span>
+          <!-- Content -->
+          <div class="p-8 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-600 transition-colors leading-tight">
+              {{ item.title }}
+            </h3>
+            
+            <p v-if="item.excerpt" class="text-gray-600 text-sm leading-relaxed mb-6 flex-1 italic">
+              "{{ item.excerpt }}"
+            </p>
+            <p v-else class="text-gray-500 text-sm mb-6 flex-1">
+              Karya seni visual oleh santri berprestasi Annawa.
+            </p>
+
+            <div class="flex items-center justify-between pt-6 border-t border-gray-50">
+              <div class="flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500 border border-gray-200">
+                  {{ item.author?.charAt(0) }}
+                </div>
+                <div class="ml-3">
+                  <p class="text-[11px] font-bold text-gray-900 uppercase tracking-tighter">{{ item.author }}</p>
+                  <p class="text-[10px] text-gray-400">{{ item.date }}</p>
+                </div>
+              </div>
+              <button class="text-brand-600 hover:text-black transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Empty State -->
-      <div v-if="filteredGallery.length === 0" class="text-center py-16">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <p class="text-gray-500 text-lg">Belum ada foto untuk kategori ini</p>
+      <div v-if="filteredGallery.length === 0" class="text-center py-24">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Belum ada karya</h3>
+        <p class="text-gray-500">Nantikan karya-karya inspiratif berikutnya dari santri kami.</p>
       </div>
     </section>
   </div>
@@ -95,94 +121,74 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-const categories = ref(['Semua', 'Kegiatan', 'Pembelajaran', 'Wisuda', 'Olahraga', 'Seni'])
+const categories = ref(['Semua', 'Puisi', 'Cerpen', 'Karikatur', 'Teks Ceramah', 'Pantun'])
 const selectedCategory = ref('Semua')
 
-// Data galeri (nanti bisa diganti dengan API)
+// Data galeri (Work samples)
 const galleryList = ref([
   {
     id: 1,
-    title: 'Kegiatan Tahfidz Pagi',
-    image: '',
+    title: 'Rindu Cahaya Wahyu',
+    excerpt: 'Di hening malam aku bersimpuh, mencari setitik embun dalam kalbu yang lusuh...',
+    author: 'Ahmad Fauzan',
     date: '15 Jan 2026',
-    category: 'Pembelajaran'
+    category: 'Puisi'
   },
   {
     id: 2,
-    title: 'Upacara Bendera',
-    image: '',
+    title: 'Santri dan Sepatu Tua',
+    excerpt: 'Sepatu itu telah menemaninya melewati ribuan langkah menuju majelis ilmu, meski solnya mulai menipis...',
+    author: 'Siti Aminah',
     date: '14 Jan 2026',
-    category: 'Kegiatan'
+    category: 'Cerpen'
   },
   {
     id: 3,
-    title: 'Wisuda Santri Tahfidz',
+    title: 'Adab Sebelum Ilmu',
     image: '',
+    author: 'Zaid Al-Khoiri',
     date: '10 Jan 2026',
-    category: 'Wisuda'
+    category: 'Karikatur'
   },
   {
     id: 4,
-    title: 'Pertandingan Futsal',
-    image: '',
-    date: '8 Jan 2026',
-    category: 'Olahraga'
+    title: 'Urgensi Menjaga Lisan',
+    excerpt: 'Lisan adalah pedang bermata dua. Ia bisa menjadi jalan ke surga, atau justru menyeret ke jurang celaka...',
+    author: 'Muhammad Ridwan',
+    date: '08 Jan 2026',
+    category: 'Teks Ceramah'
   },
   {
     id: 5,
-    title: 'Kajian Kitab Kuning',
-    image: '',
-    date: '7 Jan 2026',
-    category: 'Pembelajaran'
+    title: 'Pantun Nasihat Santri',
+    excerpt: 'Pergi berlayar ke pulau Jawa, membawa bekal keripik kentang. Belajarlah dengan sepenuh jiwa, agar masa depan terang benderang.',
+    author: 'Luthfi Hakim',
+    date: '07 Jan 2026',
+    category: 'Pantun'
   },
   {
     id: 6,
-    title: 'Pelatihan Hadroh',
+    title: 'Goresan Senyum Kiai',
     image: '',
-    date: '5 Jan 2026',
-    category: 'Seni'
+    author: 'Rahmat Hidayat',
+    date: '05 Jan 2026',
+    category: 'Karikatur'
   },
   {
     id: 7,
-    title: 'Bakti Sosial',
-    image: '',
-    date: '3 Jan 2026',
-    category: 'Kegiatan'
+    title: 'Fajar di Gerbang Pesantren',
+    excerpt: 'Ketika surya belum menampakkan wajahnya, sayup-sayup lantunan ayat suci mulai membelah kesunyian...',
+    author: 'Annisa Fitri',
+    date: '03 Jan 2026',
+    category: 'Puisi'
   },
   {
     id: 8,
-    title: 'Lomba Kaligrafi',
-    image: '',
-    date: '1 Jan 2026',
-    category: 'Seni'
-  },
-  {
-    id: 9,
-    title: 'Senam Pagi Santri',
-    image: '',
-    date: '28 Des 2025',
-    category: 'Olahraga'
-  },
-  {
-    id: 10,
-    title: 'Peringatan Maulid Nabi',
-    image: '',
-    date: '25 Des 2025',
-    category: 'Kegiatan'
-  },
-  {
-    id: 11,
-    title: 'Kelas Bahasa Arab',
-    image: '',
-    date: '20 Des 2025',
-    category: 'Pembelajaran'
-  },
-  {
-    id: 12,
-    title: 'Turnamen Voli',
-    image: '',
-    date: '15 Des 2025',
-    category: 'Olahraga'
+    title: 'Misteri Kitab Kuning',
+    excerpt: 'Lembaran usang itu menyimpan rahasia besar yang belum terpecahkan selama puluhan tahun...',
+    author: 'Umar Khalid',
+    date: '01 Jan 2026',
+    category: 'Cerpen'
   }
 ])
 
@@ -193,3 +199,9 @@ const filteredGallery = computed(() => {
   return galleryList.value.filter(item => item.category === selectedCategory.value)
 })
 </script>
+
+<style scoped>
+.font-heading {
+  font-family: 'Montserrat', sans-serif;
+}
+</style>

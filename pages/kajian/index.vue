@@ -1,38 +1,39 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50/50">
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-teal-600 via-teal-700 to-emerald-800 text-white pt-20 pb-20">
-      <div class="absolute inset-0 bg-black/10"></div>
+    <section class="relative bg-white pt-16 pb-24 overflow-hidden border-b border-gray-100">
+      <!-- Artistic Background Decorations -->
+      <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
+      <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-30"></div>
+      
       <div class="container mx-auto px-6 relative z-10">
         <div class="max-w-3xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Kajian Rutin</h1>
-          <p class="text-lg md:text-xl text-teal-50">
-            Bergabunglah dengan kajian-kajian ilmiah untuk menambah wawasan keislaman
+          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+            Jadwal & Materi
+          </div>
+          <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
+            Kajian Rutin & <span class="text-brand-500">Ilmiah</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Bergabunglah dengan rangkaian kajian keislaman untuk memperdalam pemahaman agama dan membentuk akhlak mulia.
           </p>
         </div>
-      </div>
-      
-      <!-- Decorative wave -->
-      <div class="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#F9FAFB"/>
-        </svg>
       </div>
     </section>
 
     <!-- Filter Section -->
     <section class="container mx-auto px-6 -mt-8 relative z-20">
-      <div class="bg-white rounded-2xl shadow-lg p-6">
-        <div class="flex flex-wrap gap-3">
+      <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-4 max-w-4xl mx-auto">
+        <div class="flex flex-wrap justify-center gap-2">
           <button 
             v-for="cat in categories" 
             :key="cat"
             @click="selectedCategory = cat"
             :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
+              'px-5 py-2.5 rounded-xl font-bold transition-all text-sm uppercase tracking-wider',
               selectedCategory === cat 
-                ? 'bg-teal-600 text-white shadow-md' 
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-brand-500 text-black shadow-lg shadow-brand-500/20' 
+                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
             ]"
           >
             {{ cat }}
@@ -42,8 +43,8 @@
     </section>
 
     <!-- Kajian List -->
-    <section class="container mx-auto px-6 py-12">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="container mx-auto px-6 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <KajianCard
           v-for="kajian in filteredKajian"
           :key="kajian.id"
@@ -57,11 +58,14 @@
       </div>
 
       <!-- Empty State -->
-      <div v-if="filteredKajian.length === 0" class="text-center py-16">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <p class="text-gray-500 text-lg">Belum ada kajian untuk kategori ini</p>
+      <div v-if="filteredKajian.length === 0" class="text-center py-24">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Belum ada kajian</h3>
+        <p class="text-gray-500">Nantikan jadwal kajian terbaru untuk kategori ini.</p>
       </div>
     </section>
   </div>
@@ -139,3 +143,9 @@ const filteredKajian = computed(() => {
   return kajianList.value.filter(k => k.category === selectedCategory.value)
 })
 </script>
+
+<style scoped>
+.font-heading {
+  font-family: 'Montserrat', sans-serif;
+}
+</style>

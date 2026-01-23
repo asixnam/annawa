@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-[#F9FAFB] font-sans">
     <!-- Hero Section -->
-    <section class="relative pt-16 pb-20 lg:pt-32 lg:pb-40 overflow-hidden bg-white">
+    <section class="relative pt-0 pb-10 lg:pt-2 lg:pb-20 overflow-hidden bg-white">
       <!-- Decoration Circles (like plai style) -->
       <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-30"></div>
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-20"></div>
