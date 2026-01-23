@@ -49,9 +49,9 @@
     <!-- Tentang Pondok -->
     <section class="container mx-auto px-6 py-16">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Tentang Pondok Annawa</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Pondok Pesantren Khozinatul Ulum An-Nawa</h2>
         <p class="text-gray-600 text-lg leading-relaxed mb-8">
-          Pondok Pesantren Annawa adalah lembaga pendidikan Islam yang berfokus pada pembentukan karakter Islami dan penguasaan ilmu agama. Kami menyediakan berbagai program pendidikan mulai dari PAUD, SD/QTA, hingga pendidikan pesantren untuk putra dan putri.
+          Pondok Pesantren Khozinatul Ulum An-Nawa adalah lembaga pendidikan Islam yang berfokus pada pembentukan karakter Islami dan penguasaan ilmu agama. Kami menyediakan berbagai program pendidikan mulai dari PAUD, SD/QTA, hingga pendidikan pesantren untuk putra dan putri.
         </p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
           <div class="text-center">
