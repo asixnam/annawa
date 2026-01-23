@@ -54,6 +54,7 @@
           :location="kajian.location"
           :description="kajian.description"
           :category="kajian.category"
+          :slug="kajian.slug"
         />
       </div>
 
@@ -87,7 +88,8 @@ const kajianList = ref([
     time: 'Senin & Kamis, 19:30 - 21:00 WIB',
     location: 'Masjid Utama',
     description: 'Metode kajian tatap muka langsung (sorogan) untuk membedah kitab fiqih klasik dengan bimbingan intensif.',
-    category: 'Sorogan'
+    category: 'Sorogan',
+    slug: 'kajian-fathul-qorib'
   },
   {
     id: 2,
@@ -96,7 +98,8 @@ const kajianList = ref([
     time: 'Rabu, 20:00 - 21:30 WIB',
     location: 'Aula Pondok',
     description: 'Program tahfidz terpadu untuk penguatan hafalan Al-Qur\'an dengan metode mutqin.',
-    category: 'Tahfidzul Quran'
+    category: 'Tahfidzul Quran',
+    slug: 'tahfidz-juz-amma'
   },
   {
     id: 3,
@@ -105,7 +108,8 @@ const kajianList = ref([
     time: 'Selasa, 19:00 - 20:30 WIB',
     location: 'Ruang Kajian',
     description: 'Forum diskusi ilmiah membahas persoalan hukum kontemporer dari perspektif fiqih lintas madzhab.',
-    category: 'Bahtsul Masail'
+    category: 'Bahtsul Masail',
+    slug: 'bahtsul-masail-tematik'
   },
   {
     id: 4,
@@ -114,16 +118,18 @@ const kajianList = ref([
     time: 'Jum\'at, 15:00 - 16:30 WIB',
     location: 'Masjid Utama',
     description: 'Penyampaian materi secara klasikal (bandongan) yang diikuti oleh seluruh santri dan jamaah umum.',
-    category: 'Bandongan'
+    category: 'Bandongan',
+    slug: 'riyadus-shalihin-umum'
   },
   {
     id: 5,
     title: 'Muroja\'ah Akbar',
     ustadz: 'Ustadz Ibrahim Khalil',
-    time: 'Sabtu, 16:00 - 17:30 WIB',
+    time: 'Sabtu, 14:00 - 15:30 WIB',
     location: 'Aula Pondok',
     description: 'Kegiatan rutin mengulang hafalan secara berkelompok untuk menjaga kelancaran bacaan.',
-    category: 'Tahfidzul Quran'
+    category: 'Tahfidzul Quran',
+    slug: 'murojaah-akbar'
   },
   {
     id: 6,
@@ -132,7 +138,8 @@ const kajianList = ref([
     time: 'Ahad, 08:00 - 10:00 WIB',
     location: 'Ruang Kajian',
     description: 'Mengkaji dasar-dasar ilmu nahwu secara mendetail dengan metode bandongan.',
-    category: 'Bandongan'
+    category: 'Bandongan',
+    slug: 'kitab-jurumiyah'
   }
 ])
 

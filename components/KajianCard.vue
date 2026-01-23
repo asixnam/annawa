@@ -1,5 +1,5 @@
 <template>
-  <div class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2">
+  <NuxtLink :to="`/kajian/${slug}`" class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2">
     <!-- Context Header -->
     <div class="h-12 bg-brand-50/50 border-b border-gray-50 flex items-center px-6">
       <div class="w-2 h-2 rounded-full bg-brand-500 mr-2"></div>
@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
@@ -69,6 +69,7 @@ defineProps<{
   location: string
   description: string
   category: string
+  slug: string
 }>()
 </script>
 

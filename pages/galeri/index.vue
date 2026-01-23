@@ -45,9 +45,10 @@
     <!-- Gallery Grid -->
     <section class="container mx-auto px-6 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div 
+        <NuxtLink 
           v-for="item in filteredGallery" 
           :key="item.id"
+          :to="`/galeri/${item.slug}`"
           class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
         >
           <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
@@ -101,7 +102,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <!-- Empty State -->
@@ -133,7 +134,8 @@ const galleryList = ref([
     author: 'Majid Al-Fatih',
     date: '20 Jan 2026',
     category: 'Juara',
-    image: 'https://images.unsplash.com/photo-1577894780451-9f144e87d2bc?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1577894780451-9f144e87d2bc?auto=format&fit=crop&q=80&w=800',
+    slug: 'juara-1-mtq-nasional'
   },
   {
     id: 2,
@@ -142,7 +144,8 @@ const galleryList = ref([
     author: 'Zaskia Nurul',
     date: '18 Jan 2026',
     category: 'Juara',
-    image: 'https://images.unsplash.com/photo-1533256621371-d4e5ff04226f?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1533256621371-d4e5ff04226f?auto=format&fit=crop&q=80&w=800',
+    slug: 'pemenang-pidato-arab'
   },
   {
     id: 3,
@@ -150,7 +153,8 @@ const galleryList = ref([
     excerpt: 'Di hening malam aku bersimpuh, mencari setitik embun dalam kalbu yang lusuh...',
     author: 'Ahmad Fauzan',
     date: '15 Jan 2026',
-    category: 'Literasi'
+    category: 'Literasi',
+    slug: 'rindu-cahaya-wahyu'
   },
   {
     id: 4,
@@ -158,7 +162,8 @@ const galleryList = ref([
     excerpt: 'Sepatu itu telah menemaninya melewati ribuan langkah menuju majelis ilmu, meski solnya mulai menipis...',
     author: 'Siti Aminah',
     date: '14 Jan 2026',
-    category: 'Literasi'
+    category: 'Literasi',
+    slug: 'santri-sepatu-tua'
   },
   {
     id: 5,
@@ -166,7 +171,8 @@ const galleryList = ref([
     image: '',
     author: 'Zaid Al-Khoiri',
     date: '10 Jan 2026',
-    category: 'Kesenian'
+    category: 'Kesenian',
+    slug: 'adab-sebelum-ilmu'
   },
   {
     id: 6,
@@ -174,7 +180,8 @@ const galleryList = ref([
     excerpt: 'Lisan adalah pedang bermata dua. Ia bisa menjadi jalan ke surga, atau justru menyeret ke jurang celaka...',
     author: 'Muhammad Ridwan',
     date: '08 Jan 2026',
-    category: 'Khitobah'
+    category: 'Khitobah',
+    slug: 'urgensi-menjaga-lisan'
   },
   {
     id: 7,
@@ -182,7 +189,8 @@ const galleryList = ref([
     excerpt: 'Pergi berlayar ke pulau Jawa, membawa bekal keripik kentang. Belajarlah dengan sepenuh jiwa, agar masa depan terang benderang.',
     author: 'Luthfi Hakim',
     date: '07 Jan 2026',
-    category: 'Literasi'
+    category: 'Literasi',
+    slug: 'pantun-nasihat-santri'
   },
   {
     id: 8,
@@ -190,7 +198,8 @@ const galleryList = ref([
     image: '',
     author: 'Rahmat Hidayat',
     date: '05 Jan 2026',
-    category: 'Kesenian'
+    category: 'Kesenian',
+    slug: 'goresan-senyum-kiai'
   },
   {
     id: 9,
@@ -198,7 +207,8 @@ const galleryList = ref([
     excerpt: 'Ketika surya belum menampakkan wajahnya, sayup-sayup lantunan ayat suci mulai membelah kesunyian...',
     author: 'Annisa Fitri',
     date: '03 Jan 2026',
-    category: 'Literasi'
+    category: 'Literasi',
+    slug: 'fajar-gerbang-pesantren'
   },
   {
     id: 10,
@@ -206,7 +216,8 @@ const galleryList = ref([
     excerpt: 'Lembaran usang itu menyimpan rahasia besar yang belum terpecahkan selama puluhan tahun...',
     author: 'Umar Khalid',
     date: '01 Jan 2026',
-    category: 'Literasi'
+    category: 'Literasi',
+    slug: 'misteri-kitab-kuning'
   }
 ])
 

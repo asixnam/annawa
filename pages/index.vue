@@ -189,6 +189,7 @@
           :location="kajian.location"
           :description="kajian.description"
           :category="kajian.category"
+          :slug="kajian.slug"
         />
       </div>
 
@@ -312,7 +313,8 @@ const featuredKajian = ref([
     time: 'Senin & Kamis, 19:30 - 21:00 WIB',
     location: 'Masjid Utama',
     description: 'Kajian mendalam tentang tafsir Al-Qur\'an dengan pendekatan kontekstual dan klasik.',
-    category: 'Tafsir'
+    category: 'Tafsir',
+    slug: 'tafsir-al-quran'
   },
   {
     id: 2,
@@ -321,7 +323,8 @@ const featuredKajian = ref([
     time: 'Rabu, 20:00 - 21:30 WIB',
     location: 'Aula Pondok',
     description: 'Mempelajari 40 hadits pilihan Imam Nawawi yang mencakup berbagai aspek kehidupan muslim.',
-    category: 'Hadits'
+    category: 'Hadits',
+    slug: 'hadits-arbain'
   },
   {
     id: 3,
@@ -330,7 +333,8 @@ const featuredKajian = ref([
     time: 'Selasa, 19:00 - 20:30 WIB',
     location: 'Ruang Kajian',
     description: 'Membahas hukum-hukum muamalah dalam konteks modern dan ekonomi syariah.',
-    category: 'Fiqih'
+    category: 'Fiqih',
+    slug: 'fiqih-muamalah-kontemporer'
   }
 ])
 
