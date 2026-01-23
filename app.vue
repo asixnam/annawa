@@ -13,6 +13,4 @@
 
 <script setup lang="ts">
 import './assets/css/tailwind.css'
-import HeaderNav from './components/layout/HeaderNav.vue'
-import FooterNav from './components/layout/FooterNav.vue'
 </script>

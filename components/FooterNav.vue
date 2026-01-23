@@ -75,7 +75,7 @@
       </div>
 
       <div class="border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest uppercase">
-        <p>&copy; {{ new Date().getFullYear() }} Pondok Pesantren Khozinatul Ulum An-Nawa. All rights reserved.</p>
+        <p>&copy; {{ currentYear }} Pondok Pesantren Khozinatul Ulum An-Nawa. All rights reserved.</p>
         <div class="flex space-x-6 mt-4 md:mt-0">
           <a href="#" class="hover:text-white">Privacy Policy</a>
           <a href="#" class="hover:text-white">Terms of Service</a>
@@ -86,5 +86,5 @@
 </template>
 
 <script setup lang="ts">
-// Tidak ada logic khusus yang diperlukan saat ini
+const currentYear = new Date().getFullYear()
 </script>
