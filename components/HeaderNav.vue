@@ -28,7 +28,7 @@
               <NuxtLink to="/sejarah" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Sejarah</NuxtLink>
               <NuxtLink to="/paud" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">PAUD An-Nawa Khozinatul Ulum
               </NuxtLink>
-              <NuxtLink to="/sd" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">SDQTA An-Nawa Khozinatul Ulum
+              <NuxtLink to="/sdqta" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">SDQTA An-Nawa Khozinatul Ulum
               </NuxtLink>
             </div>
           </div>
@@ -49,7 +49,7 @@
               </svg>
             </button>
             <div v-show="isCtaOpen" class="absolute right-0 top-full mt-0 w-56 bg-white shadow-xl py-2 border-t-2 border-brand-500 z-[60]">
-              <NuxtLink to="/psb" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar Santri</NuxtLink>
+              <NuxtLink to="/psb" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar Santri (PSB)</NuxtLink>
               <NuxtLink to="/ppdb/paud" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar PAUD</NuxtLink>
               <NuxtLink to="/ppdb/sd" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar SDQTA</NuxtLink>
             </div>
@@ -89,7 +89,7 @@
             <NuxtLink to="/sejarah" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Sejarah</NuxtLink>
             <NuxtLink to="/paud" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">PAUD An-Nawa Khozinatul Ulum
             </NuxtLink>
-            <NuxtLink to="/sd" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">SDQTA An-Nawa Khozinatul Ulum
+            <NuxtLink to="/sdqta" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">SDQTA An-Nawa Khozinatul Ulum
             </NuxtLink>
           </div>
         </div>

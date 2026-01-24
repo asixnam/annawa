@@ -29,10 +29,9 @@
         <div>
           <h3 class="text-white font-bold mb-6 tracking-wider uppercase text-sm">Program Pendidikan</h3>
           <ul class="space-y-4 text-sm">
-            <li><NuxtLink to="/psb/putra" class="hover:text-brand-500 transition-colors">Pesantren Putra</NuxtLink></li>
-            <li><NuxtLink to="/psb/putri" class="hover:text-brand-500 transition-colors">Pesantren Putri</NuxtLink></li>
-            <li><NuxtLink to="/ppdb/paud" class="hover:text-brand-500 transition-colors">PAUD Islam</NuxtLink></li>
-            <li><NuxtLink to="/ppdb/sd" class="hover:text-brand-500 transition-colors">SD / QTA</NuxtLink></li>
+            <li><NuxtLink to="/psb" class="hover:text-brand-500 transition-colors">Pendaftaran Santri (PSB)</NuxtLink></li>
+            <li><NuxtLink to="/paud" class="hover:text-brand-500 transition-colors">Profil PAUD</NuxtLink></li>
+            <li><NuxtLink to="/sdqta" class="hover:text-brand-500 transition-colors">Profil SDQTA</NuxtLink></li>
           </ul>
         </div>
 
