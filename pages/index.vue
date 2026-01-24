@@ -310,11 +310,10 @@
               >
                 Daftar Sekarang
               </NuxtLink>
-              <button 
-                class="px-12 py-5 border-2 border-brand-500 text-brand-700 rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-50 transition-all text-center"
-              >
-                Profil Pesantren
-              </button>
+
+              <NuxtLink to="/profil" class="px-12 py-5 border-2 border-brand-500 text-brand-700 rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-50 transition-all text-center"">
+                Profil Pondok
+              </NuxtLink>
             </div>
           </div>
         </div>
