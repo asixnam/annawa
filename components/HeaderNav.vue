@@ -26,10 +26,9 @@
             <div v-show="isAboutOpen" class="absolute top-full left-0 mt-0 w-48 bg-white shadow-xl py-2 border-t-2 border-brand-500">
               <NuxtLink to="/profil" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Profil</NuxtLink>
               <NuxtLink to="/sejarah" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Sejarah</NuxtLink>
-              <NuxtLink to="/sejarah" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Pondok Pesantren</NuxtLink>
-              <NuxtLink to="/sejarah" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">PAUD An-Nawa Khozinatul Ulum
+              <NuxtLink to="/paud" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">PAUD An-Nawa Khozinatul Ulum
               </NuxtLink>
-              <NuxtLink to="/sejarah" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">SDQTA An-Nawa Khozinatul Ulum
+              <NuxtLink to="/sd" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">SDQTA An-Nawa Khozinatul Ulum
               </NuxtLink>
             </div>
           </div>
@@ -88,6 +87,10 @@
           <div v-show="isAboutMobileOpen" class="pl-4 space-y-1 border-l-2 border-brand-500 ml-1">
             <NuxtLink to="/profil" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Profil</NuxtLink>
             <NuxtLink to="/sejarah" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Sejarah</NuxtLink>
+            <NuxtLink to="/paud" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">PAUD An-Nawa Khozinatul Ulum
+            </NuxtLink>
+            <NuxtLink to="/sd" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">SDQTA An-Nawa Khozinatul Ulum
+            </NuxtLink>
           </div>
         </div>
 
