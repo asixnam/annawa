@@ -282,19 +282,41 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="bg-[#F5F5F5] py-20">
-      <div class="container mx-auto px-6 text-center">
-        <h2 class="text-4xl font-black text-gray-900 mb-6 uppercase tracking-tight">Bergabunglah dengan Kami</h2>
-        <p class="text-gray-600 text-lg mb-10 max-w-2xl mx-auto">
-          Daftarkan putra-putri Anda untuk mendapatkan pendidikan Islam yang berkualitas dan berakhlak mulia di Pondok Pesantren Khozinatul Ulum An-Nawa.
-        </p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <NuxtLink to="/psb/putra" class="px-10 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-xl shadow-brand-500/10">
-            Daftar Sekarang
-          </NuxtLink>
-          <NuxtLink to="/galeri" class="px-10 py-4 border-2 border-gray-300 text-gray-700 rounded font-black uppercase text-sm tracking-widest hover:border-black hover:text-black transition-all">
-            Lihat Galeri
-          </NuxtLink>
+    <section class="bg-gray-50 py-16 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden relative p-8 md:p-14">
+          <!-- Decoration for CTA -->
+          <div class="absolute top-0 right-0 w-80 h-full opacity-10 pointer-events-none">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+              <path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.5,90,-16.3,88.5,-0.9C87,14.5,81.4,29,73.4,42.4C65.3,55.8,54.8,68,41.4,75.1C28,82.2,14,84.1,0.2,83.8C-13.6,83.5,-27.2,81,-40.4,74.1C-53.5,67.2,-66.2,55.8,-74.6,42.2C-82.9,28.6,-86.9,12.8,-86.2,-2.7C-85.4,-18.2,-80,-33.4,-70.7,-46.1C-61.4,-58.8,-48.3,-69.1,-34.4,-76.5C-20.5,-83.9,-10.2,-88.4,2.9,-93.4C16,-98.5,30.6,-83.7,44.7,-76.4Z" transform="translate(100 100)" class="text-brand-500" />
+            </svg>
+          </div>
+
+          <div class="relative z-10">
+            <h2 class="text-3xl md:text-5xl font-black text-brand-600 mb-3 font-heading leading-tight">
+              Bergabunglah dengan An-Nawa Sekarang!
+            </h2>
+            <p class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
+              Terbuka untuk tahun ajaran 2025/2026
+            </p>
+            <p class="text-gray-500 text-sm mb-12">
+              Informasi selengkapnya di <a href="#" class="text-brand-600 underline font-bold hover:text-brand-700">psb.annawa.com</a>
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-5">
+              <NuxtLink 
+                to="/psb" 
+                class="px-12 py-5 bg-brand-500 text-black rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-600 transition-all text-center shadow-xl shadow-brand-500/20"
+              >
+                Daftar Sekarang
+              </NuxtLink>
+              <button 
+                class="px-12 py-5 border-2 border-brand-500 text-brand-700 rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-50 transition-all text-center"
+              >
+                Profil Pesantren
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

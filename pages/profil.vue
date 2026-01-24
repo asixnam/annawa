@@ -20,23 +20,23 @@
     </section>
 
     <!-- Tentang Pondok -->
-    <section class="container mx-auto px-4 md:px-10 py-20">
-      <div class="text-center mb-10">
+    <section class="mx-auto px-4 md:px-10 lg:px-20 py-16 w-full">
+      <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight font-heading">
           Tentang <span class="text-brand-500">Kami</span>
         </h2>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
         <div class="flex justify-center lg:justify-start">
-          <div class="w-64 h-64 flex-shrink-0">
+          <div class="w-64 h-64 lg:w-80 lg:h-80 flex-shrink-0">
             <img 
-              src="/images/pengasuh.jpg" 
+              src="/images/pengasuh.jpeg" 
               alt="Pengasuh Pondok" 
-              class="w-full h-full object-cover rounded-2xl shadow-lg border-2 border-gray-100 bg-gray-100 grayscale hover:grayscale-0 transition-all duration-500"
+              class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-white bg-gray-100 grayscale hover:grayscale-0 transition-all duration-500"
             />
           </div>
         </div>
-        <div class="space-y-6 text-gray-600 leading-relaxed text-lg lg:text-left">
+        <div class="space-y-6 text-gray-600 leading-relaxed text-lg text-justify pt-6 lg:max-w-2xl">
           <p>
             Pondok Pesantren Khozinatul Ulum An-Nawa adalah sebuah lembaga pendidikan Islam yang berkomitmen untuk mencetak generasi yang tidak hanya unggul dalam ilmu pengetahuan, namun juga memiliki karakter Qur'ani yang kuat.
           </p>
@@ -100,11 +100,11 @@
             />
           </div>
           <h4 class="text-lg font-bold text-gray-900 mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ member.name }}</h4>
-          <p class="text-brand-600 text-[11px] font-bold uppercase tracking-wider italic mb-1">
+          <p class="text-brand-600 text-[11px] font-bold uppercase tracking-wider  mb-1">
             {{ member.position }}
           </p>
           <p class="text-gray-400 text-[9px] font-bold uppercase tracking-widest">
-            Ulum An-Nawa
+           Khozinatul Ulum An-Nawa
           </p>
         </div>
       </div>
@@ -114,17 +114,16 @@
     <section class="bg-white py-16">
       <div class="container mx-auto px-6 max-w-5xl">
         <div class="text-center mb-12">
-          <h2 class="text-3xl font-black text-brand-500 uppercase font-heading tracking-tight">
-            Program Pendidikan
+          <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-4 font-heading">
+            Mitra <span class="text-brand-500">Lembaga</span>
           </h2>
         </div>
-
-        <div class="flex flex-wrap justify-center gap-10 md:gap-20 lg:gap-24">
+        <div class="flex flex-wrap justify-center gap-12 md:gap-24 lg:gap-32">
           <div v-for="program in programs" :key="program.name" class="flex flex-col items-center group">
-            <div class="w-20 h-20 mb-4 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-105">
+            <div class="w-32 h-32 md:w-40 md:h-40 mb-6 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
               <img :src="program.image" :alt="program.name" class="max-w-full max-h-full object-contain" />
             </div>
-            <h3 class="text-xs font-black uppercase tracking-widest text-gray-700 transition-colors font-heading group-hover:text-brand-500">
+            <h3 class="text-base font-bold text-gray-700 transition-colors font-heading group-hover:text-brand-500">
               {{ program.name }}
             </h3>
           </div>
@@ -132,24 +131,43 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="bg-gray-950 py-16 relative overflow-hidden">
-      <!-- Decoration for CTA -->
-      <div class="absolute top-0 left-0 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl -ml-32 -mt-32"></div>
+    <!-- CTA Section (Card Style) -->
+    <section class="bg-gray-50 py-16 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden relative p-8 md:p-14">
+          <!-- Decoration for CTA -->
+          <div class="absolute top-0 right-0 w-80 h-full opacity-10 pointer-events-none">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+              <path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.5,90,-16.3,88.5,-0.9C87,14.5,81.4,29,73.4,42.4C65.3,55.8,54.8,68,41.4,75.1C28,82.2,14,84.1,0.2,83.8C-13.6,83.5,-27.2,81,-40.4,74.1C-53.5,67.2,-66.2,55.8,-74.6,42.2C-82.9,28.6,-86.9,12.8,-86.2,-2.7C-85.4,-18.2,-80,-33.4,-70.7,-46.1C-61.4,-58.8,-48.3,-69.1,-34.4,-76.5C-20.5,-83.9,-10.2,-88.4,2.9,-93.4C16,-98.5,30.6,-83.7,44.7,-76.4Z" transform="translate(100 100)" class="text-brand-500" />
+            </svg>
+          </div>
 
-      <div class="container mx-auto px-6 text-center relative z-10">
-        <h2 class="text-2xl md:text-3xl font-black text-white mb-4 uppercase tracking-widest font-heading">
-          Bergabunglah Bersama Kami
-        </h2>
-        <p class="text-gray-400 mb-10 text-base max-w-2xl mx-auto leading-relaxed">
-          Mulai perjalanan pendidikan Islami yang berkualitas dan berakhlak mulia untuk masa depan yang lebih baik.
-        </p>
-        <NuxtLink 
-          to="/psb" 
-          class="inline-block px-10 py-4 bg-brand-500 text-black rounded font-black uppercase tracking-widest text-xs hover:bg-white hover:scale-105 transition-all shadow-xl shadow-brand-500/20"
-        >
-          Daftar Sekarang
-        </NuxtLink>
+          <div class="relative z-10">
+            <h2 class="text-xl md:text-3xl font-black text-brand-700 mb-3 font-heading leading-tight">
+              Bergabunglah dengan Khozinatul Ulum An-Nawa Sekarang!
+            </h2>
+            <p class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
+              Terbuka untuk tahun ajaran 2025/2026
+            </p>
+            <p class="text-gray-500 text-sm mb-12">
+              Informasi selengkapnya di <a href="#" class="text-brand-600 underline font-bold hover:text-brand-700">psb.annawa.com</a>
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-5">
+              <NuxtLink 
+                to="/psb" 
+                class="px-12 py-5 bg-brand-500 text-black rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-600 transition-all text-center shadow-xl shadow-brand-500/20"
+              >
+                Daftar Sekarang
+              </NuxtLink>
+              <button 
+                class="px-12 py-5 border-2 border-brand-500 text-brand-700 rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-50 transition-all text-center"
+              >
+               Profil Pesantren
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -189,15 +207,15 @@ const team = [
 
 const programs = [
   {
-    name: "PAUD",
+    name: "Paud",
     image: "/annawa.png"
   },
   {
-    name: "SDQTA",
+    name: "Sdqta",
     image: "/annawa.png"
   },
   {
-    name: "PESANTREN",
+    name: "Pesantren",
     image: "/annawa.png"
   }
 ]
