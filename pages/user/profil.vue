@@ -155,7 +155,7 @@
 
             <div class="flex flex-col sm:flex-row gap-5">
               <NuxtLink 
-                to="/psb" 
+                to="/user/psb" 
                 class="px-12 py-5 bg-brand-500 text-black rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-600 transition-all text-center shadow-xl shadow-brand-500/20"
               >
                 Daftar Sekarang

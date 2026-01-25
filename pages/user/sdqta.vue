@@ -10,19 +10,19 @@
           Official Profil
         </div>
         <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
-          Profil <span class="text-brand-500 uppercase">PAUD An-Nawa</span>
+          Profil <span class="text-brand-500 uppercase">SDQTA An-Nawa</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          Membentuk landasan karakter dan kecerdasan anak sejak dini dalam lingkungan yang islami dan menyenangkan.
+          Sekolah Dasar Qur'an Terpadu An-Nawa: Memadukan keunggulan akademik dengan nilai-nilai luhur Al-Qur'an.
         </p>
       </div>
     </section>
 
-    <!-- Tentang PAUD -->
+    <!-- Tentang SDQTA -->
     <section class="mx-auto px-4 md:px-10 lg:px-20 py-16 w-full">
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight font-heading">
-          Tentang <span class="text-brand-500">PAUD</span>
+          Tentang <span class="text-brand-500">SDQTA</span>
         </h2>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
@@ -30,17 +30,17 @@
           <div class="w-64 h-64 lg:w-80 lg:h-80 flex-shrink-0">
             <img 
               src="/annawa.png" 
-              alt="PAUD An-Nawa" 
+              alt="SDQTA An-Nawa" 
               class="w-full h-full object-contain rounded-3xl shadow-xl border-4 border-white bg-white p-8 hover:scale-105 transition-all duration-500"
             />
           </div>
         </div>
         <div class="space-y-6 text-gray-600 leading-relaxed text-lg text-justify pt-6 lg:max-w-2xl">
           <p>
-            PAUD Islam Terpadu An-Nawa Khozinatul Ulum adalah jenjang pendidikan anak usia dini yang berfokus pada pengembangan fitrah anak. Kami percaya bahwa setiap anak adalah unik dan memiliki potensi yang luar biasa.
+            SDQTA (Sekolah Dasar Qur'an Terpadu) An-Nawa Khozinatul Ulum adalah institusi pendidikan dasar yang mengintegrasikan kurikulum nasional dengan pendidikan agama yang mendalam, khususnya dalam bidang Tahfidz Al-Qur'an.
           </p>
           <p>
-            Dengan pendekatan "Learning through Play" yang diintegrasikan dengan nilai-nilai Al-Qur'an, kami menciptakan lingkungan belajar yang aman, nyaman, dan stimulatif bagi tumbuh kembang anak secara holistik.
+            Kami berkomitmen untuk melahirkan lulusan yang cerdas secara intelektual, memiliki hafalan Al-Qur'an yang mutqin, serta berakhlak mulia sesuai dengan tuntunan Rasulullah SAW.
           </p>
         </div>
       </div>
@@ -52,10 +52,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div class="bg-brand-50 p-8 rounded-3xl border border-brand-100/50 shadow-sm">
             <h3 class="text-xl font-black text-gray-900 mb-6 uppercase tracking-tight font-heading">
-              Visi <span class="text-brand-500 ml-1">PAUD</span>
+              Visi <span class="text-brand-500 ml-1">SDQTA</span>
             </h3>
             <p class="text-gray-800 text-lg font-medium leading-relaxed italic border-l-4 border-brand-500 pl-4">
-              "Terwujudnya anak usia dini yang berakhlak mulia, sehat, cerdas, ceria, dan mandiri berlandaskan nilai-nilai Al-Qur'an."
+              "Mewujudkan generasi Rabbani yang hafidz Al-Qur'an, unggul dalam prestasi, dan berkarakter islami."
             </p>
           </div>
 
@@ -81,7 +81,7 @@
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
           <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase font-heading">
-            Fasilitas <span class="text-brand-500">PAUD</span>
+            Fasilitas <span class="text-brand-500">Unggulan</span>
           </h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -98,7 +98,7 @@
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
           <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase font-heading">
-            Kegiatan <span class="text-brand-500">Siswa</span>
+            Kegiatan <span class="text-brand-500">Sekolah</span>
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -116,10 +116,10 @@
     <section class="container mx-auto px-6 py-16">
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-4 uppercase font-heading">
-          Guru <span class="text-brand-500">PAUD</span>
+          Guru <span class="text-brand-500">SDQTA</span>
         </h2>
         <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">
-          Pendidik yang sabar dan kompeten dalam membimbing tumbuh kembang anak.
+          Tim pengajar yang profesional, hafidz Al-Qur'an, dan berdedikasi tinggi.
         </p>
       </div>
 
@@ -145,17 +145,17 @@
       <div class="max-w-6xl mx-auto">
         <div class="bg-white rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden relative p-8 md:p-14 text-center">
           <h2 class="text-2xl md:text-4xl font-black text-brand-700 mb-6 font-heading">
-            Daftarkan Putra-Putri Anda Sekarang!
+            Wujudkan Generasi Qur'ani Terpadu
           </h2>
           <p class="text-gray-600 mb-10 max-w-xl mx-auto">
-            Mari bergabung bersama keluarga besar PAUD An-Nawa untuk masa depan anak yang lebih gemilang.
+            Segera daftarkan putra-putri Anda untuk bergabung dalam angkatan baru SDQTA An-Nawa.
           </p>
           <div class="flex justify-center">
             <NuxtLink 
-              to="/ppdb/paud" 
+              to="/user/ppdb/sd" 
               class="px-12 py-5 bg-brand-500 text-black rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-600 transition-all shadow-xl shadow-brand-500/20"
             >
-              Daftar PAUD
+              Daftar SDQTA
             </NuxtLink>
           </div>
         </div>
@@ -166,50 +166,50 @@
 
 <script setup lang="ts">
 const misis = [
-  "Menyelenggarakan pendidikan anak usia dini yang berbasis pada nilai-nilai keislaman.",
-  "Menciptakan lingkungan belajar yang aktif, inovatif, kreatif, dan menyenangkan.",
-  "Mengoptimalkan potensi kecerdasan majemuk anak.",
-  "Membangun pembiasaan akhlakul karimah sejak dini.",
-  "Menjalin kerjasama yang harmonis dengan orang tua dan masyarakat."
+  "Menyelenggarakan pendidikan dasar IT (Islam Terpadu) yang berkualitas tinggi.",
+  "Membekali santri dengan hafalan Al-Qur'an minimal 5-10 juz (sesuai target jenjang).",
+  "Menumbuhkan kecintaan terhadap ilmu pengetahuan dan teknologi.",
+  "Menerapkan kedisiplinan dan pembiasaan islami dalam kehidupan sehari-hari.",
+  "Mengembangkan bakat dan minat santri melalui berbagai kegiatan ekstrakurikuler."
 ]
 
 const facilities = [
-  { name: "Ruang Kelas AC", icon: "🏫" },
-  { name: "Area Bermain", icon: "🎡" },
-  { name: "Perpustakaan Mini", icon: "📚" },
-  { name: "Alat Peraga Edukasi", icon: "🧩" },
-  { name: "Musholla", icon: "🕌" },
-  { name: "Taman Kreatif", icon: "🌳" },
-  { name: "Area Makan Bersama", icon: "🍱" },
-  { name: "Pojok Baca", icon: "📖" }
+  { name: "Gedung Representatif", icon: "🏛️" },
+  { name: "Laboratorium Komputer", icon: "💻" },
+  { name: "Perpustakaan Lengkap", icon: "📚" },
+  { name: "Lapangan Olahraga", icon: "⚽" },
+  { name: "Musholla Nyaman", icon: "🕌" },
+  { name: "Kantin Sehat", icon: "🍱" },
+  { name: "UKS", icon: "🏥" },
+  { name: "Studio Tahfidz", icon: "🎙️" }
 ]
 
 const activities = [
-  { title: "Manasik Haji Cilik", image: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=800&auto=format&fit=crop" },
-  { title: "Outing Class & Field Trip", image: "https://images.unsplash.com/photo-1472289065668-ce6a9a442c23?q=80&w=800&auto=format&fit=crop" },
-  { title: "Market Day & Kewirausahaan", image: "https://images.unsplash.com/photo-1516627145497-ae69688bc554?q=80&w=800&auto=format&fit=crop" }
+  { title: "Mukhayyam Al-Qur'an", image: "https://images.unsplash.com/photo-1544027993-37dbfe43552e?q=80&w=800&auto=format&fit=crop" },
+  { title: "Pramuka & Kepanduan", image: "https://images.unsplash.com/photo-1510522134121-2236c571001e?q=80&w=800&auto=format&fit=crop" },
+  { title: "Lomba Kreativitas Siswa", image: "https://images.unsplash.com/photo-1491321447008-4c8a5979bc75?q=80&w=800&auto=format&fit=crop" }
 ]
 
 const teachers = [
   {
-    name: "Ustadzah Fatimah, S.Pd",
-    position: "Kepala PAUD",
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=500&auto=format&fit=crop"
+    name: "Ustadz H. Abdullah, M.Pd",
+    position: "Kepala SDQTA",
+    photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&h=500&auto=format&fit=crop"
   },
   {
-    name: "Ustadzah Aisyah",
-    position: "Wali Kelas A",
-    photo: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=400&h=500&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadzah Khadijah",
-    position: "Wali Kelas B",
+    name: "Ustadzah Siti Zulaikha, S.Pd",
+    position: "Koordinator Kurikulum",
     photo: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=400&h=500&auto=format&fit=crop"
   },
   {
-    name: "Ustadzah Maryam",
-    position: "Guru Pendamping",
-    photo: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=400&h=500&auto=format&fit=crop"
+    name: "Ustadz Mansyur Al-Hafidz",
+    position: "Koordinator Tahfidz",
+    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&h=500&auto=format&fit=crop"
+  },
+  {
+    name: "Ustadzah Rohmah, S.Pd",
+    position: "Guru Tematik",
+    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&h=500&auto=format&fit=crop"
   }
 ]
 </script>

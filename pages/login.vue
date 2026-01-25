@@ -192,7 +192,17 @@
     try {
       await auth.login({ email: email.value, password: password.value })
       // Handle remember me logic here if needed
-      router.push('/')
+      
+      const role = auth.user?.role
+      if (role === 'super') {
+        router.push('/super-admin')
+      } else if (role?.startsWith('admin')) {
+        router.push('/admin')
+      } else if (role === 'author') {
+        router.push('/author')
+      } else {
+        router.push('/user')
+      }
     } catch (e: any) {
       errorMsg.value = e.message || 'Login gagal. Periksa kembali email dan password Anda.'
     } finally {

@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import BeritaCard from '../../components/BeritaCard.vue'
+import BeritaCard from '~/components/BeritaCard.vue'
 
 // Data berita (nanti bisa diganti dengan API)
 const beritaList = ref([

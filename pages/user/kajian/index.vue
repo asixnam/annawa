@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import KajianCard from '../../components/KajianCard.vue'
+import KajianCard from '~/components/KajianCard.vue'
 
 const categories = ref(['Semua', 'Sorogan', 'Tahfidzul Quran', 'Bahtsul Masail', 'Bandongan'])
 const selectedCategory = ref('Semua')

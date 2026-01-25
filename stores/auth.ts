@@ -16,8 +16,16 @@ export const useAuthStore = defineStore('auth', () => {
       setUser({ id: '2', name: 'Admin PAUD', role: 'admin:paud' })
       return
     }
+    if (payload.email === 'santri@admin' && payload.password === 'pass') {
+      setUser({ id: '5', name: 'Admin Kesantrian', role: 'admin:santri' })
+      return
+    }
     if (payload.email === 'user@local' && payload.password === 'pass') {
       setUser({ id: '3', name: 'Santri', role: 'user' })
+      return
+    }
+    if (payload.email === 'author@local' && payload.password === 'pass') {
+      setUser({ id: '4', name: 'Ustadz Author', role: 'author' })
       return
     }
     throw new Error('Invalid credentials')
@@ -29,7 +37,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (!user.value) return false
     if (required === '*') return true
     // support multiple roles separated by | e.g. 'admin:paud|admin:sd'
-    return required.split('|').some(r => user.value!.role === r || (r.endsWith(':*') && user.value!.role.startsWith(r.replace(':*',''))))
+    return required.split('|').some(r => user.value!.role === r || (r.endsWith(':*') && user.value!.role.startsWith(r.replace(':*', ''))))
   }
 
   return { user, login, logout, setUser, hasRole }

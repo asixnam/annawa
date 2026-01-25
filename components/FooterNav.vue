@@ -29,9 +29,9 @@
         <div>
           <h3 class="text-white font-bold mb-6 tracking-wider uppercase text-sm">Program Pendidikan</h3>
           <ul class="space-y-4 text-sm">
-            <li><NuxtLink to="/psb" class="hover:text-brand-500 transition-colors">Pendaftaran Santri (PSB)</NuxtLink></li>
-            <li><NuxtLink to="/paud" class="hover:text-brand-500 transition-colors">Profil PAUD</NuxtLink></li>
-            <li><NuxtLink to="/sdqta" class="hover:text-brand-500 transition-colors">Profil SDQTA</NuxtLink></li>
+            <li><NuxtLink to="/user/psb" class="hover:text-brand-500 transition-colors">Pendaftaran Santri (PSB)</NuxtLink></li>
+            <li><NuxtLink to="/user/paud" class="hover:text-brand-500 transition-colors">Profil PAUD</NuxtLink></li>
+            <li><NuxtLink to="/user/sdqta" class="hover:text-brand-500 transition-colors">Profil SDQTA</NuxtLink></li>
           </ul>
         </div>
 
@@ -39,10 +39,10 @@
         <div>
           <h3 class="text-white font-bold mb-6 tracking-wider uppercase text-sm">Tautan Penting</h3>
           <ul class="space-y-4 text-sm">
-            <li><NuxtLink to="/profil" class="hover:text-brand-500 transition-colors">Profil Pondok</NuxtLink></li>
-            <li><NuxtLink to="/kajian" class="hover:text-brand-500 transition-colors">Jadwal Kajian</NuxtLink></li>
-            <li><NuxtLink to="/berita" class="hover:text-brand-500 transition-colors">Warta Terbaru</NuxtLink></li>
-            <li><NuxtLink to="/kontak" class="hover:text-brand-500 transition-colors">Hubungi Kami</NuxtLink></li>
+            <li><NuxtLink to="/user/profil" class="hover:text-brand-500 transition-colors">Profil Pondok</NuxtLink></li>
+            <li><NuxtLink to="/user/kajian" class="hover:text-brand-500 transition-colors">Jadwal Kajian</NuxtLink></li>
+            <li><NuxtLink to="/user/berita" class="hover:text-brand-500 transition-colors">Warta Terbaru</NuxtLink></li>
+            <li><NuxtLink to="/user/kontak" class="hover:text-brand-500 transition-colors">Hubungi Kami</NuxtLink></li>
           </ul>
         </div>
 

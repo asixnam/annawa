@@ -24,18 +24,18 @@
               </svg>
             </button>
             <div v-show="isAboutOpen" class="absolute top-full left-0 mt-0 w-48 bg-white shadow-xl py-2 border-t-2 border-brand-500">
-              <NuxtLink to="/profil" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Profil</NuxtLink>
-              <NuxtLink to="/sejarah" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Sejarah</NuxtLink>
-              <NuxtLink to="/paud" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">PAUD An-Nawa Khozinatul Ulum
+              <NuxtLink to="/user/profil" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Profil</NuxtLink>
+              <NuxtLink to="/user/sejarah" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">Sejarah</NuxtLink>
+              <NuxtLink to="/user/paud" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">PAUD An-Nawa Khozinatul Ulum
               </NuxtLink>
-              <NuxtLink to="/sdqta" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">SDQTA An-Nawa Khozinatul Ulum
+              <NuxtLink to="/user/sdqta" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px]">SDQTA An-Nawa Khozinatul Ulum
               </NuxtLink>
             </div>
           </div>
 
-          <NuxtLink to="/kajian" class="hover:text-brand-600 transition-colors">Kajian</NuxtLink>
-          <NuxtLink to="/berita" class="hover:text-brand-600 transition-colors">Berita</NuxtLink>
-          <NuxtLink to="/galeri" class="hover:text-brand-600 transition-colors">Galeri</NuxtLink>
+          <NuxtLink to="/user/kajian" class="hover:text-brand-600 transition-colors">Kajian</NuxtLink>
+          <NuxtLink to="/user/berita" class="hover:text-brand-600 transition-colors">Berita</NuxtLink>
+          <NuxtLink to="/user/galeri" class="hover:text-brand-600 transition-colors">Galeri</NuxtLink>
         </nav>
 
         <!-- CTA & Tools -->
@@ -49,9 +49,9 @@
               </svg>
             </button>
             <div v-show="isCtaOpen" class="absolute right-0 top-full mt-0 w-56 bg-white shadow-xl py-2 border-t-2 border-brand-500 z-[60]">
-              <NuxtLink to="/psb" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar Santri (PSB)</NuxtLink>
-              <NuxtLink to="/ppdb/paud" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar PAUD</NuxtLink>
-              <NuxtLink to="/ppdb/sd" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar SDQTA</NuxtLink>
+              <NuxtLink to="/user/psb" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar Santri (PSB)</NuxtLink>
+              <NuxtLink to="/user/ppdb/paud" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar PAUD</NuxtLink>
+              <NuxtLink to="/user/ppdb/sd" class="block px-4 py-3 hover:bg-brand-50 hover:text-brand-600 transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar SDQTA</NuxtLink>
             </div>
           </div>
           
@@ -85,11 +85,11 @@
             </svg>
           </button>
           <div v-show="isAboutMobileOpen" class="pl-4 space-y-1 border-l-2 border-brand-500 ml-1">
-            <NuxtLink to="/profil" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Profil</NuxtLink>
-            <NuxtLink to="/sejarah" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Sejarah</NuxtLink>
-            <NuxtLink to="/paud" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">PAUD An-Nawa Khozinatul Ulum
+            <NuxtLink to="/user/profil" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Profil</NuxtLink>
+            <NuxtLink to="/user/sejarah" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Sejarah</NuxtLink>
+            <NuxtLink to="/user/paud" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">PAUD An-Nawa Khozinatul Ulum
             </NuxtLink>
-            <NuxtLink to="/sdqta" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">SDQTA An-Nawa Khozinatul Ulum
+            <NuxtLink to="/user/sdqta" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">SDQTA An-Nawa Khozinatul Ulum
             </NuxtLink>
           </div>
         </div>
@@ -103,15 +103,15 @@
             </svg>
           </button>
           <div v-show="isCtaMobileOpen" class="pl-4 space-y-1 border-l-2 border-brand-500 ml-1">
-            <NuxtLink to="/psb" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Daftar Santri</NuxtLink>
-            <NuxtLink to="/ppdb/paud" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Daftar PAUD</NuxtLink>
-            <NuxtLink to="/ppdb/sd" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Daftar SDQTA</NuxtLink>
+            <NuxtLink to="/user/psb" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Daftar Santri</NuxtLink>
+            <NuxtLink to="/user/ppdb/paud" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Daftar PAUD</NuxtLink>
+            <NuxtLink to="/user/ppdb/sd" class="block py-2 text-gray-600 hover:text-brand-600 transition-colors">Daftar SDQTA</NuxtLink>
           </div>
         </div>
 
-        <NuxtLink to="/kajian" class="block py-2 hover:text-brand-600 transition-colors font-bold text-sm uppercase">Kajian</NuxtLink>
-        <NuxtLink to="/berita" class="block py-2 hover:text-brand-600 transition-colors font-bold text-sm uppercase">Berita</NuxtLink>
-        <NuxtLink to="/galeri" class="block py-2 hover:text-brand-600 transition-colors font-bold text-sm uppercase">Galeri</NuxtLink>
+        <NuxtLink to="/user/kajian" class="block py-2 hover:text-brand-600 transition-colors font-bold text-sm uppercase">Kajian</NuxtLink>
+        <NuxtLink to="/user/berita" class="block py-2 hover:text-brand-600 transition-colors font-bold text-sm uppercase">Berita</NuxtLink>
+        <NuxtLink to="/user/galeri" class="block py-2 hover:text-brand-600 transition-colors font-bold text-sm uppercase">Galeri</NuxtLink>
       </div>
     </div>
   </header>
