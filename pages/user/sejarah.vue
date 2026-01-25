@@ -35,15 +35,9 @@
 
         <!-- Text Content -->
         <div class="space-y-8 text-gray-700 leading-relaxed text-lg text-justify max-w-4xl mx-auto">
-          <p class="first-letter:text-5xl first-letter:font-black first-letter:text-brand-500 first-letter:mr-3 first-letter:float-left">
-            Pondok Pesantren Khozinatul Ulum An-Nawa didirikan dengan visi yang luhur untuk menyediakan wadah pendidikan Islam yang integratif. Bermula dari sebuah pengajian kecil di lingkungan sekitar, semangat untuk menyebarkan ilmu agama terus berkembang pesat seiring bertambahnya minat masyarakat.
-          </p>
-          <p>
-            Dengan dedikasi para pendiri dan dukungan tulus dari para kiai serta tokoh masyarakat, pesantren ini bertransformasi dari sebuah tempat belajar tradisional menjadi lembaga pendidikan modern yang tetap memegang teguh nilai-nilai <span class="font-bold border-b-2 border-brand-200 uppercase tracking-wider text-sm text-brand-600">akhlaqul karimah</span> dan literasi Al-Qur'an.
-          </p>
-          <p>
-            Nama "An-Nawa" sendiri diambil dengan harapan lembaga ini menjadi inti (biji) dari kebaikan yang akan tumbuh menjadi pohon yang rimbun dan memberikan manfaat luas bagi umat dan bangsa. Perjalanan panjang ini menjadi bukti nyata kekuatan niat dan kerja keras dalam membangun peradaban islami.
-          </p>
+          <div class="space-y-8 text-gray-700 leading-relaxed text-lg text-justify max-w-4xl mx-auto whitespace-pre-line">
+            {{ historyText }}
+          </div>
         </div>
       </div>
     </section>
@@ -104,46 +98,14 @@
 </template>
 
 <script setup lang="ts">
-const milestones = [
-  {
-    year: "2010",
-    title: "Peletakan Batu Pertama",
-    description: "Inisiasi awal pembangunan lokasi pusat pesantren yang berawal dari niat ikhlas untuk kemajuan dakwah Islam di daerah."
-  },
-  {
-    year: "2013",
-    title: "Pembukaan Formal",
-    description: "Dimulainya kegiatan belajar mengajar dengan angkatan pertama santri yang memfokuskan pada pemahaman kitab kuning."
-  },
-  {
-    year: "2017",
-    title: "Pengembangan PAUD & SDQTA",
-    description: "Perluasan unit pendidikan formal di bawah naungan yayasan untuk mencakup pendidikan anak usia dini dan tingkat dasar Quranic."
-  },
-  {
-    year: "2022",
-    title: "Digitalisasi Pesantren",
-    description: "Implementasi sistem manajemen digital dan laboratorium bahasa modern untuk menunjang daya saing santri di era global."
-  }
-]
+import { computed } from 'vue'
+import { useContentStore } from '~/stores/content'
 
-const founders = [
-  {
-    name: "KH. Ahmad Ridwan (Alm)",
-    role: "Pendiri & Pengasuh Pertama",
-    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=250&auto=format&fit=crop"
-  },
-  {
-    name: "H. Abdullah Shodiq",
-    role: "Ketua Dewan Pembina",
-    photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&h=250&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadzah Fatimah",
-    role: "Perintis Pendidikan Putri",
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=250&auto=format&fit=crop"
-  }
-]
+const store = useContentStore()
+
+const milestones = computed(() => store.history.milestones)
+const founders = computed(() => store.figures)
+const historyText = computed(() => store.history.text)
 </script>
 
 <style scoped>

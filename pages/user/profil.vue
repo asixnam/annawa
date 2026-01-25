@@ -57,7 +57,7 @@
               Visi <span class="text-brand-500 ml-1">Pondok</span>
             </h3>
             <p class="text-gray-800 text-lg font-medium leading-relaxed italic border-l-4 border-brand-500 pl-4">
-              "Menjadi lembaga pendidikan Islam terkemuka dalam mencetak generasi Qur'ani yang berakhlak mulia, cerdas, dan mandiri."
+              "{{ vision }}"
             </p>
           </div>
 
@@ -172,51 +172,37 @@
 </template>
 
 <script setup lang="ts">
-const misis = [
-  "Menyelenggarakan pendidikan Islam yang berbasis pada Al-Qur'an dan Sunnah.",
-  "Menerapkan sistem pembelajaran modern dengan tetap menjaga tradisi pesantren.",
-  "Mengembangkan potensi minat dan bakat santri dalam berbagai bidang.",
-  "Membangun karakter kemandirian dan jiwa kepemimpinan islami.",
-  "Mewujudkan lingkungan pesantren yang bersih, sehat, dan kondusif untuk belajar."
-]
+import { computed } from 'vue'
+import { useContentStore } from '~/stores/content'
 
-const team = [
-  {
-    name: "KH. Ahmad Ridwan",
-    position: "Pengasuh Pondok",
-    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=250&auto=format&fit=crop"
-  },
-  {
-    name: "Dr. Luthfi Hakim",
-    position: "Kepala Pendidikan",
-    photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&h=250&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadz Fauzi",
-    position: "Sekretaris Yayasan",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=250&auto=format&fit=crop"
-  },
-  {
-    name: "Hj. Siti Aminah",
-    position: "Bendahara",
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=250&auto=format&fit=crop"
-  }
-]
+const store = useContentStore()
 
-const programs = [
-  {
-    name: "Paud",
-    image: "/annawa.png"
-  },
-  {
-    name: "Sdqta",
-    image: "/annawa.png"
-  },
-  {
-    name: "Pesantren",
-    image: "/annawa.png"
-  }
-]
+// Use computed properties to stay reactive to store updates
+const misis = computed(() => store.identity.mission)
+const vision = computed(() => store.identity.vision)
+const team = computed(() => {
+  // Combine all staff from all units or filter specific leadership?
+  // For now, let's just grab main figures or leaders if we had them extended
+  // Or reuse existing figures/founders if that matches "Tim Kami" intent
+  // The original looked like staff list.
+  // Ideally, store should have a 'team' section or we aggregate unit heads.
+  // For demo sync, let's use the 'figures' from store as 'Tim Kami' or map Store Staff
+  
+  // Let's use the figures as key people for now to show sync
+  // Or better, aggregate unit heads:
+  const heads = []
+  store.units.forEach(u => {
+    const head = u.staff.find(s => s.position.includes('Kepala') || s.position.includes('Pengasuh'))
+    if (head) heads.push(head)
+  })
+  return heads.length ? heads : store.figures // Fallback
+})
+
+// Partners from store
+const programs = computed(() => store.units.map(u => ({
+  name: u.name,
+  image: u.image
+})))
 </script>
 
 <style scoped>

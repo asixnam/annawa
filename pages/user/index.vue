@@ -13,10 +13,10 @@
               Official Website
             </div>
             <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
-               Pondok Pesantren <span class="text-brand-500">Khozinatul Ulum</span> An-Nawa
+               {{ hero.title }}
             </h1>
             <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
-              Lembaga pendidikan Islam yang menggabungkan tradisi pesantren dengan pendidikan modern untuk membentuk generasi Qur'ani yang berakhlak mulia.
+              {{ hero.subtitle }}
             </p>
             <div class="flex flex-wrap gap-4">
               <NuxtLink to="/user/psb/putra" class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1">
@@ -29,7 +29,7 @@
           </div>
           <div class="flex-1 relative">
             <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white">
-              <img src="/images/hero-santri.png" alt="Santri Pesantren" class="w-full h-auto object-cover" />
+              <img :src="hero.image" alt="Santri Pesantren" class="w-full h-auto object-cover" />
             </div>
             <!-- Floating badge -->
             <div class="absolute -bottom-6 -left-6 z-20 bg-white p-6 rounded-xl shadow-xl flex items-center gap-4 border border-gray-100">
@@ -304,7 +304,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useContentStore } from '~/stores/content'
+
+const store = useContentStore()
+const hero = computed(() => store.hero)
 
 // Featured Kajian (3 items)
 const featuredKajian = ref([
