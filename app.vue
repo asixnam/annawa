@@ -1,13 +1,9 @@
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <div class="min-h-screen flex flex-col bg-white">
-      <HeaderNav />
-      <main class="flex-1 pt-20">
-        <NuxtPage />
-      </main>
-      <FooterNav />
-    </div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 
