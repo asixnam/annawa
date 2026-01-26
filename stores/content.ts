@@ -55,6 +55,13 @@ export const useContentStore = defineStore('content', () => {
                 'Menciptakan lingkungan belajar yang aktif, inovatif, kreatif, dan menyenangkan.'
             ],
             image: '/annawa.png',
+            facilities: [
+                { id: 1, name: "Ruang Kelas AC", icon: "🏫" },
+                { id: 2, name: "Area Bermain", icon: "🎡" }
+            ],
+            activities: [
+                { id: 1, title: "Manasik Haji Cilik", image: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=800&auto=format&fit=crop" }
+            ],
             staff: [
                 { id: 1, name: 'Ustadzah Fatimah, S.Pd', position: 'Kepala PAUD', photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=500&auto=format&fit=crop' },
                 { id: 2, name: 'Ustadzah Aisyah', position: 'Wali Kelas A', photo: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=400&h=500&auto=format&fit=crop' }
@@ -70,6 +77,13 @@ export const useContentStore = defineStore('content', () => {
                 'Membekali santri dengan hafalan Al-Qur\'an minimal 5-10 juz.'
             ],
             image: '/annawa.png',
+            facilities: [
+                { id: 1, name: "Gedung Representatif", icon: "🏛️" },
+                { id: 2, name: "Laboratorium Komputer", icon: "💻" }
+            ],
+            activities: [
+                { id: 1, title: "Mukhayyam Al-Qur'an", image: "https://images.unsplash.com/photo-1544027993-37dbfe43552e?q=80&w=800&auto=format&fit=crop" }
+            ],
             staff: [
                 { id: 1, name: 'Ustadz H. Abdullah, M.Pd', position: 'Kepala SDQTA', photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&h=500&auto=format&fit=crop' },
                 { id: 2, name: 'Ustadz Mansyur Al-Hafidz', position: 'Koordinator Tahfidz', photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&h=500&auto=format&fit=crop' }
@@ -85,6 +99,8 @@ export const useContentStore = defineStore('content', () => {
                 'Menerapkan sistem pembelajaran modern dengan tetap menjaga tradisi pesantren.'
             ],
             image: '/images/pengasuh.jpeg',
+            facilities: [],
+            activities: [],
             staff: [
                 { id: 1, name: 'KH. Ahmad Ridwan', position: 'Pengasuh Pondok', photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=250&auto=format&fit=crop' },
                 { id: 2, name: 'Dr. Luthfi Hakim', position: 'Kepala Pendidikan', photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&h=250&auto=format&fit=crop' }
@@ -143,6 +159,34 @@ export const useContentStore = defineStore('content', () => {
         }
     }
 
+    // Facilities
+    function addFacility(unitId: string, facility: any) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            unit.facilities.push({ ...facility, id: Date.now() })
+        }
+    }
+    function removeFacility(unitId: string, facilityId: number) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            unit.facilities = unit.facilities.filter(f => f.id !== facilityId)
+        }
+    }
+
+    // Activities
+    function addActivity(unitId: string, activity: any) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            unit.activities.push({ ...activity, id: Date.now() })
+        }
+    }
+    function removeActivity(unitId: string, activityId: number) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            unit.activities = unit.activities.filter(a => a.id !== activityId)
+        }
+    }
+
     return {
         hero,
         partners,
@@ -161,6 +205,10 @@ export const useContentStore = defineStore('content', () => {
         updateFigure,
         updateUnit,
         addStaff,
-        removeStaff
+        removeStaff,
+        addFacility,
+        removeFacility,
+        addActivity,
+        removeActivity
     }
 })
