@@ -1,87 +1,65 @@
 <template>
-  <div>
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-900">Data Santri Siswa</h1>
-      <NuxtLink to="/super-admin/students/create" class="px-4 py-2 bg-brand-600 text-white rounded-lg font-bold text-sm hover:bg-brand-700 transition flex items-center shadow-lg shadow-brand-500/20">
-        + Tambah Santri
+  <div class="max-w-6xl mx-auto pb-12">
+    <div class="mb-10 text-center">
+      <h1 class="text-4xl font-black text-gray-900 tracking-tight mb-3 uppercase">Manajemen Data Siswa</h1>
+      <p class="text-gray-500 max-w-2xl mx-auto">Pilih kategori pendidikan untuk mengelola data siswa, pendaftaran, dan administrasi akademik.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Santri Pondok -->
+      <NuxtLink to="/super-admin/students/santri" class="group bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-brand-500/10 hover:border-brand-200 transition-all active:scale-95 flex flex-col items-center text-center">
+        <div class="h-20 w-20 rounded-2xl bg-brand-50 flex items-center justify-center text-brand-600 mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-black text-gray-900 mb-2 uppercase tracking-wide">Pondok Pesantren</h2>
+        <p class="text-sm text-gray-500 mb-6 leading-relaxed">Manajemen data santri, asrama, dan pendaftaran santri baru (PSB).</p>
+        <div class="mt-auto pt-6 border-t border-gray-50 w-full flex justify-between items-center text-gray-400 group-hover:text-brand-600 transition-colors">
+          <span class="text-xs font-bold uppercase tracking-widest">Kelola Data</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform translate-x-0 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
       </NuxtLink>
-    </div>
 
-    <!-- Tabs PAUD / SD -->
-    <div class="flex border-b border-gray-200 mb-6">
-      <button @click="activeTab = 'paud'" :class="['px-6 py-3 font-bold text-sm border-b-2 transition', activeTab === 'paud' ? 'border-brand-500 text-brand-600' : 'border-transparent text-gray-500 hover:text-gray-700']">PAUD An-Nawa</button>
-      <button @click="activeTab = 'sd'" :class="['px-6 py-3 font-bold text-sm border-b-2 transition', activeTab === 'sd' ? 'border-brand-500 text-brand-600' : 'border-transparent text-gray-500 hover:text-gray-700']">SDQTA</button>
-    </div>
+      <!-- PAUD -->
+      <NuxtLink to="/super-admin/students/paud" class="group bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-orange-500/10 hover:border-orange-200 transition-all active:scale-95 flex flex-col items-center text-center">
+        <div class="h-20 w-20 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-black text-gray-900 mb-2 uppercase tracking-wide">PAUD Islam IT</h2>
+        <p class="text-sm text-gray-500 mb-6 leading-relaxed">Administrasi murid PAUD, data tumbuh kembang, dan pendaftaran murid baru.</p>
+        <div class="mt-auto pt-6 border-t border-gray-50 w-full flex justify-between items-center text-gray-400 group-hover:text-orange-600 transition-colors">
+          <span class="text-xs font-bold uppercase tracking-widest">Kelola Data</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform translate-x-0 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
+      </NuxtLink>
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-      <!-- Search Bar -->
-      <div class="p-4 border-b border-gray-100 bg-gray-50">
-        <input type="text" v-model="search" placeholder="Cari nama santri..." class="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20">
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-white">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">NIS</th>
-            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nama Santri</th>
-            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Kelas</th>
-            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Wali Murid</th>
-            <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="student in filteredStudents" :key="student.id" class="hover:bg-gray-50">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ student.nis }}</td>
-            <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">{{ student.name }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ student.class }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ student.parent }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <NuxtLink :to="`/super-admin/students/${student.id}`" class="text-brand-600 hover:text-brand-900 font-bold mr-3">Edit</NuxtLink>
-              <button @click="deleteStudent(student.id)" class="text-red-600 hover:text-red-900 font-bold">Hapus</button>
-            </td>
-          </tr>
-          <tr v-if="filteredStudents.length === 0">
-            <td colspan="5" class="px-6 py-10 text-center text-gray-500 text-sm">Data tidak ditemukan.</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
+      <!-- SD -->
+      <NuxtLink to="/super-admin/students/sd" class="group bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-blue-500/10 hover:border-blue-200 transition-all active:scale-95 flex flex-col items-center text-center">
+        <div class="h-20 w-20 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-black text-gray-900 mb-2 uppercase tracking-wide">SDQTA Qur'an</h2>
+        <p class="text-sm text-gray-500 mb-6 leading-relaxed">Manajemen siswa SDQTA, data akademik, tahfidz, dan pendaftaran murid baru.</p>
+        <div class="mt-auto pt-6 border-t border-gray-50 w-full flex justify-between items-center text-gray-400 group-hover:text-blue-600 transition-colors">
+          <span class="text-xs font-bold uppercase tracking-widest">Kelola Data</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform translate-x-0 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-
 definePageMeta({ layout: 'super-admin' })
-
-const activeTab = ref('paud')
-const search = ref('')
-
-// Sample Data
-const studentsPAUD = ref([
-  { id: 1, nis: '2024001', name: 'Ahmad Kecil', class: 'A', parent: 'Bpk. Budi' },
-  { id: 2, nis: '2024002', name: 'Siti Mungil', class: 'B', parent: 'Ibu Ani' },
-])
-const studentsSD = ref([
-  { id: 101, nis: 'SD24001', name: 'Fulan bin Fulan', class: '1A', parent: 'Bpk. Hasan' },
-  { id: 102, nis: 'SD24002', name: 'Fulanah', class: '2C', parent: 'Bpk. Ali' },
-])
-
-const filteredStudents = computed(() => {
-  const source = activeTab.value === 'paud' ? studentsPAUD.value : studentsSD.value
-  if (!search.value) return source
-  return source.filter(s => s.name.toLowerCase().includes(search.value.toLowerCase()))
-})
-
-function deleteStudent(id: number) {
-  if (confirm('Hapus data siswa ini?')) {
-    if (activeTab.value === 'paud') {
-      studentsPAUD.value = studentsPAUD.value.filter(s => s.id !== id)
-    } else {
-      studentsSD.value = studentsSD.value.filter(s => s.id !== id)
-    }
-  }
-}
 </script>
