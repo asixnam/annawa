@@ -32,8 +32,6 @@ onMounted(() => {
     return navigateTo('/admin/sdqta')
   } else if (role === 'admin:pondok') {
     return navigateTo('/admin/pondok')
-  } else if (role === 'admin:santri') {
-    return navigateTo('/admin/santri')
   } else if (role === 'super') {
     // Super admin can choose or default to one, let's default to SDQTA for now or show a central hub
     return navigateTo('/admin/sdqta')

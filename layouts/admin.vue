@@ -109,7 +109,6 @@ const menuGroups = computed(() => {
       { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/sdqta', icon: icons.dashboard }] },
       { label: 'Lembaga SDQTA', items: [
         { name: 'Data Murid SDQTA', path: '/admin/sdqta/students', icon: icons.users },
-        { name: 'Pendaftar SDQTA', path: '#', icon: icons.registration },
         { name: 'Berita SDQTA', path: '#', icon: icons.news },
       ]}
     ]
@@ -120,19 +119,6 @@ const menuGroups = computed(() => {
       { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/pondok', icon: icons.dashboard }] },
       { label: 'Pondok Pesantren', items: [
         { name: 'Data Santri', path: '/admin/pondok/students', icon: icons.users },
-        { name: 'Pendaftar Pondok', path: '#', icon: icons.registration },
-        { name: 'Data Kamar', path: '#', icon: icons.room },
-      ]}
-    ]
-  }
-
-  if (role === 'admin:santri') {
-    return [
-      { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/santri', icon: icons.dashboard }] },
-      { label: 'Kesantrian', items: [
-        { name: 'Kedisiplinan', path: '#', icon: icons.discipline },
-        { name: 'Perizinan', path: '#', icon: icons.permit },
-        { name: 'Data Santri', path: '/admin/santri/students', icon: icons.users },
       ]}
     ]
   }

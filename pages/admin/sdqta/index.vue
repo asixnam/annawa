@@ -41,7 +41,7 @@
     </div>
 
     <!-- Registration Table -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <!-- <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
       <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
         <h2 class="font-bold text-gray-900">Data Pendaftar SDQTA</h2>
         <button class="text-brand-600 text-sm font-bold hover:text-brand-800">Export Excel</button>
@@ -87,7 +87,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
   </div>
 </template>
 
