@@ -5,7 +5,7 @@
     title="Detail Profil Santri"
   >
     <template #back-link>
-      <NuxtLink to="/super-admin/students/santri" class="group flex items-center text-gray-500 hover:text-brand-600 transition-colors text-sm mb-3">
+      <NuxtLink to="/admin/santri/students" class="group flex items-center text-gray-500 hover:text-brand-600 transition-colors text-sm mb-3">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
@@ -13,7 +13,7 @@
       </NuxtLink>
     </template>
     <template #actions>
-      <NuxtLink :to="`/super-admin/students/santri/${route.params.id}`" class="px-6 py-3 bg-brand-600 text-black font-black text-sm rounded-2xl hover:bg-brand-700 transition-all shadow-xl shadow-brand-500/20 active:scale-95 flex items-center gap-2 uppercase tracking-widest text-[10px]">
+      <NuxtLink :to="`/admin/santri/students/${route.params.id}`" class="px-6 py-3 bg-brand-600 text-white font-black text-sm rounded-2xl hover:bg-brand-700 transition-all shadow-xl shadow-brand-500/20 active:scale-95 flex items-center gap-2 uppercase tracking-widest text-[10px]">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
@@ -26,11 +26,20 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import SantriStudentDetail from '../../../../../components/students/SantriStudentDetail.vue'
+import { useAuthStore } from '~/stores/auth'
+import SantriStudentDetail from '~/components/students/SantriStudentDetail.vue'
 
-definePageMeta({ layout: 'super-admin' })
+definePageMeta({
+  layout: 'admin',
+  middleware: (to, from) => {
+    const auth = useAuthStore()
+    if (!auth.hasRole('admin:santri') && !auth.hasRole('super')) {
+      return navigateTo('/user/unauthorized')
+    }
+  }
+})
+
 const route = useRoute()
-
 const loading = ref(true)
 const santri = reactive({
   namaLengkap: '',

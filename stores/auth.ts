@@ -12,12 +12,17 @@ export const useAuthStore = defineStore('auth', () => {
       setUser({ id: '1', name: 'Super Admin', role: 'super' })
       return
     }
-    if (payload.email === 'admin@local' && payload.password === 'pass') {
+    if (payload.email === 'paud@local' && payload.password === 'pass') {
       setUser({ id: '2', name: 'Admin PAUD', role: 'admin:paud' })
       return
     }
-    if (payload.email === 'santri@admin' && payload.password === 'pass') {
-      setUser({ id: '5', name: 'Admin Kesantrian', role: 'admin:santri' })
+
+    if (payload.email === 'sd@local' && payload.password === 'pass') {
+      setUser({ id: '6', name: 'Admin SDQTA', role: 'admin:sd' })
+      return
+    }
+    if (payload.email === 'pondok@local' && payload.password === 'pass') {
+      setUser({ id: '7', name: 'Admin Pondok', role: 'admin:pondok' })
       return
     }
     if (payload.email === 'user@local' && payload.password === 'pass') {
