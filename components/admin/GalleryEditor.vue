@@ -24,7 +24,13 @@
           </div>
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-2">Nama Penulis / Pemenang</label>
-            <input type="text" v-model="form.author" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <input 
+              type="text" 
+              v-model="form.author" 
+              required 
+              :disabled="auth.user?.role === 'author'"
+              :class="['w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500', auth.user?.role === 'author' ? 'opacity-50 cursor-not-allowed' : '']"
+            >
           </div>
         </div>
 
@@ -68,6 +74,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useContentStore } from '~/stores/content'
+import { useAuthStore } from '~/stores/auth'
 
 const props = defineProps<{
   id?: string
@@ -76,6 +83,7 @@ const props = defineProps<{
 
 const router = useRouter()
 const store = useContentStore()
+const auth = useAuthStore()
 const isEdit = !!props.id
 const fileInput = ref<HTMLInputElement | null>(null)
 
@@ -93,8 +101,17 @@ onMounted(() => {
   if (isEdit) {
     const existing = store.gallery.find(g => g.id === parseInt(props.id!))
     if (existing) {
+      // Security check: if author, only can edit their own
+      if (auth.user?.role === 'author' && existing.author !== auth.user?.name) {
+        alert('Anda tidak memiliki akses untuk mengedit karya ini.')
+        router.push(props.basePath)
+        return
+      }
       form.value = { ...existing }
     }
+  } else if (auth.user?.role === 'author') {
+    // Auto-fill author for new items
+    form.value.author = auth.user.name
   }
 })
 
@@ -114,6 +131,10 @@ function handleFileUpload(event: Event) {
 }
 
 function saveContent() {
+  if (auth.user?.role === 'author') {
+    form.value.author = auth.user.name
+  }
+
   if (!form.value.slug) {
     form.value.slug = form.value.title.toLowerCase().replace(/ /g, '-')
   }

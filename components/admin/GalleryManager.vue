@@ -65,18 +65,27 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useContentStore } from '~/stores/content'
+import { useAuthStore } from '~/stores/auth'
 
 const props = defineProps<{
   basePath: string
 }>()
 
 const store = useContentStore()
+const auth = useAuthStore()
 const categories = ref(['Semua', 'Juara', 'Literasi', 'Kesenian', 'Khitobah'])
 const selectedCategory = ref('Semua')
 
 const filteredGallery = computed(() => {
-  if (selectedCategory.value === 'Semua') return store.gallery
-  return store.gallery.filter(item => item.category === selectedCategory.value)
+  let list = store.gallery
+  
+  // Filter by author if user is an author
+  if (auth.user?.role === 'author') {
+    list = list.filter(item => item.author === auth.user?.name)
+  }
+
+  if (selectedCategory.value === 'Semua') return list
+  return list.filter(item => item.category === selectedCategory.value)
 })
 
 function deleteItem(id: number) {

@@ -1,9 +1,9 @@
 <template>
-  <AdminGalleryManager base-path="/author" />
+  <AdminGalleryEditor base-path="/author" />
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '../../stores/auth'
+import { useAuthStore } from '~/stores/auth'
 
 definePageMeta({
   layout: 'author',

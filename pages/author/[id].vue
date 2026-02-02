@@ -1,9 +1,13 @@
 <template>
-  <AdminGalleryManager base-path="/author" />
+  <AdminGalleryEditor :id="id" base-path="/author" />
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '../../stores/auth'
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '~/stores/auth'
+
+const route = useRoute()
+const id = route.params.id as string
 
 definePageMeta({
   layout: 'author',
