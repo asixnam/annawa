@@ -114,6 +114,87 @@ export const useContentStore = defineStore('content', () => {
         }
     ])
 
+    // --- News, Gallery, Testimonials ---
+    const news = ref([
+        { id: 1, title: 'Wisuda Tahfidz 2026', type: 'Berita', date: '2026-01-20', excerpt: 'Alhamdulillah telah terlaksana wisuda akbar...', image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=400', content: 'Isi lengkap berita wisuda...' },
+        { id: 2, title: 'Pembukaan Pendaftaran Santri Baru', type: 'Pengumuman', date: '2026-01-15', excerpt: 'Pendaftaran santri baru tahun ajaran 2026/2027 telah dibuka...', image: null, content: 'Isi lengkap pengumuman pendaftaran...' },
+    ])
+
+    const gallery = ref([
+        {
+            id: 1,
+            title: 'Juara 1 MTQ Nasional',
+            excerpt: 'Prestasi gemilang santri Annawa dalam ajang Musabaqah Tilawatil Quran tingkat nasional tahun 2025.',
+            author: 'Majid Al-Fatih',
+            date: '20 Jan 2026',
+            category: 'Juara',
+            image: 'https://images.unsplash.com/photo-1577894780451-9f144e87d2bc?auto=format&fit=crop&q=80&w=800',
+            slug: 'juara-1-mtq-nasional'
+        },
+        {
+            id: 2,
+            title: 'Pemenang Lomba Pidato Bahasa Arab',
+            excerpt: 'Keberhasilan meraih podium utama dalam kompetisi pidato antar pesantren se-Jawa Barat.',
+            author: 'Zaskia Nurul',
+            date: '18 Jan 2026',
+            category: 'Juara',
+            image: 'https://images.unsplash.com/photo-1533256621371-d4e5ff04226f?auto=format&fit=crop&q=80&w=800',
+            slug: 'pemenang-pidato-arab'
+        },
+        {
+            id: 3,
+            title: 'Rindu Cahaya Wahyu',
+            excerpt: 'Di hening malam aku bersimpuh, mencari setitik embun dalam kalbu yang lusuh...',
+            author: 'Ahmad Fauzan',
+            date: '15 Jan 2026',
+            category: 'Literasi',
+            slug: 'rindu-cahaya-wahyu'
+        },
+        {
+            id: 4,
+            title: 'Santri dan Sepatu Tua',
+            excerpt: 'Sepatu itu telah menemaninya melewati ribuan langkah menuju majelis ilmu, meski solnya mulai menipis...',
+            author: 'Siti Aminah',
+            date: '14 Jan 2026',
+            category: 'Literasi',
+            slug: 'santri-sepatu-tua'
+        }
+    ])
+
+    const testimonials = ref([
+        {
+            id: 1,
+            name: 'Ahmad Muzaki',
+            batch: 'Alumni 2018',
+            profession: 'Mahasiswa Al-Azhar, Kairo',
+            quote: 'Belajar di Annawa memberikan pondasi keagamaan yang kuat...',
+            image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop'
+        }
+    ])
+
+    const kajian = ref([
+        {
+            id: 1,
+            title: 'Kajian Kitab Fathul Qorib',
+            ustadz: 'Kiai Ahmad Fauzi',
+            time: 'Senin & Kamis, 19:30 - 21:00 WIB',
+            location: 'Masjid Utama',
+            description: 'Metode kajian tatap muka langsung (sorogan) untuk membedah kitab fiqih klasik dengan bimbingan intensif.',
+            category: 'Sorogan',
+            slug: 'kajian-fathul-qorib'
+        },
+        {
+            id: 2,
+            title: 'Setoran Hafalan Juz Amma',
+            ustadz: 'Ustadz Muhammad Ridwan',
+            time: 'Rabu, 20:00 - 21:30 WIB',
+            location: 'Aula Pondok',
+            description: 'Program tahfidz terpadu untuk penguatan hafalan Al-Qur\'an dengan metode mutqin.',
+            category: 'Tahfidzul Quran',
+            slug: 'tahfidz-juz-amma'
+        }
+    ])
+
     // --- Actions (CRUD Logic) ---
 
     // Hero
@@ -277,6 +358,38 @@ export const useContentStore = defineStore('content', () => {
         updateUnitPartner,
         addMilestone,
         removeMilestone,
-        updateMilestone
+        updateMilestone,
+        // News
+        news,
+        addNews: (item: any) => news.value.push({ ...item, id: Date.now() }),
+        removeNews: (id: number) => news.value = news.value.filter(n => n.id !== id),
+        updateNews: (id: number, data: any) => {
+            const idx = news.value.findIndex(n => n.id === id)
+            if (idx !== -1) news.value[idx] = { ...news.value[idx], ...data }
+        },
+        // Gallery
+        gallery,
+        addGallery: (item: any) => gallery.value.push({ ...item, id: Date.now() }),
+        removeGallery: (id: number) => gallery.value = gallery.value.filter(g => g.id !== id),
+        updateGallery: (id: number, data: any) => {
+            const idx = gallery.value.findIndex(g => g.id === id)
+            if (idx !== -1) gallery.value[idx] = { ...gallery.value[idx], ...data }
+        },
+        // Testimonials
+        testimonials,
+        addTestimonial: (item: any) => testimonials.value.push({ ...item, id: Date.now() }),
+        removeTestimonial: (id: number) => testimonials.value = testimonials.value.filter(t => t.id !== id),
+        updateTestimonial: (id: number, data: any) => {
+            const idx = testimonials.value.findIndex(t => t.id === id)
+            if (idx !== -1) testimonials.value[idx] = { ...testimonials.value[idx], ...data }
+        },
+        // Kajian
+        kajian,
+        addKajian: (item: any) => kajian.value.push({ ...item, id: Date.now() }),
+        removeKajian: (id: number) => kajian.value = kajian.value.filter(k => k.id !== id),
+        updateKajian: (id: number, data: any) => {
+            const idx = kajian.value.findIndex(k => k.id === id)
+            if (idx !== -1) kajian.value[idx] = { ...kajian.value[idx], ...data }
+        }
     }
 })

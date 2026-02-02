@@ -30,7 +30,7 @@
     >
       <template #nama="{ item }">
         <div class="flex items-center">
-          <div class="h-10 w-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 font-bold mr-3 uppercase text-sm">
+          <div class="h-10 w-10 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600 font-bold mr-3 uppercase text-sm">
             {{ item.nama[0] }}
           </div>
           <div>
@@ -41,7 +41,7 @@
       </template>
       <template #jk="{ item }">
         <span class="px-2.5 py-1 rounded-lg text-xs font-bold capitalize" :class="item.jk === 'laki-laki' ? 'bg-blue-50 text-blue-700' : 'bg-pink-50 text-pink-700'">
-          {{ item.jk === 'laki-laki' ? 'L' : 'P' }}
+          {{ item.jk }}
         </span>
       </template>
       <template #tahunPendaftaran="{ item }">
@@ -67,7 +67,7 @@ const availableYears = ['2024', '2025', '2026']
 const headers = [
   { key: 'nama', label: 'Murid' },
   { key: 'nik', label: 'NIK' },
-  { key: 'jk', label: 'L/P' },
+  { key: 'jk', label: 'Jenis Kelamin' },
   { key: 'tahunPendaftaran', label: 'Tahun Masuk' }
 ]
 

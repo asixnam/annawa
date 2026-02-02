@@ -26,8 +26,12 @@ definePageMeta({
 })
 
 const students = ref([
-  { id: 1, name: 'Zaid Al-Khoir', pondokType: 'Salafiyah', room: 'B1' },
-  { id: 2, name: 'Umar Khalid', pondokType: 'Modern', room: 'A3' },
+  // { id: 1, name: 'Zaid Al-Khoir', pondokType: 'Salafiyah', room: 'B1' },
+  // { id: 2, name: 'Umar Khalid', pondokType: 'Modern', room: 'A3' },
+
+  { id: 1, nama: 'Zaidan Al-Fatih', nisn: '0123456789', jk: 'putra', asalSekolah: 'SDN 1 Blora', noHp: '081234567890', tahunPendaftaran: '2025' },
+  { id: 2, nama: 'Aisyah Humaira', nisn: '0123456790', jk: 'putri', asalSekolah: 'MI Khozinatul Ulum', noHp: '081234567891', tahunPendaftaran: '2025' },
+  { id: 3, nama: 'Muhammad Ali', nisn: '0123456791', jk: 'putra', asalSekolah: 'SDN 2 Blora', noHp: '081234567892', tahunPendaftaran: '2024' }
 ])
 
 function deleteStudent(id: number) {

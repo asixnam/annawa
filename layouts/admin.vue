@@ -99,7 +99,9 @@ const menuGroups = computed(() => {
       { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/paud', icon: icons.dashboard }] },
       { label: 'Lembaga PAUD', items: [
         { name: 'Data Siswa PAUD', path: '/admin/paud/students', icon: icons.users },
-        { name: 'Galeri', path: '#', icon: icons.gallery },
+        { name: 'Profil PAUD', path: '/admin/paud/units', icon: icons.news },
+        { name: 'Galeri', path: '/admin/paud/gallery', icon: icons.gallery },
+        { name: 'Berita', path: '/admin/paud/news', icon: icons.news },
       ]}
     ]
   }
@@ -109,7 +111,9 @@ const menuGroups = computed(() => {
       { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/sdqta', icon: icons.dashboard }] },
       { label: 'Lembaga SDQTA', items: [
         { name: 'Data Murid SDQTA', path: '/admin/sdqta/students', icon: icons.users },
-        { name: 'Berita SDQTA', path: '#', icon: icons.news },
+        { name: 'Profil SDQTA', path: '/admin/sdqta/units', icon: icons.news },
+        { name: 'Berita SDQTA', path: '/admin/sdqta/news', icon: icons.news },
+        { name: 'Galeri', path: '/admin/sdqta/gallery', icon: icons.gallery },
       ]}
     ]
   }
@@ -119,6 +123,11 @@ const menuGroups = computed(() => {
       { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/pondok', icon: icons.dashboard }] },
       { label: 'Pondok Pesantren', items: [
         { name: 'Data Santri', path: '/admin/pondok/students', icon: icons.users },
+        { name: 'Profil Pondok', path: '/admin/pondok/units', icon: icons.news },
+        { name: 'Berita', path: '/admin/pondok/news', icon: icons.news },
+        { name: 'Galeri', path: '/admin/pondok/gallery', icon: icons.gallery },
+        { name: 'Testimoni', path: '/admin/pondok/testimonials', icon: icons.users },
+        { name: 'Jadwal Kajian', path: '/admin/pondok/kajian', icon: icons.dashboard },
       ]}
     ]
   }
