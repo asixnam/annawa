@@ -12,49 +12,47 @@
     </div>
 
     <!-- Hero Section -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-      <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 font-bold text-gray-800">
-        1. Hero Section
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+      <div class="px-8 py-4 bg-brand-500 flex justify-between items-center">
+        <h2 class="text-sm font-black text-black uppercase tracking-wider">1. Hero Section</h2>
+        <span class="text-[10px] font-black text-black/50 uppercase tracking-widest">Header Utama</span>
       </div>
-      <div class="p-6 space-y-6">
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">Judul Utama</label>
-          <input type="text" v-model="form.heroTitle" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-bold text-lg">
-        </div>
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">Sub Judul / Deskripsi</label>
-          <textarea rows="3" v-model="form.heroSubtitle" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"></textarea>
-        </div>
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">Gambar Hero</label>
-          <div class="flex items-center gap-4">
-            <img :src="form.heroImage" class="w-24 h-24 object-cover rounded-lg border border-gray-200">
-            <button class="px-4 py-2 border border-brand-200 text-brand-600 rounded-lg text-sm font-bold hover:bg-brand-50">Upload Gambar Baru</button>
+      <div class="p-8 space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <!-- Image Preview & Upload -->
+          <div class="space-y-3">
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Gambar Hero</label>
+            <div class="relative group">
+              <input type="file" @change="handleImageUpload" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+              <div class="aspect-video w-full rounded-2xl overflow-hidden border-2 border-dashed border-gray-100 group-hover:border-brand-500 transition-all duration-300 relative bg-gray-50">
+                <img :src="form.heroImage" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                  <div class="flex flex-col items-center gap-2 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    <span class="text-[10px] font-black uppercase tracking-widest">Klik untuk Ganti</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text Inputs -->
+          <div class="md:col-span-2 space-y-6">
+            <div>
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Judul Utama</label>
+              <input type="text" v-model="form.heroTitle" class="w-full px-5 py-4 bg-white border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 font-bold text-lg transition-all" placeholder="Masukkan judul utama...">
+            </div>
+            <div>
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Sub Judul / Deskripsi</label>
+              <textarea rows="4" v-model="form.heroSubtitle" class="w-full px-5 py-4 bg-white border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 text-sm leading-relaxed transition-all resize-y" placeholder="Masukkan deskripsi singkat..."></textarea>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Collaborators / Partners -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-      <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-        <span class="font-bold text-gray-800">2. Mitra & Kolaborator</span>
-        <button class="text-xs font-bold text-brand-600 uppercase tracking-wider hover:text-brand-800">+ Tambah Mitra</button>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div v-for="(partner, idx) in form.partners" :key="idx" class="relative group border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center bg-gray-50 hover:border-brand-500 transition-colors">
-            <button @click="removePartner(idx)" class="absolute top-2 right-2 text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </button>
-            <img :src="partner.logo" class="h-12 object-contain mb-2 grayscale group-hover:grayscale-0 transition-all">
-            <span class="text-xs font-bold text-gray-600">{{ partner.name }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -73,19 +71,19 @@ const isSaving = ref(false)
 const form = ref({
   heroTitle: 'Pondok Pesantren Khozinatul Ulum An-Nawa',
   heroSubtitle: 'Lembaga pendidikan Islam yang menggabungkan tradisi pesantren dengan pendidikan modern untuk membentuk generasi Qur\'ani yang berakhlak mulia.',
-  heroImage: '/images/hero-santri.png',
-  partners: [
-    { name: 'Kemenag', logo: '/annawa.png' },
-    { name: 'Depdikbud', logo: '/annawa.png' },
-    { name: 'Yayasan KU', logo: '/annawa.png' }
-  ]
+  heroImage: '/images/hero-santri.png'
 })
 
-function removePartner(idx: number) {
-  if (confirm('Hapus mitra ini?')) {
-    form.value.partners.splice(idx, 1)
+function handleImageUpload(event: Event) {
+  const target = event.target as HTMLInputElement
+  if (target.files && target.files[0]) {
+    const file = target.files[0]
+    // Use object URL for preview
+    form.value.heroImage = URL.createObjectURL(file)
   }
 }
+
+
 
 function saveChanges() {
   isSaving.value = true

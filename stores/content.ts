@@ -65,7 +65,8 @@ export const useContentStore = defineStore('content', () => {
             staff: [
                 { id: 1, name: 'Ustadzah Fatimah, S.Pd', position: 'Kepala PAUD', photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=500&auto=format&fit=crop' },
                 { id: 2, name: 'Ustadzah Aisyah', position: 'Wali Kelas A', photo: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=400&h=500&auto=format&fit=crop' }
-            ]
+            ],
+            partners: []
         },
         {
             id: 'sd',
@@ -87,7 +88,8 @@ export const useContentStore = defineStore('content', () => {
             staff: [
                 { id: 1, name: 'Ustadz H. Abdullah, M.Pd', position: 'Kepala SDQTA', photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&h=500&auto=format&fit=crop' },
                 { id: 2, name: 'Ustadz Mansyur Al-Hafidz', position: 'Koordinator Tahfidz', photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&h=500&auto=format&fit=crop' }
-            ]
+            ],
+            partners: []
         },
         {
             id: 'pondok',
@@ -104,6 +106,10 @@ export const useContentStore = defineStore('content', () => {
             staff: [
                 { id: 1, name: 'KH. Ahmad Ridwan', position: 'Pengasuh Pondok', photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=250&auto=format&fit=crop' },
                 { id: 2, name: 'Dr. Luthfi Hakim', position: 'Kepala Pendidikan', photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&h=250&auto=format&fit=crop' }
+            ],
+            partners: [
+                { id: 1, name: 'Kemenag', logo: '/annawa.png' },
+                { id: 2, name: 'RMI NU', logo: '/annawa.png' }
             ]
         }
     ])
@@ -127,6 +133,17 @@ export const useContentStore = defineStore('content', () => {
     function updateHistory(text: string) { history.value.text = text }
     function updateVision(text: string) { identity.value.vision = text }
     function updateMission(lines: string) { identity.value.mission = lines.split('\n') } // Simplified
+
+    // Milestones
+    function addMilestone(milestone: any) {
+        history.value.milestones.push({ ...milestone })
+    }
+    function removeMilestone(index: number) {
+        history.value.milestones.splice(index, 1)
+    }
+    function updateMilestone(index: number, data: any) {
+        history.value.milestones[index] = { ...history.value.milestones[index], ...data }
+    }
 
     // Figures
     function addFigure(figure: any) {
@@ -158,12 +175,19 @@ export const useContentStore = defineStore('content', () => {
             unit.staff = unit.staff.filter(s => s.id !== staffId)
         }
     }
+    function updateStaff(unitId: string, staffId: number, data: any) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            const idx = unit.staff.findIndex(s => s.id === staffId)
+            if (idx !== -1) unit.staff[idx] = { ...unit.staff[idx], ...data }
+        }
+    }
 
     // Facilities
     function addFacility(unitId: string, facility: any) {
         const unit = units.value.find(u => u.id === unitId)
         if (unit) {
-            unit.facilities.push({ ...facility, id: Date.now() })
+            (unit.facilities as any[]).push({ ...facility, id: Date.now() })
         }
     }
     function removeFacility(unitId: string, facilityId: number) {
@@ -172,18 +196,53 @@ export const useContentStore = defineStore('content', () => {
             unit.facilities = unit.facilities.filter(f => f.id !== facilityId)
         }
     }
+    function updateFacility(unitId: string, facilityId: number, data: any) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            const idx = unit.facilities.findIndex(f => f.id === facilityId)
+            if (idx !== -1) unit.facilities[idx] = { ...unit.facilities[idx], ...data }
+        }
+    }
 
     // Activities
     function addActivity(unitId: string, activity: any) {
         const unit = units.value.find(u => u.id === unitId)
         if (unit) {
-            unit.activities.push({ ...activity, id: Date.now() })
+            (unit.activities as any[]).push({ ...activity, id: Date.now() })
         }
     }
     function removeActivity(unitId: string, activityId: number) {
         const unit = units.value.find(u => u.id === unitId)
         if (unit) {
             unit.activities = unit.activities.filter(a => a.id !== activityId)
+        }
+    }
+    function updateActivity(unitId: string, activityId: number, data: any) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            const idx = unit.activities.findIndex(a => a.id === activityId)
+            if (idx !== -1) unit.activities[idx] = { ...unit.activities[idx], ...data }
+        }
+    }
+
+    // Unit Partners
+    function addUnitPartner(unitId: string, partner: any) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            (unit.partners as any[]).push({ ...partner, id: Date.now() })
+        }
+    }
+    function removeUnitPartner(unitId: string, partnerId: number) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            unit.partners = unit.partners.filter(p => p.id !== partnerId)
+        }
+    }
+    function updateUnitPartner(unitId: string, partnerId: number, data: any) {
+        const unit = units.value.find(u => u.id === unitId)
+        if (unit) {
+            const idx = unit.partners.findIndex(p => p.id === partnerId)
+            if (idx !== -1) unit.partners[idx] = { ...unit.partners[idx], ...data }
         }
     }
 
@@ -204,11 +263,20 @@ export const useContentStore = defineStore('content', () => {
         removeFigure,
         updateFigure,
         updateUnit,
-        addStaff,
-        removeStaff,
         addFacility,
         removeFacility,
+        updateFacility,
         addActivity,
-        removeActivity
+        removeActivity,
+        updateActivity,
+        addStaff,
+        removeStaff,
+        updateStaff,
+        addUnitPartner,
+        removeUnitPartner,
+        updateUnitPartner,
+        addMilestone,
+        removeMilestone,
+        updateMilestone
     }
 })

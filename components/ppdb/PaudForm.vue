@@ -89,9 +89,10 @@
         <div class="p-8">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- Akta Kelahiran -->
-            <div class="space-y-2">
+            <div class="space-y-3">
               <label class="text-sm font-bold text-gray-700">Scan/Foto Akta Kelahiran</label>
-              <div v-if="initialData.files?.akta && !form.files.akta" class="mb-2 p-3 bg-brand-50 rounded-xl border border-brand-100 flex items-center justify-between group">
+              
+              <div v-if="initialData.files?.akta && !form.files.akta" class="p-3 bg-brand-50 rounded-xl border border-brand-100 flex items-center justify-between group">
                 <div class="flex items-center gap-2 min-w-0">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -100,12 +101,34 @@
                 </div>
                 <span class="text-[10px] font-black uppercase text-brand-400 tracking-widest whitespace-nowrap">Sudah Ada</span>
               </div>
-              <input type="file" @change="handleFileUpload($event, 'akta')" accept="image/*,.pdf" class="w-full p-2 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 transition-all underline decoration-brand-200" />
+
+              <div class="relative group">
+                <input 
+                  type="file" 
+                  @change="handleFileUpload($event, 'akta')" 
+                  accept="image/*,.pdf" 
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                />
+                <div class="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-dashed border-gray-200 group-hover:border-brand-500 group-hover:bg-brand-50 transition-all duration-300">
+                  <div class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-brand-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-hover:text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[11px] font-bold text-gray-500 group-hover:text-brand-700 truncate">
+                      {{ form.files.akta ? form.files.akta.name : 'Pilih file atau drag disini' }}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <!-- KK -->
-            <div class="space-y-2">
+            <div class="space-y-3">
               <label class="text-sm font-bold text-gray-700">Scan/Foto Kartu Keluarga</label>
-              <div v-if="initialData.files?.kk && !form.files.kk" class="mb-2 p-3 bg-brand-50 rounded-xl border border-brand-100 flex items-center justify-between group">
+              
+              <div v-if="initialData.files?.kk && !form.files.kk" class="p-3 bg-brand-50 rounded-xl border border-brand-100 flex items-center justify-between group">
                 <div class="flex items-center gap-2 min-w-0">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -114,24 +137,44 @@
                 </div>
                 <span class="text-[10px] font-black uppercase text-brand-400 tracking-widest whitespace-nowrap">Sudah Ada</span>
               </div>
-              <input type="file" @change="handleFileUpload($event, 'kk')" accept="image/*,.pdf" class="w-full p-2 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 transition-all underline decoration-brand-200" />
+
+              <div class="relative group">
+                <input 
+                  type="file" 
+                  @change="handleFileUpload($event, 'kk')" 
+                  accept="image/*,.pdf" 
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                />
+                <div class="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-dashed border-gray-200 group-hover:border-brand-500 group-hover:bg-brand-50 transition-all duration-300">
+                  <div class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-brand-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-hover:text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[11px] font-bold text-gray-500 group-hover:text-brand-700 truncate">
+                      {{ form.files.kk ? form.files.kk.name : 'Pilih file atau drag disini' }}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <p class="text-[10px] text-gray-400 mt-6">Format file: JPG, PNG, atau PDF. Maksimal 2MB.</p>
+          <p class="text-[10px] text-gray-400 mt-6 italic">Format file: JPG, PNG, atau PDF. Maksimal 2MB.</p>
         </div>
       </div>
 
       <!-- Submit Button -->
-      <div class="flex justify-center pt-4">
+      <div class="flex justify-end pt-4">
         <button 
           type="submit" 
           :disabled="isLoading"
-          class="group px-16 py-5 bg-brand-500 text-black rounded-full font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-all shadow-xl shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+          class="group px-6 py-3 bg-brand-500 text-black rounded-xl font-bold text-sm hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           <span v-if="isLoading">Sedang Mengirim...</span>
           <span v-else>{{ submitLabel }}</span>
-          <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
           </svg>
         </button>
       </div>

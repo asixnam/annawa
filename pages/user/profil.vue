@@ -79,6 +79,34 @@
       </div>
     </section>
 
+    <!-- Fasilitas -->
+    <section class="bg-gray-50 py-16">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-4 uppercase font-heading">
+            Fasilitas <span class="text-brand-500">Unggulan</span>
+          </h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed text-sm md:text-base">
+            Sarana dan prasarana yang menunjang kenyamanan serta efektivitas proses belajar mengajar santri di An-Nawa.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div v-for="facility in facilities" :key="facility.id" class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center mb-5 overflow-hidden group-hover:bg-brand-500 transition-colors duration-300">
+               <img v-if="facility.icon && (facility.icon.startsWith('http') || facility.icon.startsWith('data:') || facility.icon.startsWith('/'))" :src="facility.icon" class="w-full h-full object-cover">
+               <span v-else class="text-3xl group-hover:scale-110 transition-transform duration-300">{{ facility.icon }}</span>
+            </div>
+            <h4 class="text-gray-900 font-black uppercase tracking-widest text-[10px]">{{ facility.name }}</h4>
+          </div>
+          <!-- Empty State if no facilities -->
+          <div v-if="facilities.length === 0" class="col-span-full py-12 text-center bg-white rounded-3xl border border-dashed border-gray-200">
+            <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Fasilitas akan segera diperbarui</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Tim Kami -->
     <section class="container mx-auto px-6 py-16">
       <div class="text-center mb-12">
@@ -110,22 +138,27 @@
       </div>
     </section>
 
-    <!-- Program Pendidikan (Minimalist Grid) -->
+    <!-- Mitra Lembaga -->
     <section class="bg-white py-16">
       <div class="container mx-auto px-6 max-w-5xl">
         <div class="text-center mb-12">
           <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-4 font-heading">
             Mitra <span class="text-brand-500">Lembaga</span>
           </h2>
+          <p class="text-gray-500 text-sm max-w-xl mx-auto">Jalinan kerjasama dengan berbagai institusi untuk meningkatkan kualitas pendidikan dan pengabdian.</p>
         </div>
-        <div class="flex flex-wrap justify-center gap-12 md:gap-24 lg:gap-32">
-          <div v-for="program in programs" :key="program.name" class="flex flex-col items-center group">
-            <div class="w-32 h-32 md:w-40 md:h-40 mb-6 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
-              <img :src="program.image" :alt="program.name" class="max-w-full max-h-full object-contain" />
+        <div class="flex flex-wrap justify-center gap-8 md:gap-16 lg:gap-20">
+          <div v-for="mitra in partners" :key="mitra.id" class="flex flex-col items-center group">
+            <div class="w-24 h-24 md:w-32 md:h-32 mb-4 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
+              <img :src="mitra.logo" :alt="mitra.name" class="max-w-full max-h-full object-contain" />
             </div>
-            <h3 class="text-base font-bold text-gray-700 transition-colors font-heading group-hover:text-brand-500">
-              {{ program.name }}
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-brand-600 transition-colors">
+              {{ mitra.name }}
             </h3>
+          </div>
+          <!-- Empty state -->
+          <div v-if="partners.length === 0" class="text-gray-400 font-bold uppercase tracking-widest text-xs py-10">
+            Belum ada mitra lembaga yang ditambahkan
           </div>
         </div>
       </div>
@@ -178,8 +211,15 @@ import { useContentStore } from '~/stores/content'
 const store = useContentStore()
 
 // Use computed properties to stay reactive to store updates
-const misis = computed(() => store.identity.mission)
 const vision = computed(() => store.identity.vision)
+const misis = computed(() => store.identity.mission)
+
+const facilities = computed(() => {
+  // Aggregate facilities from all units for the general profile, 
+  // or just show Pondok's if specific. Let's show Pondok's for now.
+  const pondok = store.units.find(u => u.id === 'pondok')
+  return pondok ? pondok.facilities : []
+})
 const team = computed(() => {
   // Combine all staff from all units or filter specific leadership?
   // For now, let's just grab main figures or leaders if we had them extended
@@ -198,11 +238,11 @@ const team = computed(() => {
   return heads.length ? heads : store.figures // Fallback
 })
 
-// Partners from store
-const programs = computed(() => store.units.map(u => ({
-  name: u.name,
-  image: u.image
-})))
+// Partners (Mitra Lembaga) from store
+const partners = computed(() => {
+  const pondok = store.units.find(u => u.id === 'pondok')
+  return pondok ? pondok.partners : []
+})
 </script>
 
 <style scoped>
