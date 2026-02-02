@@ -129,7 +129,7 @@
           <!-- Register Link -->
           <p class="text-center text-sm text-gray-500">
             Belum punya akun? 
-            <a href="#" class="font-bold text-brand-600 hover:text-brand-500">
+            <a href="/register" class="font-bold text-brand-600 hover:text-brand-500">
               Daftar Sekarang
             </a>
           </p>
