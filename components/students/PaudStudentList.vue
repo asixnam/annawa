@@ -10,6 +10,11 @@
           <option value="">Semua Tahun</option>
           <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
         </select>
+        <select v-model="selectedGender" class="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-bold focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all cursor-pointer">
+          <option value="">Semua Jenis</option>
+          <option value="laki-laki">Laki Laki</option>
+          <option value="perempuan">Perempuan</option>
+        </select>
         <slot name="header-actions">
            <button @click="$emit('create')" class="flex-1 md:flex-none px-5 py-2.5 bg-brand-600 text-white rounded-xl font-bold text-sm hover:bg-brand-700 transition flex items-center justify-center shadow-lg shadow-brand-500/20 active:scale-95">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -61,6 +66,7 @@ const props = defineProps<{
 
 defineEmits(['detail', 'edit', 'delete', 'create'])
 
+const selectedGender = ref('')
 const selectedYear = ref('')
 const availableYears = ['2024', '2025', '2026']
 
@@ -72,7 +78,10 @@ const headers = [
 ]
 
 const filteredStudents = computed(() => {
-  if (!selectedYear.value) return props.students
-  return props.students.filter(s => s.tahunPendaftaran === selectedYear.value)
+  return props.students.filter(s => {
+    const matchYear = !selectedYear.value || s.tahunPendaftaran === selectedYear.value
+    const matchGender = !selectedGender.value || (s.jk === selectedGender.value || s.jenisKelamin === selectedGender.value)
+    return matchYear && matchGender
+  })
 })
 </script>
