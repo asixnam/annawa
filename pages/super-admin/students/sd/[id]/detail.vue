@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import SdStudentDetail from '../../../../../components/students/SdStudentDetail.vue'
+import SdStudentDetail from '~/components/students/SdStudentDetail.vue'
 
 definePageMeta({ layout: 'super-admin' })
 const route = useRoute()

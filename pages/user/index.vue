@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-[#F9FAFB] font-sans">
+  <div class="min-h-screen bg-light dark:bg-gray-950 font-sans transition-colors duration-300">
     <!-- Hero Section -->
-    <section class="relative pt-0 pb-10 lg:pt-2 lg:pb-20 overflow-hidden bg-white">
+    <section class="relative pt-0 pb-10 lg:pt-2 lg:pb-20 overflow-hidden bg-card">
       <!-- Decoration Circles (like plai style) -->
       <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-30"></div>
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-20"></div>
@@ -12,10 +12,10 @@
             <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
               Official Website
             </div>
-            <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
+            <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
                {{ hero.title }}
             </h1>
-            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl leading-relaxed">
               {{ hero.subtitle }}
             </p>
             <div class="flex flex-wrap gap-4">
@@ -32,13 +32,13 @@
               <img :src="hero.image" alt="Santri Pesantren" class="w-full h-auto object-cover" />
             </div>
             <!-- Floating badge -->
-            <div class="absolute -bottom-6 -left-6 z-20 bg-white p-6 rounded-xl shadow-xl flex items-center gap-4 border border-gray-100">
+            <div class="absolute -bottom-6 -left-6 z-20 bg-card p-6 rounded-xl shadow-xl flex items-center gap-4 border border-gray-100 dark:border-brand-400/20">
               <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-black font-bold">
                 500+
               </div>
               <div class="text-sm">
-                <span class="block font-bold text-gray-900 leading-none">Santri Aktif</span>
-                <span class="text-gray-500 text-xs">Tahun Ajaran 2024/2025</span>
+                <span class="block font-bold text-main leading-none">Santri Aktif</span>
+                <span class="text-gray-500 dark:text-gray-400 text-xs">Tahun Ajaran 2024/2025</span>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@
     <!-- Tentang Pondok -->
     <section class="container mx-auto px-6 py-16">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Pondok Pesantren Khozinatul Ulum An-Nawa</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-main mb-6">Pondok Pesantren Khozinatul Ulum An-Nawa</h2>
         <p class="text-gray-600 text-lg leading-relaxed mb-8">
           Pondok Pesantren Khozinatul Ulum An-Nawa adalah lembaga pendidikan Islam yang berfokus pada pembentukan karakter Islami dan penguasaan ilmu agama. Kami menyediakan berbagai program pendidikan mulai dari PAUD, SD/QTA, hingga pendidikan pesantren untuk putra dan putri.
         </p>
@@ -75,17 +75,17 @@
     </section>
 
     <!-- Layanan Utama -->
-    <section class="bg-white py-16">
+    <section class="bg-card py-16 transition-colors duration-300">
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Layanan Pendaftaran</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-main mb-4">Layanan Pendaftaran</h2>
           <p class="text-gray-600 text-lg">Pilih program pendidikan yang sesuai untuk putra-putri Anda</p>
         </div>
 
         <div class="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
           <!-- PSB -->
           <NuxtLink to="/user/psb" class="group w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm">
-            <div class="bg-white rounded-2xl p-8 text-gray-800 shadow-lg border border-gray-100 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2 h-full flex flex-col">
+            <div class="bg-card rounded-2xl p-8 text-main shadow-lg border border-gray-100 dark:border-gray-800/40 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2 h-full flex flex-col">
               <div class="mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -104,7 +104,7 @@
 
           <!-- PPDB PAUD -->
           <NuxtLink to="/user/ppdb/paud" class="group w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm">
-            <div class="bg-white rounded-2xl p-8 text-gray-800 shadow-lg border border-gray-100 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2 h-full flex flex-col">
+            <div class="bg-card rounded-2xl p-8 text-main shadow-lg border border-gray-100 dark:border-gray-800/40 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2 h-full flex flex-col">
               <div class="mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -123,7 +123,7 @@
 
           <!-- PPDB SD -->
           <NuxtLink to="/user/ppdb/sd" class="group w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm">
-            <div class="bg-white rounded-2xl p-8 text-gray-800 shadow-lg border border-gray-100 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2 h-full flex flex-col">
+            <div class="bg-card rounded-2xl p-8 text-main shadow-lg border border-gray-100 dark:border-gray-800/40 hover:shadow-2xl hover:border-brand-500 transition-all transform hover:-translate-y-2 h-full flex flex-col">
               <div class="mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -149,7 +149,7 @@
     <section class="container mx-auto px-6 py-16">
       <div class="flex justify-between items-center mb-8">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Kajian Rutin</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-main mb-2">Kajian Rutin</h2>
           <p class="text-gray-600">Ikuti kajian-kajian ilmiah untuk menambah wawasan keislaman</p>
         </div>
         <NuxtLink to="/user/kajian" class="hidden md:flex items-center text-brand-600 font-bold uppercase tracking-wider text-xs hover:text-black">
@@ -185,11 +185,11 @@
     </section>
 
     <!-- Berita Terbaru -->
-    <section class="bg-white py-16">
+    <section class="bg-card py-16">
       <div class="container mx-auto px-6">
         <div class="flex justify-between items-center mb-8">
           <div>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Berita Terbaru</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-main mb-2">Berita Terbaru</h2>
             <p class="text-gray-600">Informasi dan kegiatan terkini dari Pondok Annawa</p>
           </div>
           <NuxtLink to="/user/berita" class="hidden md:flex items-center text-brand-600 font-bold uppercase tracking-wider text-xs hover:text-black">
@@ -227,12 +227,12 @@
     <section class="py-16 overflow-hidden">
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Apa Kata Alumni!</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-main mb-4">Apa Kata Alumni!</h2>
           <p class="text-gray-600 text-lg">Apa kata mereka yang telah menempuh pendidikan di Pondok Pesantren Khozinatul Ulum An-Nawa</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="testi in testimonials" :key="testi.id" class="bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col relative transition-all hover:shadow-2xl hover:-translate-y-1">
+          <div v-for="testi in testimonials" :key="testi.id" class="bg-card p-8 rounded-3xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800/40 flex flex-col relative transition-all hover:shadow-2xl hover:-translate-y-1">
             <!-- Quote Icon -->
             <div class="absolute -top-4 -left-4 bg-brand-500 w-10 h-10 rounded-full flex items-center justify-center text-black shadow-lg">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -244,15 +244,15 @@
               "{{ testi.quote }}"
             </p>
 
-            <div class="flex items-center gap-4 border-t border-gray-50 pt-6">
-              <div class="w-14 h-14 rounded-full bg-brand-100 overflow-hidden border-2 border-brand-500 flex-shrink-0">
+            <div class="flex items-center gap-4 border-t border-gray-50 dark:border-gray-800/40 pt-6">
+              <div class="w-14 h-14 rounded-full bg-brand-100 dark:bg-brand-900/40 overflow-hidden border-2 border-brand-500 flex-shrink-0">
                 <img v-if="testi.image" :src="testi.image" :alt="testi.name" class="w-full h-full object-cover">
-                <div v-else class="w-full h-full flex items-center justify-center text-brand-700 font-bold bg-gray-100 uppercase">
-                  {{ testi.name.charAt(0) }}
+                <div v-else class="w-full h-full flex items-center justify-center text-brand-700 dark:text-brand-300 font-bold bg-gray-100 dark:bg-gray-800 uppercase">
+                   {{ testi.name.charAt(0) }}
                 </div>
               </div>
               <div>
-                <h4 class="font-bold text-gray-900 leading-tight">{{ testi.name }}</h4>
+                <h4 class="font-bold text-main leading-tight">{{ testi.name }}</h4>
                 <p class="text-brand-600 text-xs font-bold uppercase tracking-wider mb-1">{{ testi.batch }}</p>
                 <p class="text-gray-500 text-sm">{{ testi.profession }}</p>
               </div>
@@ -263,9 +263,9 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="bg-gray-50 py-16 px-6">
+    <section class="bg-light dark:bg-gray-950 py-16 px-6 transition-colors duration-300">
       <div class="max-w-6xl mx-auto">
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden relative p-8 md:p-14">
+        <div class="bg-card dark:border-brand-400/30 rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden relative p-8 md:p-14">
           <!-- Decoration for CTA -->
           <div class="absolute top-0 right-0 w-80 h-full opacity-10 pointer-events-none">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
@@ -274,10 +274,10 @@
           </div>
 
           <div class="relative z-10">
-            <h2 class="text-3xl md:text-5xl font-black text-brand-600 mb-3 font-heading leading-tight">
+            <h2 class="text-3xl md:text-5xl font-black text-brand-600 dark:text-brand-400 mb-3 font-heading leading-tight">
               Bergabunglah dengan An-Nawa Sekarang!
             </h2>
-            <p class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
+            <p class="text-xl md:text-2xl font-bold text-main mb-6">
               Terbuka untuk tahun ajaran 2025/2026
             </p>
             <p class="text-gray-500 text-sm mb-12">

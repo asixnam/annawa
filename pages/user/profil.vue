@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-[#F9FAFB] font-sans">
+  <div class="min-h-screen bg-light font-sans transition-colors duration-300">
     <!-- Hero Section -->
-    <section class="relative pt-20 pb-16 overflow-hidden bg-white">
+    <section class="relative pt-20 pb-16 overflow-hidden bg-card transition-colors duration-300">
       <!-- Decoration Circles -->
       <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-30"></div>
@@ -10,7 +10,7 @@
         <div class="inline-block px-4 py-1 bg-brand-100 text-brand-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-brand-200">
           Official Profil
         </div>
-        <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
+        <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
           Profil <span class="text-brand-500 uppercase">Pondok Pesantren</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -22,7 +22,7 @@
     <!-- Tentang Pondok -->
     <section class="mx-auto px-4 md:px-10 lg:px-20 py-16 w-full">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight font-heading">
+        <h2 class="text-3xl md:text-4xl font-black text-main uppercase tracking-tight font-heading">
           Tentang <span class="text-brand-500">Kami</span>
         </h2>
       </div>
@@ -32,7 +32,7 @@
             <img 
               src="/images/pengasuh.jpeg" 
               alt="Pengasuh Pondok" 
-              class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-white bg-gray-100 grayscale hover:grayscale-0 transition-all duration-500"
+              class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-white dark:border-gray-800 bg-gray-100 grayscale hover:grayscale-0 transition-all duration-500"
             />
           </div>
         </div>
@@ -48,12 +48,12 @@
     </section>
 
     <!-- Visi & Misi -->
-    <section class="bg-white py-16">
+    <section class="bg-card py-16 transition-colors duration-300">
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Visi -->
           <div class="bg-brand-50 p-8 rounded-3xl border border-brand-100/50 shadow-sm">
-            <h3 class="text-xl font-black text-gray-900 mb-6 uppercase tracking-tight font-heading">
+            <h3 class="text-xl font-black text-main mb-6 uppercase tracking-tight font-heading">
               Visi <span class="text-brand-500 ml-1">Pondok</span>
             </h3>
             <p class="text-gray-800 text-lg font-medium leading-relaxed italic border-l-4 border-brand-500 pl-4">
@@ -62,8 +62,8 @@
           </div>
 
           <!-- Misi -->
-          <div class="bg-gray-50 p-8 rounded-3xl border border-gray-100 shadow-sm">
-            <h3 class="text-xl font-black text-gray-900 mb-6 uppercase tracking-tight font-heading">
+          <div class="bg-light p-8 rounded-3xl border border-gray-100 dark:border-gray-800/40 shadow-sm">
+            <h3 class="text-xl font-black text-main mb-6 uppercase tracking-tight font-heading">
               Misi <span class="text-brand-500 ml-1">Kami</span>
             </h3>
             <ul class="space-y-4">
@@ -80,10 +80,10 @@
     </section>
 
     <!-- Fasilitas -->
-    <section class="bg-gray-50 py-16">
+    <section class="bg-light py-16 transition-colors duration-300">
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-4 uppercase font-heading">
+          <h2 class="text-3xl md:text-5xl font-black text-main mb-4 uppercase font-heading">
             Fasilitas <span class="text-brand-500">Unggulan</span>
           </h2>
           <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed text-sm md:text-base">
@@ -92,15 +92,15 @@
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          <div v-for="facility in facilities" :key="facility.id" class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center mb-5 overflow-hidden group-hover:bg-brand-500 transition-colors duration-300">
+          <div v-for="facility in facilities" :key="facility.id" class="bg-card p-8 rounded-3xl border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group text-center">
+            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-5 overflow-hidden group-hover:bg-brand-500 transition-colors duration-300">
                <img v-if="facility.icon && (facility.icon.startsWith('http') || facility.icon.startsWith('data:') || facility.icon.startsWith('/'))" :src="facility.icon" class="w-full h-full object-cover">
                <span v-else class="text-3xl group-hover:scale-110 transition-transform duration-300">{{ facility.icon }}</span>
             </div>
-            <h4 class="text-gray-900 font-black uppercase tracking-widest text-[10px]">{{ facility.name }}</h4>
+            <h4 class="text-main font-black uppercase tracking-widest text-[10px]">{{ facility.name }}</h4>
           </div>
           <!-- Empty State if no facilities -->
-          <div v-if="facilities.length === 0" class="col-span-full py-12 text-center bg-white rounded-3xl border border-dashed border-gray-200">
+          <div v-if="facilities.length === 0" class="col-span-full py-12 text-center bg-card rounded-3xl border border-dashed border-gray-200">
             <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Fasilitas akan segera diperbarui</p>
           </div>
         </div>
@@ -110,7 +110,7 @@
     <!-- Tim Kami -->
     <section class="container mx-auto px-6 py-16">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-4 uppercase font-heading">
+        <h2 class="text-3xl md:text-5xl font-black text-main mb-4 uppercase font-heading">
           Tim <span class="text-brand-500">Kami</span>
         </h2>
         <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">
@@ -127,8 +127,8 @@
               class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
             />
           </div>
-          <h4 class="text-lg font-bold text-gray-900 mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ member.name }}</h4>
-          <p class="text-brand-600 text-[11px] font-bold uppercase tracking-wider  mb-1">
+          <h4 class="text-lg font-bold text-main mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ member.name }}</h4>
+          <p class="text-brand-600 text-[11px] font-bold uppercase tracking-wider mb-1">
             {{ member.position }}
           </p>
           <p class="text-gray-400 text-[9px] font-bold uppercase tracking-widest">
@@ -139,10 +139,10 @@
     </section>
 
     <!-- Mitra Lembaga -->
-    <section class="bg-white py-16">
+    <section class="bg-card py-16 transition-colors duration-300">
       <div class="container mx-auto px-6 max-w-5xl">
         <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-4 font-heading">
+          <h2 class="text-3xl md:text-4xl font-black text-main mb-4 font-heading">
             Mitra <span class="text-brand-500">Lembaga</span>
           </h2>
           <p class="text-gray-500 text-sm max-w-xl mx-auto">Jalinan kerjasama dengan berbagai institusi untuk meningkatkan kualitas pendidikan dan pengabdian.</p>
@@ -150,9 +150,9 @@
         <div class="flex flex-wrap justify-center gap-8 md:gap-16 lg:gap-20">
           <div v-for="mitra in partners" :key="mitra.id" class="flex flex-col items-center group">
             <div class="w-24 h-24 md:w-32 md:h-32 mb-4 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
-              <img :src="mitra.logo" :alt="mitra.name" class="max-w-full max-h-full object-contain" />
+              <img :src="mitra.logo" :alt="mitra.name" class="max-w-full max-h-full object-contain dark:brightness-0 dark:invert" />
             </div>
-            <h3 class="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-brand-600 transition-colors">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-brand-600 transition-colors text-center">
               {{ mitra.name }}
             </h3>
           </div>
@@ -165,9 +165,9 @@
     </section>
 
     <!-- CTA Section (Card Style) -->
-    <section class="bg-gray-50 py-16 px-6">
+    <section class="bg-light py-16 px-6 transition-colors duration-300">
       <div class="max-w-6xl mx-auto">
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden relative p-8 md:p-14">
+        <div class="bg-card rounded-[2rem] border border-gray-100 dark:border-gray-800/40 shadow-2xl overflow-hidden relative p-8 md:p-14">
           <!-- Decoration for CTA -->
           <div class="absolute top-0 right-0 w-80 h-full opacity-10 pointer-events-none">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">

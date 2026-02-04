@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import PaudStudentEdit from '../../../../../components/students/PaudStudentEdit.vue'
+import PaudStudentEdit from '~/components/students/PaudStudentEdit.vue'
 
 definePageMeta({ layout: 'super-admin' })
 const router = useRouter()

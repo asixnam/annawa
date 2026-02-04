@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import SantriStudentEdit from '../../../../../components/students/SantriStudentEdit.vue'
+import SantriStudentEdit from '~/components/students/SantriStudentEdit.vue'
 
 definePageMeta({ layout: 'super-admin' })
 const router = useRouter()

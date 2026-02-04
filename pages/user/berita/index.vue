@@ -1,17 +1,17 @@
 <template>
-  <div class="min-h-screen bg-gray-50/50">
+  <div class="min-h-screen bg-light transition-colors duration-300">
     <!-- Hero Section -->
-    <section class="relative bg-white pt-16 pb-24 overflow-hidden border-b border-gray-100">
+    <section class="relative bg-card pt-16 pb-24 overflow-hidden border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
       <!-- Artistic Background Decorations -->
       <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-30"></div>
       
-      <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-3xl mx-auto text-center">
+      <div class="container mx-auto px-6 relative z-10 text-center">
+        <div class="max-w-3xl mx-auto">
           <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
             Kabar & Pemutakhiran
           </div>
-          <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
+          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
             Berita & <span class="text-brand-500">Kegiatan</span>
           </h1>
           <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -37,12 +37,12 @@
 
       <!-- Empty State -->
       <div v-if="beritaList.length === 0" class="text-center py-24">
-        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 mb-6">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-card mb-6">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
           </svg>
         </div>
-        <h3 class="text-lg font-bold text-gray-900 mb-2">Belum ada berita</h3>
+        <h3 class="text-lg font-bold text-main mb-2">Belum ada berita</h3>
         <p class="text-gray-500">Ikuti terus kami untuk mendapatkan informasi terbaru.</p>
       </div>
 
@@ -51,10 +51,10 @@
         <button class="w-12 h-12 flex items-center justify-center bg-brand-500 text-black rounded-xl font-bold shadow-lg shadow-brand-500/20">
           1
         </button>
-        <button class="w-12 h-12 flex items-center justify-center bg-white text-gray-600 border border-gray-100 rounded-xl font-bold hover:bg-gray-50 transition-colors shadow-sm">
+        <button class="w-12 h-12 flex items-center justify-center bg-card text-gray-600 border border-gray-100 dark:border-gray-800/40 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-sm">
           2
         </button>
-        <button class="w-12 h-12 flex items-center justify-center bg-white text-gray-600 border border-gray-100 rounded-xl font-bold hover:bg-gray-50 transition-colors shadow-sm">
+        <button class="w-12 h-12 flex items-center justify-center bg-card text-gray-600 border border-gray-100 dark:border-gray-800/40 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-sm">
           3
         </button>
       </div>

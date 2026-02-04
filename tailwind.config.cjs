@@ -7,6 +7,7 @@ module.exports = {
     "./app.vue",
     "./plugins/**/*.{js,ts}"
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -24,7 +25,11 @@ module.exports = {
           700: 'var(--color-brand-700)',
           800: 'var(--color-brand-800)',
           900: 'var(--color-brand-900)',
-        }
+        },
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        card: 'var(--color-card-bg)',
+        'text-main': 'var(--color-text-main)',
       }
     },
   },

@@ -4,21 +4,214 @@
   Ubah kode warna HEX di bawah ini untuk mengganti warna seluruh website secara otomatis.
 */
 
-:root {
+@layer base {
+  :root {
     /* Brand Colors - Inspired by plai.ac.id (Gold/Yellow theme) */
     --color-brand-50: #fefce8;
     --color-brand-100: #fef9c3;
     --color-brand-200: #fef08a;
     --color-brand-300: #fde047;
     --color-brand-400: #facc15;
-    --color-brand-500: #E2C765;
+    --color-brand-500: #eab308;
     /* Core Gold Color from plai.ac.id */
     --color-brand-600: #ca8a04;
     --color-brand-700: #a16207;
     --color-brand-800: #854d0e;
     --color-brand-900: #713f12;
 
-    /* Extra layout colors */
+    /* Primary & Secondary Theme Colors */
+    --color-primary: var(--color-brand-500);
+    --color-primary-dark: #000000;
+    --color-secondary: #c58000;
+    /* Dark Gray */
+    --color-secondary-light: #4B5563;
+
     --color-bg-light: #F5F5F5;
-    --color-text-dark: #1F2937;
+    --color-text-main: #000000;
+    /* Pure Black for Light Mode */
+    --color-card-bg: #FFFFFF;
+    /* White Cards for Light Mode */
+
+    /* Extra layout colors */
+    --color-text-dark: #000000;
+
+    /* Semantic UI Colors */
+    --color-nav-bg: rgba(255, 255, 255, 0.7);
+    --color-nav-border: rgba(229, 231, 235, 0.5);
+    --color-text-muted: #4b5563;
+    /* gray-600 */
+    --color-text-subtle: #374151;
+    /* gray-700 */
+    --color-dropdown-bg: #ffffff;
+    --color-mobile-nav-bg: rgba(255, 255, 255, 0.9);
+  }
+
+  .dark {
+    --color-bg-light: #000000;
+    --color-text-main: #eab308;
+    /* Pure White for Dark Mode */
+    --color-primary: #000713;
+    /* Slightly brighter gold for dark mode */
+    --color-secondary: #f8fafc;
+    /* Light Gray/White for dark mode */
+    --color-card-bg: var(--color-primary);
+    /* Gold Cards for Dark Mode */
+
+    /* Semantic UI Colors - Dark Mode */
+    --color-nav-bg: rgba(3, 7, 18, 0.7);
+    /* gray-950/70 */
+    --color-nav-border: rgba(31, 41, 55, 0.5);
+    /* gray-800/50 */
+    --color-text-muted: #9ca3af;
+    /* gray-400 */
+    --color-text-subtle: #d1d5db;
+    /* gray-300 */
+    --color-dropdown-bg: #111827;
+    /* gray-900 */
+    --color-mobile-nav-bg: rgba(3, 7, 18, 0.9);
+    /* gray-950/90 */
+  }
+
+  body {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-main);
+    @apply transition-colors duration-300;
+  }
+
+  /* Standard Card style to be used globally */
+  .theme-card {
+    background-color: var(--color-card-bg);
+    color: var(--color-text-main);
+    @apply transition-colors duration-300;
+  }
+}
+
+/* Utils and legacy support */
+.bg-brand-50 {
+  background-color: #fefce8;
+}
+
+.dark .bg-brand-50 {
+  background-color: rgba(113, 63, 18, 0.1);
+  /* Dark version of brand-50 */
+}
+
+/* Centralized Tailwind Overrides */
+.text-main {
+  color: var(--color-text-main) !important;
+}
+
+.text-gray-900 {
+  color: var(--color-text-main) !important;
+}
+
+.text-gray-800 {
+  color: var(--color-text-main) !important;
+}
+
+.text-gray-700 {
+  color: var(--color-text-subtle) !important;
+}
+
+.text-gray-600 {
+  color: var(--color-text-muted) !important;
+}
+
+.text-gray-500 {
+  color: var(--color-text-muted) !important;
+  opacity: 0.8;
+}
+
+.text-gray-400 {
+  color: var(--color-text-muted) !important;
+}
+
+.bg-light {
+  background-color: var(--color-bg-light) !important;
+  transition: background-color 0.3s ease;
+}
+
+.bg-card {
+  background-color: var(--color-card-bg) !important;
+  transition: background-color 0.3s ease;
+}
+
+/* Global Dark Mode Overrides for Tailwind Classes */
+.dark .bg-white {
+  background-color: var(--color-card-bg) !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: var(--color-bg-light) !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: rgba(31, 41, 55, 0.4) !important;
+  /* gray-800/40 */
+}
+
+.dark .border-gray-100 {
+  border-color: rgba(31, 41, 55, 0.5) !important;
+}
+
+.dark .border-gray-200 {
+  border-color: rgba(75, 85, 99, 0.3) !important;
+}
+
+.dark .divide-gray-200> :not([hidden])~ :not([hidden]) {
+  border-color: rgba(75, 85, 99, 0.3) !important;
+}
+
+.theme-card {
+  background-color: var(--color-card-bg) !important;
+  color: var(--color-text-main) !important;
+  @apply transition-colors duration-300;
+}
+
+.theme-input {
+  background-color: var(--color-bg-light) !important;
+  color: var(--color-text-main) !important;
+  border-color: rgba(156, 163, 175, 0.2) !important;
+  @apply transition-all duration-300 outline-none;
+}
+
+.theme-input:focus {
+  border-color: var(--primary-500) !important;
+  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
+.dark .theme-input {
+  border-color: rgba(75, 85, 99, 0.4) !important;
+}
+
+.bg-white\/70 {
+  background-color: var(--color-nav-bg) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.dark .dark\:bg-gray-950\/70 {
+  background-color: var(--color-nav-bg) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.border-gray-200\/50 {
+  border-color: var(--color-nav-border) !important;
+}
+
+.dark .dark\:border-gray-800\/50 {
+  border-color: var(--color-nav-border) !important;
+}
+
+.bg-white\/90 {
+  background-color: var(--color-mobile-nav-bg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.dark .dark\:bg-gray-950\/90 {
+  background-color: var(--color-mobile-nav-bg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
 }

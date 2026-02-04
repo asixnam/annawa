@@ -2,8 +2,8 @@
   <div class="space-y-8">
     <div class="flex justify-between items-center mb-6">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Manajemen User</h1>
-        <p class="text-gray-500 text-sm mt-1">Kelola akses dan peran pengguna berdasarkan kategori.</p>
+        <h1 class="text-2xl font-bold text-main">Manajemen User</h1>
+        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Kelola akses dan peran pengguna berdasarkan kategori.</p>
       </div>
       <NuxtLink to="/super-admin/users/create" class="px-5 py-2.5 bg-brand-600 text-white rounded-xl font-bold text-sm hover:bg-brand-700 transition flex items-center shadow-lg shadow-brand-500/20 active:scale-95">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -17,8 +17,8 @@
     <section>
       <div class="flex items-center gap-2 mb-4">
         <div class="h-8 w-1.5 bg-brand-600 rounded-full"></div>
-        <h2 class="text-lg font-bold text-gray-800 tracking-tight">Super Admin</h2>
-        <span class="px-2 py-0.5 bg-brand-50 text-brand-700 text-xs font-bold rounded-md border border-brand-100">
+        <h2 class="text-lg font-bold text-main tracking-tight">Super Admin</h2>
+        <span class="px-2 py-0.5 bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400 text-xs font-bold rounded-md border border-brand-100 dark:border-brand-800/50">
           {{ groupedUsers.super.length }}
         </span>
       </div>
@@ -26,13 +26,13 @@
         <div v-for="user in groupedUsers.super" :key="user.id" class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
-              <div class="h-12 w-12 rounded-xl bg-brand-100 overflow-hidden flex items-center justify-center text-brand-600 font-bold text-lg ring-2 ring-white">
+              <div class="h-12 w-12 rounded-xl bg-brand-100 dark:bg-brand-900/40 overflow-hidden flex items-center justify-center text-brand-600 dark:text-brand-400 font-bold text-lg ring-2 ring-white dark:ring-gray-800">
                 <img v-if="user.image" :src="user.image" class="h-full w-full object-cover">
                 <span v-else>{{ user.name.charAt(0) }}</span>
               </div>
               <div>
-                <h3 class="font-bold text-gray-900 leading-tight">{{ user.name }}</h3>
-                <p class="text-sm text-gray-500">{{ user.email }}</p>
+                <h3 class="font-bold text-main leading-tight">{{ user.name }}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</p>
               </div>
             </div>
             <div class="flex gap-2">
@@ -51,20 +51,20 @@
     <section>
       <div class="flex items-center gap-2 mb-4">
         <div class="h-8 w-1.5 bg-blue-600 rounded-full"></div>
-        <h2 class="text-lg font-bold text-gray-800 tracking-tight">Admin Lembaga</h2>
+        <h2 class="text-lg font-bold text-main tracking-tight">Admin Lembaga</h2>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div v-for="(admins, unit) in groupedUsers.admin" :key="unit" class="space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest">{{ unit }}</h3>
-            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{{ admins.length }} / 2</span>
+            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-full">{{ admins.length }} / 2</span>
           </div>
           <div class="space-y-3">
-            <div v-for="user in admins" :key="user.id" class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:border-blue-200 transition">
+            <div v-for="user in admins" :key="user.id" class="bg-card p-4 rounded-xl border border-gray-100 dark:border-brand-400/20 shadow-sm hover:border-blue-200 dark:hover:border-blue-800 transition">
               <div class="flex items-center justify-between">
                 <div class="min-w-0">
-                  <h4 class="font-bold text-gray-900 truncate text-sm">{{ user.name }}</h4>
-                  <p class="text-xs text-gray-500 truncate">{{ user.email }}</p>
+                  <h4 class="font-bold text-main truncate text-sm">{{ user.name }}</h4>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ user.email }}</p>
                 </div>
                 <div class="flex shrink-0">
                   <NuxtLink :to="`/super-admin/users/${user.id}`" class="p-1.5 text-gray-400 hover:text-blue-600 transition">

@@ -1,17 +1,17 @@
 <template>
-  <div class="min-h-screen bg-gray-50/50">
+  <div class="min-h-screen bg-light transition-colors duration-300 font-sans">
     <!-- Hero Section -->
-    <section class="relative bg-white pt-16 pb-24 overflow-hidden border-b border-gray-100">
+    <section class="relative bg-card pt-16 pb-24 overflow-hidden border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
       <!-- Artistic Background Decorations -->
       <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-30"></div>
       
-      <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-3xl mx-auto text-center">
+      <div class="container mx-auto px-6 relative z-10 text-center">
+        <div class="max-w-3xl mx-auto">
           <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
             Kreativitas & Inspirasi
           </div>
-          <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight font-heading">
+          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
             Goresan Pena <span class="text-brand-500">Santri</span>
           </h1>
           <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -23,7 +23,7 @@
 
     <!-- Filter Categories -->
     <section class="container mx-auto px-6 -mt-8 relative z-20">
-      <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-4 max-w-4xl mx-auto">
+      <div class="bg-card rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
         <div class="flex flex-wrap justify-center gap-2">
           <button 
             v-for="cat in categories" 
@@ -33,7 +33,7 @@
               'px-5 py-2.5 rounded-xl font-bold transition-all text-sm uppercase tracking-wider',
               selectedCategory === cat 
                 ? 'bg-brand-500 text-black shadow-lg shadow-brand-500/20' 
-                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                : 'bg-light text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800'
             ]"
           >
             {{ cat }}
@@ -49,7 +49,7 @@
           v-for="item in filteredGallery" 
           :key="item.id"
           :to="`/galeri/${item.slug}`"
-          class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
+          class="group bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
         >
           <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
           <div v-if="item.category === 'Kesenian' || item.category === 'Juara'" class="relative h-64 overflow-hidden">
@@ -62,19 +62,19 @@
                v-else 
                :src="item.image" 
                :alt="item.title" 
-               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0"
              />
              <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
           </div>
           
-          <div v-else class="h-12 bg-brand-50/50 border-b border-gray-50 flex items-center px-6">
+          <div v-else class="h-12 bg-brand-50/50 border-b border-gray-50 dark:border-gray-800/20 flex items-center px-6">
             <div class="w-2 h-2 rounded-full bg-brand-500 mr-2"></div>
             <span class="text-[10px] font-black uppercase tracking-widest text-brand-600">{{ item.category }}</span>
           </div>
 
           <!-- Content -->
           <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-600 transition-colors leading-tight">
+            <h3 class="text-xl font-bold text-main mb-3 group-hover:text-brand-600 transition-colors leading-tight">
               {{ item.title }}
             </h3>
             
@@ -85,17 +85,17 @@
               Karya seni visual oleh santri berprestasi Annawa.
             </p>
 
-            <div class="flex items-center justify-between pt-6 border-t border-gray-50">
+            <div class="flex items-center justify-between pt-6 border-t border-gray-50 dark:border-gray-800/20">
               <div class="flex items-center">
-                <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500 border border-gray-200">
+                <div class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-[10px] font-bold text-gray-500 border border-gray-200 dark:border-gray-800/40">
                   {{ item.author?.charAt(0) }}
                 </div>
                 <div class="ml-3">
-                  <p class="text-[11px] font-bold text-gray-900 uppercase tracking-tighter">{{ item.author }}</p>
+                  <p class="text-[11px] font-bold text-main uppercase tracking-tighter">{{ item.author }}</p>
                   <p class="text-[10px] text-gray-400">{{ item.date }}</p>
                 </div>
               </div>
-              <button class="text-brand-600 hover:text-black transition-colors">
+              <button class="text-brand-600 hover:text-main transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -107,20 +107,20 @@
 
       <!-- Empty State -->
       <div v-if="filteredGallery.length === 0" class="text-center py-24">
-        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 mb-6">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-card mb-6 shadow-sm">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
         </div>
-        <h3 class="text-lg font-bold text-gray-900 mb-2">Belum ada karya</h3>
+        <h3 class="text-lg font-bold text-main mb-2">Belum ada karya</h3>
         <p class="text-gray-500">Nantikan karya-karya inspiratif berikutnya dari santri kami.</p>
       </div>
     </section>
 
     <!-- Author Registration CTA -->
-    <section class="bg-gray-50 py-16 px-6">
+    <section class="bg-light py-16 px-6 transition-colors duration-300">
       <div class="max-w-6xl mx-auto">
-        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden relative p-8 md:p-14">
+        <div class="bg-card rounded-[2rem] border border-gray-100 dark:border-gray-800/40 shadow-2xl overflow-hidden relative p-8 md:p-14">
           <!-- Decoration for CTA -->
           <div class="absolute top-0 right-0 w-80 h-full opacity-10 pointer-events-none">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
@@ -129,10 +129,10 @@
           </div>
 
           <div class="relative z-10 text-center">
-            <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-6 font-heading leading-tight">
+            <h2 class="text-3xl md:text-5xl font-black text-main mb-6 font-heading leading-tight">
               Punya Bakat <span class="text-brand-600">Menulis</span> atau <span class="text-brand-600">Seni?</span>
             </h2>
-            <p class="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+            <p class="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
               Mari bergabung menjadi kontributor galeri Annawa. Bagikan karyamu, inspirasi temanmu, dan jadilah bagian dari sejarah kreatif pesantren.
             </p>
             

@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import PaudStudentList from '../../../components/students/PaudStudentList.vue'
+import PaudStudentList from '~/components/students/PaudStudentList.vue'
 
 definePageMeta({ layout: 'super-admin' })
 

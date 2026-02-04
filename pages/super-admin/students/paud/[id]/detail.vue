@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import PaudStudentDetail from '../../../../../components/students/PaudStudentDetail.vue'
+import PaudStudentDetail from '~/components/students/PaudStudentDetail.vue'
 
 definePageMeta({ layout: 'super-admin' })
 const route = useRoute()
