@@ -12,12 +12,12 @@
       class="w-64 bg-card border-r border-gray-200 dark:border-brand-400/30 flex flex-col fixed inset-y-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 md:static overflow-y-auto"
       :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
     >
-      <div class="h-16 flex-shrink-0 flex items-center px-6 border-b border-gray-200 dark:border-brand-400/20 justify-between sticky top-0 bg-brand-500 z-10 transition-colors duration-300">
+      <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-brand-400/20 justify-between">
         <NuxtLink to="/super-admin" class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-black flex items-center justify-center text-brand-500 font-bold">
+          <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-black font-bold">
             SA
           </div>
-          <span class="font-bold text-black tracking-tight">Super Admin</span>
+          <span class="font-bold text-main tracking-tight">Super Admin</span>
         </NuxtLink>
         <div class="flex items-center gap-2">
           <ThemeToggle />

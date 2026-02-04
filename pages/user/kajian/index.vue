@@ -24,7 +24,23 @@
     <!-- Filter Section -->
     <section class="container mx-auto px-6 -mt-8 relative z-20">
       <div class="bg-card rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
-        <div class="flex flex-wrap justify-center gap-2">
+        <!-- Mobile View: Dropdown -->
+        <div class="block md:hidden relative">
+          <select 
+            v-model="selectedCategory"
+            class="w-full px-5 py-3 rounded-xl font-bold bg-light text-gray-700 border border-gray-200 dark:border-gray-800/40 focus:outline-none focus:ring-2 focus:ring-brand-500/50 appearance-none transition-all"
+          >
+            <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+          </select>
+          <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Desktop View: Buttons -->
+        <div class="hidden md:flex flex-wrap justify-center gap-2">
           <button 
             v-for="cat in categories" 
             :key="cat"
@@ -75,79 +91,17 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import KajianCard from '~/components/KajianCard.vue'
+import { useContentStore } from '~/stores/content'
 
+const store = useContentStore()
 const categories = ref(['Semua', 'Sorogan', 'Tahfidzul Quran', 'Bahtsul Masail', 'Bandongan'])
 const selectedCategory = ref('Semua')
 
-// Data kajian (nanti bisa diganti dengan API)
-const kajianList = ref([
-  {
-    id: 1,
-    title: 'Kajian Kitab Fathul Qorib',
-    ustadz: 'Kiai Ahmad Fauzi',
-    time: 'Senin & Kamis, 19:30 - 21:00 WIB',
-    location: 'Masjid Utama',
-    description: 'Metode kajian tatap muka langsung (sorogan) untuk membedah kitab fiqih klasik dengan bimbingan intensif.',
-    category: 'Sorogan',
-    slug: 'kajian-fathul-qorib'
-  },
-  {
-    id: 2,
-    title: 'Setoran Hafalan Juz Amma',
-    ustadz: 'Ustadz Muhammad Ridwan',
-    time: 'Rabu, 20:00 - 21:30 WIB',
-    location: 'Aula Pondok',
-    description: 'Program tahfidz terpadu untuk penguatan hafalan Al-Qur\'an dengan metode mutqin.',
-    category: 'Tahfidzul Quran',
-    slug: 'tahfidz-juz-amma'
-  },
-  {
-    id: 3,
-    title: 'Diskusi Hukum Islam Tematik',
-    ustadz: 'Tim Bahtsul Masail',
-    time: 'Selasa, 19:00 - 20:30 WIB',
-    location: 'Ruang Kajian',
-    description: 'Forum diskusi ilmiah membahas persoalan hukum kontemporer dari perspektif fiqih lintas madzhab.',
-    category: 'Bahtsul Masail',
-    slug: 'bahtsul-masail-tematik'
-  },
-  {
-    id: 4,
-    title: 'Kajian Umum Riyadus Shalihin',
-    ustadz: 'Ustadz Hasan Basri',
-    time: 'Jum\'at, 15:00 - 16:30 WIB',
-    location: 'Masjid Utama',
-    description: 'Penyampaian materi secara klasikal (bandongan) yang diikuti oleh seluruh santri dan jamaah umum.',
-    category: 'Bandongan',
-    slug: 'riyadus-shalihin-umum'
-  },
-  {
-    id: 5,
-    title: 'Muroja\'ah Akbar',
-    ustadz: 'Ustadz Ibrahim Khalil',
-    time: 'Sabtu, 14:00 - 15:30 WIB',
-    location: 'Aula Pondok',
-    description: 'Kegiatan rutin mengulang hafalan secara berkelompok untuk menjaga kelancaran bacaan.',
-    category: 'Tahfidzul Quran',
-    slug: 'murojaah-akbar'
-  },
-  {
-    id: 6,
-    title: 'Kajian Kitab Jurumiyah',
-    ustadz: 'Ustadz Zainal Abidin',
-    time: 'Ahad, 08:00 - 10:00 WIB',
-    location: 'Ruang Kajian',
-    description: 'Mengkaji dasar-dasar ilmu nahwu secara mendetail dengan metode bandongan.',
-    category: 'Bandongan',
-    slug: 'kitab-jurumiyah'
-  }
-])
-
 const filteredKajian = computed(() => {
   if (selectedCategory.value === 'Semua') {
-    return kajianList.value
+    return store.kajian
   }
-  return kajianList.value.filter(k => k.category === selectedCategory.value)
+  return store.kajian.filter(k => k.category === selectedCategory.value)
 })
 </script>
 

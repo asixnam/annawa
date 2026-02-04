@@ -1,18 +1,36 @@
 <template>
-  <div class="min-h-screen bg-light flex transition-colors duration-300">
+  <div class="h-screen bg-light flex overflow-hidden transition-colors duration-300">
+    <!-- Mobile Sidebar Backdrop -->
+    <div 
+      v-if="isSidebarOpen" 
+      @click="isSidebarOpen = false"
+      class="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm transition-opacity"
+    ></div>
+
     <!-- Sidebar -->
-    <aside class="w-64 bg-card border-r border-gray-200 dark:border-brand-400/30 hidden md:flex flex-col fixed inset-y-0 z-50 transition-colors duration-300">
+    <aside 
+      class="w-64 bg-card border-r border-gray-200 dark:border-brand-400/30 flex flex-col fixed inset-y-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 md:static overflow-y-auto"
+      :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+    >
       <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-brand-400/20 justify-between">
-        <NuxtLink to="/" class="flex items-center gap-2">
+        <NuxtLink to="/admin" class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-black font-bold">
             AD
           </div>
           <span class="font-bold text-main tracking-tight">Admin Unit</span>
         </NuxtLink>
-        <ThemeToggle />
+        <div class="flex items-center gap-2">
+          <ThemeToggle />
+          <!-- Close button for mobile -->
+          <button @click="isSidebarOpen = false" class="md:hidden text-gray-500 hover:text-main">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
       
-      <div class="flex-1 overflow-y-auto py-4">
+      <div class="flex-1 py-4">
         <nav class="space-y-6 px-3">
           <div v-for="group in menuGroups" :key="group.label">
             <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{{ group.label }}</p>
@@ -21,6 +39,7 @@
                 v-for="item in group.items" 
                 :key="item.name"
                 :to="item.path" 
+                @click="isSidebarOpen = false"
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-main hover:bg-black/5 dark:hover:bg-white/10 group transition-all" 
                 active-class="bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400"
               >
@@ -42,37 +61,43 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 md:pl-64 flex flex-col min-h-screen">
-      <header class="bg-card border-b border-gray-200 dark:border-gray-800/40 h-16 flex items-center justify-between px-4 md:hidden">
-        <NuxtLink to="/" class="font-bold text-main">Admin Unit</NuxtLink>
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+      <!-- Navbar (Mobile only) -->
+      <header class="bg-card border-b border-gray-200 dark:border-gray-800/40 h-16 flex-shrink-0 flex items-center justify-between px-4 md:hidden z-30 transition-colors duration-300">
         <div class="flex items-center gap-2">
-          <ThemeToggle />
-          <button class="p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/10">
+          <button @click="isSidebarOpen = true" class="p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/10">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
+          <span class="font-bold text-main">Admin Unit</span>
         </div>
+        <ThemeToggle />
       </header>
       
-      <div class="p-6 lg:p-10 flex-1">
-        <slot />
-      </div>
-
-      <footer class="bg-card border-t border-gray-200 dark:border-gray-800/40 py-4 px-6 text-center md:text-left transition-colors duration-300">
-        <p class="text-sm text-gray-500 dark:text-gray-400">&copy; {{ new Date().getFullYear() }} Pondok Pesantren Khozinatul Ulum An-Nawa</p>
-      </footer>
-    </main>
+      <!-- Scrollable Main Area -->
+      <main class="flex-1 overflow-y-auto transition-colors duration-300">
+        <div class="min-h-full flex flex-col">
+          <div class="flex-1 p-6 lg:p-10">
+            <slot />
+          </div>
+          <footer class="bg-card border-t border-gray-200 dark:border-gray-800/40 py-4 px-6 text-center md:text-left transition-colors duration-300">
+            <p class="text-sm text-gray-500 dark:text-gray-400">&copy; {{ new Date().getFullYear() }} Pondok Pesantren Khozinatul Ulum An-Nawa</p>
+          </footer>
+        </div>
+      </main>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
 import ThemeToggle from '../components/ThemeToggle.vue'
 
+const isSidebarOpen = ref(false)
 const auth = useAuthStore()
 const router = useRouter()
 

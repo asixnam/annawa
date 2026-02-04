@@ -24,7 +24,23 @@
     <!-- Filter Categories -->
     <section class="container mx-auto px-6 -mt-8 relative z-20">
       <div class="bg-card rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
-        <div class="flex flex-wrap justify-center gap-2">
+        <!-- Mobile View: Dropdown -->
+        <div class="block md:hidden relative">
+          <select 
+            v-model="selectedCategory"
+            class="w-full px-5 py-3 rounded-xl font-bold bg-light text-gray-700 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500/50 appearance-none transition-all"
+          >
+            <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+          </select>
+          <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Desktop View: Buttons -->
+        <div class="hidden md:flex flex-wrap justify-center gap-2">
           <button 
             v-for="cat in categories" 
             :key="cat"
@@ -48,7 +64,7 @@
         <NuxtLink 
           v-for="item in filteredGallery" 
           :key="item.id"
-          :to="`/galeri/${item.slug}`"
+          :to="`/user/galeri/${item.slug}`"
           class="group bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
         >
           <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
@@ -153,111 +169,17 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useContentStore } from '~/stores/content'
 
+const store = useContentStore()
 const categories = ref(['Semua', 'Juara', 'Literasi', 'Kesenian', 'Khitobah'])
 const selectedCategory = ref('Semua')
 
-// Data galeri (Work samples)
-const galleryList = ref([
-  {
-    id: 1,
-    title: 'Juara 1 MTQ Nasional',
-    excerpt: 'Prestasi gemilang santri Annawa dalam ajang Musabaqah Tilawatil Quran tingkat nasional tahun 2025.',
-    author: 'Majid Al-Fatih',
-    date: '20 Jan 2026',
-    category: 'Juara',
-    image: 'https://images.unsplash.com/photo-1577894780451-9f144e87d2bc?auto=format&fit=crop&q=80&w=800',
-    slug: 'juara-1-mtq-nasional'
-  },
-  {
-    id: 2,
-    title: 'Pemenang Lomba Pidato Bahasa Arab',
-    excerpt: 'Keberhasilan meraih podium utama dalam kompetisi pidato antar pesantren se-Jawa Barat.',
-    author: 'Zaskia Nurul',
-    date: '18 Jan 2026',
-    category: 'Juara',
-    image: 'https://images.unsplash.com/photo-1533256621371-d4e5ff04226f?auto=format&fit=crop&q=80&w=800',
-    slug: 'pemenang-pidato-arab'
-  },
-  {
-    id: 3,
-    title: 'Rindu Cahaya Wahyu',
-    excerpt: 'Di hening malam aku bersimpuh, mencari setitik embun dalam kalbu yang lusuh...',
-    author: 'Ahmad Fauzan',
-    date: '15 Jan 2026',
-    category: 'Literasi',
-    slug: 'rindu-cahaya-wahyu'
-  },
-  {
-    id: 4,
-    title: 'Santri dan Sepatu Tua',
-    excerpt: 'Sepatu itu telah menemaninya melewati ribuan langkah menuju majelis ilmu, meski solnya mulai menipis...',
-    author: 'Siti Aminah',
-    date: '14 Jan 2026',
-    category: 'Literasi',
-    slug: 'santri-sepatu-tua'
-  },
-  {
-    id: 5,
-    title: 'Adab Sebelum Ilmu',
-    image: '',
-    author: 'Zaid Al-Khoiri',
-    date: '10 Jan 2026',
-    category: 'Kesenian',
-    slug: 'adab-sebelum-ilmu'
-  },
-  {
-    id: 6,
-    title: 'Urgensi Menjaga Lisan',
-    excerpt: 'Lisan adalah pedang bermata dua. Ia bisa menjadi jalan ke surga, atau justru menyeret ke jurang celaka...',
-    author: 'Muhammad Ridwan',
-    date: '08 Jan 2026',
-    category: 'Khitobah',
-    slug: 'urgensi-menjaga-lisan'
-  },
-  {
-    id: 7,
-    title: 'Pantun Nasihat Santri',
-    excerpt: 'Pergi berlayar ke pulau Jawa, membawa bekal keripik kentang. Belajarlah dengan sepenuh jiwa, agar masa depan terang benderang.',
-    author: 'Luthfi Hakim',
-    date: '07 Jan 2026',
-    category: 'Literasi',
-    slug: 'pantun-nasihat-santri'
-  },
-  {
-    id: 8,
-    title: 'Goresan Senyum Kiai',
-    image: '',
-    author: 'Rahmat Hidayat',
-    date: '05 Jan 2026',
-    category: 'Kesenian',
-    slug: 'goresan-senyum-kiai'
-  },
-  {
-    id: 9,
-    title: 'Fajar di Gerbang Pesantren',
-    excerpt: 'Ketika surya belum menampakkan wajahnya, sayup-sayup lantunan ayat suci mulai membelah kesunyian...',
-    author: 'Annisa Fitri',
-    date: '03 Jan 2026',
-    category: 'Literasi',
-    slug: 'fajar-gerbang-pesantren'
-  },
-  {
-    id: 10,
-    title: 'Misteri Kitab Kuning',
-    excerpt: 'Lembaran usang itu menyimpan rahasia besar yang belum terpecahkan selama puluhan tahun...',
-    author: 'Umar Khalid',
-    date: '01 Jan 2026',
-    category: 'Literasi',
-    slug: 'misteri-kitab-kuning'
-  }
-])
-
 const filteredGallery = computed(() => {
   if (selectedCategory.value === 'Semua') {
-    return galleryList.value
+    return store.gallery
   }
-  return galleryList.value.filter(item => item.category === selectedCategory.value)
+  return store.gallery.filter(item => item.category === selectedCategory.value)
 })
 </script>
 

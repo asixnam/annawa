@@ -7,17 +7,35 @@
       </NuxtLink>
     </div>
 
-    <!-- Filter Tabs -->
-    <div class="flex overflow-x-auto pb-2 space-x-2 mb-6 scrollbar-hide">
-      <button 
-        v-for="cat in categories" 
-        :key="cat"
-        @click="selectedCategory = cat"
-        :class="['px-4 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition', 
-                selectedCategory === cat ? 'bg-gray-800 text-white' : 'bg-white text-gray-600 hover:bg-gray-50']"
-      >
-        {{ cat }}
-      </button>
+    <!-- Filter Section -->
+    <div class="mb-6">
+      <!-- Mobile View: Dropdown -->
+      <div class="block md:hidden relative">
+        <select 
+          v-model="selectedCategory"
+          class="w-full px-4 py-2.5 rounded-lg font-bold bg-white text-gray-700 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500/50 appearance-none transition-all text-sm"
+        >
+          <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+        </select>
+        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Desktop View: Tabs -->
+      <div class="hidden md:flex overflow-x-auto pb-2 space-x-2 scrollbar-hide">
+        <button 
+          v-for="cat in categories" 
+          :key="cat"
+          @click="selectedCategory = cat"
+          :class="['px-4 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition', 
+                  selectedCategory === cat ? 'bg-gray-800 text-white' : 'bg-white text-gray-600 hover:bg-gray-50']"
+        >
+          {{ cat }}
+        </button>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

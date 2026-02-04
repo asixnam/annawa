@@ -4,9 +4,9 @@
       <div class="max-w-4xl mx-auto">
         <!-- Breadcrumb -->
         <nav class="flex mb-8 text-sm font-bold uppercase tracking-widest" aria-label="Breadcrumb">
-          <NuxtLink to="/" class="text-gray-400 hover:text-brand-600 transition-colors">Home</NuxtLink>
+          <NuxtLink to="/user" class="text-gray-400 hover:text-brand-600 transition-colors">Home</NuxtLink>
           <span class="mx-3 text-gray-300">/</span>
-          <NuxtLink to="/berita" class="text-gray-400 hover:text-brand-600 transition-colors">Berita</NuxtLink>
+          <NuxtLink to="/user/berita" class="text-gray-400 hover:text-brand-600 transition-colors">Berita</NuxtLink>
           <span class="mx-3 text-gray-300">/</span>
           <span class="text-brand-600">Detail</span>
         </nav>
@@ -50,7 +50,7 @@
     
     <div v-else class="container mx-auto px-6 py-24 text-center">
       <h2 class="text-2xl font-bold text-gray-900">Berita tidak ditemukan</h2>
-      <NuxtLink to="/berita" class="mt-4 inline-block px-6 py-3 bg-brand-500 text-black font-bold rounded-xl">Kembali ke Berita</NuxtLink>
+      <NuxtLink to="/user/berita" class="mt-4 inline-block px-6 py-3 bg-brand-500 text-black font-bold rounded-xl">Kembali ke Berita</NuxtLink>
     </div>
   </div>
 </template>
@@ -58,32 +58,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useContentStore } from '~/stores/content'
 
 const route = useRoute()
 const slug = route.params.slug
+const store = useContentStore()
 
-// Mock data (same as index.vue + content)
-const beritaList = [
-  {
-    id: 1,
-    title: 'Peringatan Maulid Nabi Muhammad SAW 1446 H',
-    content: 'Pondok Pesantren Annawa mengadakan peringatan Maulid Nabi Muhammad SAW dengan rangkaian kegiatan yang meriah dan penuh makna. Acara dihadiri oleh seluruh santri, ustadz, dan masyarakat sekitar. Kegiatan dimulai dengan pembacaan sholawat diba\'i secara massal, dilanjutkan dengan mauidhoh hasanah oleh para kiai sepuh.',
-    image: '',
-    date: '2026-01-15',
-    slug: 'peringatan-maulid-nabi-1446h'
-  },
-  {
-    id: 2,
-    title: 'Wisuda Santri Tahfidz Angkatan ke-10',
-    content: 'Sebanyak 25 santri berhasil menyelesaikan hafalan 30 juz Al-Qur\'an dan diwisuda dalam acara yang khidmat. Para santri telah melewati ujian munaqosyah dengan hasil yang memuaskan. Dalam kesempatan ini, pengasuh pondok berpesan agar para hafidz tetap menjaga muroja\'ah dan mengamalkan isi Al-Qur\'an dalam kehidupan sehari-hari.',
-    image: '',
-    date: '2026-01-10',
-    slug: 'wisuda-santri-tahfidz-10'
-  }
-  // ... more items can be added
-]
-
-const berita = computed(() => beritaList.find(b => b.slug === slug))
+const berita = computed(() => store.news.find(b => b.slug === slug))
 
 const formattedDate = computed(() => {
   if (!berita.value) return ''

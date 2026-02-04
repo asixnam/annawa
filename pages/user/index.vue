@@ -311,66 +311,10 @@ const store = useContentStore()
 const hero = computed(() => store.hero)
 
 // Featured Kajian (3 items)
-const featuredKajian = ref([
-  {
-    id: 1,
-    title: 'Kajian Tafsir Al-Qur\'an',
-    ustadz: 'Ustadz Ahmad Fauzi',
-    time: 'Senin & Kamis, 19:30 - 21:00 WIB',
-    location: 'Masjid Utama',
-    description: 'Kajian mendalam tentang tafsir Al-Qur\'an dengan pendekatan kontekstual dan klasik.',
-    category: 'Tafsir',
-    slug: 'tafsir-al-quran'
-  },
-  {
-    id: 2,
-    title: 'Kajian Hadits Arba\'in',
-    ustadz: 'Ustadz Muhammad Ridwan',
-    time: 'Rabu, 20:00 - 21:30 WIB',
-    location: 'Aula Pondok',
-    description: 'Mempelajari 40 hadits pilihan Imam Nawawi yang mencakup berbagai aspek kehidupan muslim.',
-    category: 'Hadits',
-    slug: 'hadits-arbain'
-  },
-  {
-    id: 3,
-    title: 'Fiqih Muamalah Kontemporer',
-    ustadz: 'Ustadz Abdul Hakim',
-    time: 'Selasa, 19:00 - 20:30 WIB',
-    location: 'Ruang Kajian',
-    description: 'Membahas hukum-hukum muamalah dalam konteks modern dan ekonomi syariah.',
-    category: 'Fiqih',
-    slug: 'fiqih-muamalah-kontemporer'
-  }
-])
+const featuredKajian = computed(() => store.kajian.slice(0, 3))
 
 // Featured Berita (3 items)
-const featuredBerita = ref([
-  {
-    id: 1,
-    title: 'Peringatan Maulid Nabi Muhammad SAW 1446 H',
-    excerpt: 'Pondok Pesantren Annawa mengadakan peringatan Maulid Nabi Muhammad SAW dengan rangkaian kegiatan yang meriah dan penuh makna.',
-    image: '',
-    date: '2026-01-15',
-    slug: 'peringatan-maulid-nabi-1446h'
-  },
-  {
-    id: 2,
-    title: 'Wisuda Santri Tahfidz Angkatan ke-10',
-    excerpt: 'Sebanyak 25 santri berhasil menyelesaikan hafalan 30 juz Al-Qur\'an dan diwisuda dalam acara yang khidmat.',
-    image: '',
-    date: '2026-01-10',
-    slug: 'wisuda-santri-tahfidz-10'
-  },
-  {
-    id: 3,
-    title: 'Pembukaan Pendaftaran Santri Baru 2026',
-    excerpt: 'Pendaftaran santri baru untuk tahun ajaran 2026/2027 telah dibuka. Segera daftarkan putra-putri Anda!',
-    image: '',
-    date: '2026-01-05',
-    slug: 'pembukaan-pendaftaran-2026'
-  }
-])
+const featuredBerita = computed(() => store.news.slice(0, 3))
 
 // Testimonials Data
 const testimonials = ref([

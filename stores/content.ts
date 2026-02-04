@@ -116,8 +116,66 @@ export const useContentStore = defineStore('content', () => {
 
     // --- News, Gallery, Testimonials ---
     const news = ref([
-        { id: 1, title: 'Wisuda Tahfidz 2026', type: 'Berita', date: '2026-01-20', excerpt: 'Alhamdulillah telah terlaksana wisuda akbar...', image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=400', content: 'Isi lengkap berita wisuda...' },
-        { id: 2, title: 'Pembukaan Pendaftaran Santri Baru', type: 'Pengumuman', date: '2026-01-15', excerpt: 'Pendaftaran santri baru tahun ajaran 2026/2027 telah dibuka...', image: null, content: 'Isi lengkap pengumuman pendaftaran...' },
+        {
+            id: 1,
+            title: 'Peringatan Maulid Nabi Muhammad SAW 1446 H',
+            type: 'Berita',
+            date: '2026-01-15',
+            excerpt: 'Pondok Pesantren Annawa mengadakan peringatan Maulid Nabi Muhammad SAW dengan rangkaian kegiatan yang meriah dan penuh makna.',
+            image: '',
+            content: 'Pondok Pesantren Annawa mengadakan peringatan Maulid Nabi Muhammad SAW dengan rangkaian kegiatan yang meriah dan penuh makna. Acara dihadiri oleh seluruh santri, ustadz, dan masyarakat sekitar. Kegiatan dimulai dengan pembacaan sholawat diba\'i secara massal, dilanjutkan dengan mauidhoh hasanah oleh para kiai sepuh.',
+            slug: 'peringatan-maulid-nabi-1446h'
+        },
+        {
+            id: 2,
+            title: 'Wisuda Santri Tahfidz Angkatan ke-10',
+            type: 'Berita',
+            date: '2026-01-10',
+            excerpt: 'Sebanyak 25 santri berhasil menyelesaikan hafalan 30 juz Al-Qur\'an dan diwisuda dalam acara yang khidmat.',
+            image: '',
+            content: 'Sebanyak 25 santri berhasil menyelesaikan hafalan 30 juz Al-Qur\'an dan diwisuda dalam acara yang khidmat. Para santri telah melewati ujian munaqosyah dengan hasil yang memuaskan. Dalam kesempatan ini, pengasuh pondok berpesan agar para hafidz tetap menjaga muroja\'ah dan mengamalkan isi Al-Qur\'an dalam kehidupan sehari-hari.',
+            slug: 'wisuda-santri-tahfidz-10'
+        },
+        {
+            id: 3,
+            title: 'Pembukaan Pendaftaran Santri Baru 2026',
+            type: 'Pengumuman',
+            date: '2026-01-05',
+            excerpt: 'Pendaftaran santri baru untuk tahun ajaran 2026/2027 telah dibuka. Segera daftarkan putra-putri Anda!',
+            image: '',
+            content: 'Pendaftaran santri baru untuk tahun ajaran 2026/2027 telah dibuka. Segera daftarkan putra-putri Anda untuk mendapatkan pendidikan Islam yang berkualitas.',
+            slug: 'pembukaan-pendaftaran-2026'
+        },
+        {
+            id: 4,
+            title: 'Kegiatan Bakti Sosial di Desa Sekitar',
+            type: 'Berita',
+            date: '2026-01-03',
+            excerpt: 'Santri Pondok Annawa mengadakan kegiatan bakti sosial dengan membagikan sembako kepada warga kurang mampu.',
+            image: '',
+            content: 'Santri Pondok Annawa mengadakan kegiatan bakti sosial dengan membagikan sembako kepada warga kurang mampu di desa sekitar pondok. Kegiatan ini rutin dilakukan setiap bulan.',
+            slug: 'bakti-sosial-desa'
+        },
+        {
+            id: 5,
+            title: 'Lomba Tahfidz Antar Santri Tingkat Nasional',
+            type: 'Berita',
+            date: '2025-12-28',
+            excerpt: 'Santri Pondok Annawa meraih juara 1 dalam lomba tahfidz tingkat nasional yang diselenggarakan di Jakarta.',
+            image: '',
+            content: 'Santri Pondok Annawa meraih juara 1 dalam lomba tahfidz tingkat nasional yang diselenggarakan di Jakarta. Prestasi membanggakan ini hasil dari pembinaan yang intensif.',
+            slug: 'lomba-tahfidz-nasional'
+        },
+        {
+            id: 6,
+            title: 'Pelatihan Kewirausahaan untuk Santri',
+            type: 'Berita',
+            date: '2025-12-20',
+            excerpt: 'Pondok Annawa mengadakan pelatihan kewirausahaan untuk membekali santri dengan keterampilan berbisnis.',
+            image: '',
+            content: 'Pondok Annawa mengadakan pelatihan kewirausahaan untuk membekali santri dengan keterampilan berbisnis yang sesuai syariah. Pelatihan ini diikuti oleh 50 santri senior.',
+            slug: 'pelatihan-kewirausahaan'
+        }
     ])
 
     const gallery = ref([
@@ -158,6 +216,60 @@ export const useContentStore = defineStore('content', () => {
             date: '14 Jan 2026',
             category: 'Literasi',
             slug: 'santri-sepatu-tua'
+        },
+        {
+            id: 5,
+            title: 'Adab Sebelum Ilmu',
+            image: '',
+            author: 'Zaid Al-Khoiri',
+            date: '10 Jan 2026',
+            category: 'Kesenian',
+            slug: 'adab-sebelum-ilmu'
+        },
+        {
+            id: 6,
+            title: 'Urgensi Menjaga Lisan',
+            excerpt: 'Lisan adalah pedang bermata dua. Ia bisa menjadi jalan ke surga, atau justru menyeret ke jurang celaka...',
+            author: 'Muhammad Ridwan',
+            date: '08 Jan 2026',
+            category: 'Khitobah',
+            slug: 'urgensi-menjaga-lisan'
+        },
+        {
+            id: 7,
+            title: 'Pantun Nasihat Santri',
+            excerpt: 'Pergi berlayar ke pulau Jawa, membawa bekal keripik kentang. Belajarlah dengan sepenuh jiwa, agar masa depan terang benderang.',
+            author: 'Luthfi Hakim',
+            date: '07 Jan 2026',
+            category: 'Literasi',
+            slug: 'pantun-nasihat-santri'
+        },
+        {
+            id: 8,
+            title: 'Goresan Senyum Kiai',
+            image: '',
+            author: 'Rahmat Hidayat',
+            date: '05 Jan 2026',
+            category: 'Kesenian',
+            slug: 'goresan-senyum-kiai'
+        },
+        {
+            id: 9,
+            title: 'Fajar di Gerbang Pesantren',
+            excerpt: 'Ketika surya belum menampakkan wajahnya, sayup-sayup lantunan ayat suci mulai membelah kesunyian...',
+            author: 'Annisa Fitri',
+            date: '03 Jan 2026',
+            category: 'Literasi',
+            slug: 'fajar-gerbang-pesantren'
+        },
+        {
+            id: 10,
+            title: 'Misteri Kitab Kuning',
+            excerpt: 'Lembaran usang itu menyimpan rahasia besar yang belum terpecahkan selama puluhan tahun...',
+            author: 'Umar Khalid',
+            date: '01 Jan 2026',
+            category: 'Literasi',
+            slug: 'misteri-kitab-kuning'
         }
     ])
 
@@ -192,6 +304,46 @@ export const useContentStore = defineStore('content', () => {
             description: 'Program tahfidz terpadu untuk penguatan hafalan Al-Qur\'an dengan metode mutqin.',
             category: 'Tahfidzul Quran',
             slug: 'tahfidz-juz-amma'
+        },
+        {
+            id: 3,
+            title: 'Diskusi Hukum Islam Tematik',
+            ustadz: 'Tim Bahtsul Masail',
+            time: 'Selasa, 19:00 - 20:30 WIB',
+            location: 'Ruang Kajian',
+            description: 'Forum diskusi ilmiah membahas persoalan hukum kontemporer dari perspektif fiqih lintas madzhab.',
+            category: 'Bahtsul Masail',
+            slug: 'bahtsul-masail-tematik'
+        },
+        {
+            id: 4,
+            title: 'Kajian Umum Riyadus Shalihin',
+            ustadz: 'Ustadz Hasan Basri',
+            time: 'Jum\'at, 15:00 - 16:30 WIB',
+            location: 'Masjid Utama',
+            description: 'Penyampaian materi secara klasikal (bandongan) yang diikuti oleh seluruh santri dan jamaah umum.',
+            category: 'Bandongan',
+            slug: 'riyadus-shalihin-umum'
+        },
+        {
+            id: 5,
+            title: 'Muroja\'ah Akbar',
+            ustadz: 'Ustadz Ibrahim Khalil',
+            time: 'Sabtu, 16:00 - 17:30 WIB',
+            location: 'Aula Pondok',
+            description: 'Kegiatan rutin mengulang hafalan secara berkelompok untuk menjaga kelancaran bacaan.',
+            category: 'Tahfidzul Quran',
+            slug: 'murojaah-akbar'
+        },
+        {
+            id: 6,
+            title: 'Kajian Kitab Jurumiyah',
+            ustadz: 'Ustadz Zainal Abidin',
+            time: 'Ahad, 08:00 - 10:00 WIB',
+            location: 'Ruang Kajian',
+            description: 'Mengkaji dasar-dasar ilmu nahwu secara mendetail dengan metode bandongan.',
+            category: 'Bandongan',
+            slug: 'kitab-jurumiyah'
         }
     ])
 

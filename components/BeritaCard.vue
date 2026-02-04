@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="`/berita/${slug}`" class="block group">
+  <NuxtLink :to="`/user/berita/${slug}`" class="block group">
     <div class="bg-card dark:border-brand-400/30 rounded-2xl border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden h-full flex flex-col transform hover:-translate-y-2">
       <!-- Image Wrapper -->
       <div class="relative h-56 overflow-hidden bg-gray-100 dark:bg-gray-800">
