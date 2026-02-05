@@ -32,7 +32,7 @@
             <img 
               src="/images/pengasuh.jpeg" 
               alt="Pengasuh Pondok" 
-              class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-white dark:border-gray-800 bg-gray-100 grayscale hover:grayscale-0 transition-all duration-500"
+              class="w-full h-full object-cover rounded-1xl shadow-xl border-4 bg-gray-100 transition-all duration-500"
             />
           </div>
         </div>
@@ -120,11 +120,11 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
         <div v-for="member in team" :key="member.name" class="group text-center">
-          <div class="relative overflow-hidden rounded-2xl mb-4 shadow-lg aspect-[3/4]">
+          <div class="relative overflow-hidden mb-4 shadow-lg aspect-[3/4]">
             <img 
               :src="member.photo" 
               :alt="member.name" 
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+              class="w-full h-full object-cover transition-all duration-500 " 
             />
           </div>
           <h4 class="text-lg font-bold text-main mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ member.name }}</h4>
@@ -149,7 +149,7 @@
         </div>
         <div class="flex flex-wrap justify-center gap-8 md:gap-16 lg:gap-20">
           <div v-for="mitra in partners" :key="mitra.id" class="flex flex-col items-center group">
-            <div class="w-24 h-24 md:w-32 md:h-32 mb-4 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
+            <div class="w-24 h-24 md:w-32 md:h-32 mb-4 flex items-center justify-center transition-all duration-300 transform group-hover:scale-110">
               <img :src="mitra.logo" :alt="mitra.name" class="max-w-full max-h-full object-contain dark:brightness-0 dark:invert" />
             </div>
             <h3 class="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-brand-600 transition-colors text-center">

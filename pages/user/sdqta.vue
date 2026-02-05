@@ -31,7 +31,7 @@
             <img 
               src="/annawa.png" 
               alt="SDQTA An-Nawa" 
-              class="w-full h-full object-contain rounded-3xl shadow-xl border-4 border-card bg-card p-8 hover:scale-105 transition-all duration-500 dark:border-gray-800"
+              class="w-full h-full object-contain shadow-xl border-4 border-card bg-card p-8 hover:scale-105 transition-all duration-500 dark:border-gray-800"
             />
           </div>
         </div>
@@ -102,7 +102,7 @@
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div v-for="activity in activities" :key="activity.title" class="group relative overflow-hidden rounded-3xl aspect-video shadow-lg">
+          <div v-for="activity in activities" :key="activity.title" class="group relative overflow-hidden aspect-video shadow-lg">
             <img :src="activity.image" :alt="activity.title" class="w-full h-full object-cover group-hover:scale-110 transition-duration-500" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
               <h4 class="text-white font-bold text-lg leading-tight">{{ activity.title }}</h4>
@@ -125,7 +125,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
         <div v-for="teacher in teachers" :key="teacher.name" class="group text-center">
-          <div class="relative overflow-hidden rounded-2xl mb-4 shadow-lg aspect-[3/4] bg-card dark:border dark:border-gray-800">
+          <div class="relative overflow-hidden mb-4 shadow-lg aspect-[3/4] bg-card dark:border dark:border-gray-800">
             <img 
               :src="teacher.photo" 
               :alt="teacher.name" 

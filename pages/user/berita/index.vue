@@ -38,14 +38,14 @@
       <!-- Empty State -->
 
       <!-- Pagination -->
-      <div v-if="filteredBerita.length > 0" class="flex justify-center mt-20 gap-3">
-        <button class="w-12 h-12 flex items-center justify-center bg-brand-500 text-black rounded-xl font-bold shadow-lg shadow-brand-500/20">
+      <div v-if="filteredBerita.length > 0" class="flex justify-center mt-12 gap-2">
+        <button class="w-10 h-10 flex items-center justify-center bg-brand-500 text-white font-bold shadow-md hover:scale-105 transition-transform">
           1
         </button>
-        <button class="w-12 h-12 flex items-center justify-center bg-card text-gray-600 border border-gray-100 dark:border-gray-800/40 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-sm">
+        <button class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-brand-500 hover:bg-gray-50 font-bold transition-colors">
           2
         </button>
-        <button class="w-12 h-12 flex items-center justify-center bg-card text-gray-600 border border-gray-100 dark:border-gray-800/40 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-sm">
+        <button class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-brand-500 hover:bg-gray-50 font-bold transition-colors">
           3
         </button>
       </div>

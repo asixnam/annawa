@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`/user/berita/${slug}`" class="block group">
-    <div class="bg-card dark:border-brand-400/30 rounded-2xl border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden h-full flex flex-col transform hover:-translate-y-2">
+    <div class="bg-card dark:border-brand-400/30 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden h-full flex flex-col transform hover:-translate-y-2">
       <!-- Image Wrapper -->
       <div class="relative h-56 overflow-hidden bg-gray-100 dark:bg-gray-800">
         <img 
@@ -17,8 +17,8 @@
         
         <!-- Date Badge -->
         <div class="absolute bottom-4 left-4">
-          <div class="px-3 py-1.5 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md rounded-xl shadow-lg border border-white/20 dark:border-white/10 flex items-center gap-2">
-            <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div>
+          <div class="px-3 py-1.5 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md l shadow-lg border border-white/20 dark:border-white/10 flex items-center gap-2">
+            <div class="w-1.5 h-1.5 bg-brand-500"></div>
             <span class="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-200">{{ formattedDate }}</span>
           </div>
         </div>

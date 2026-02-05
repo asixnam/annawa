@@ -23,11 +23,11 @@
     <section class="container mx-auto px-6 py-16 bg-card border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
       <div class="max-w-5xl mx-auto">
         <!-- Hero Image Horizontal -->
-        <div class="mb-12 relative overflow-hidden rounded-3xl shadow-2xl group">
+        <div class="mb-12 relative overflow-hidden shadow-2xl group">
           <img 
-            src="https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=1200&auto=format&fit=crop" 
+            src="/images/hero-santri.png" 
             alt="Gedung Utama Pesantren" 
-            class="w-full h-[400px] md:h-[500px] object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-105"
+            class="w-full h-[400px] md:h-[500px] object-cover group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-105"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
@@ -76,17 +76,20 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
           <div v-for="figure in founders" :key="figure.name" class="group text-center">
-            <div class="relative overflow-hidden rounded-2xl mb-6 shadow-xl aspect-[3/4]">
+            <div class="relative overflow-hidden mb-6 shadow-xl aspect-[3/4]">
               <img 
                 :src="figure.photo" 
                 :alt="figure.name" 
-                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+                class="w-full h-full object-cover transition-all duration-500" 
               />
             </div>
             <h4 class="text-xl font-bold text-main mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ figure.name }}</h4>
             <p class="text-brand-600 text-[11px] font-bold uppercase tracking-wider mb-1">
               {{ figure.role }}
             </p>
+            <p class="text-gray-400 text-[9px] font-bold uppercase tracking-widest">
+           Khozinatul Ulum An-Nawa
+          </p>
           </div>
         </div>
       </div>

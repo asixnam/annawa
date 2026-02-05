@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="flex-1 relative">
-            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white">
+            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
               <img :src="hero.image" alt="Santri Pesantren" class="w-full h-auto object-cover" />
             </div>
             <!-- Floating badge -->
