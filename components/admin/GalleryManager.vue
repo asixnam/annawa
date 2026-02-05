@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-900">Manajemen Galeri</h1>
+      <h1 class="text-2xl font-bold text-gray-900">Kelola Galeri</h1>
       <NuxtLink :to="`${basePath}/create`" class="px-4 py-2 bg-brand-600 text-white rounded-lg font-bold text-sm hover:bg-brand-700 transition flex items-center shadow-lg shadow-brand-500/20">
-        + Tambah Karya Galeri
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 8L2 22" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.5 15H9" />
+        </svg>
+        + Baru
       </NuxtLink>
     </div>
 
