@@ -2,97 +2,112 @@
   <div class="transition-colors duration-300">
     <!-- Registration Form -->
     <form @submit.prevent="handleSubmit" class="space-y-8">
-      <!-- Section 1: Data Diri -->
-      <div class="bg-card rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800/40 overflow-hidden transition-colors duration-300">
-        <div class="bg-brand-500 px-8 py-4">
-          <h2 class="text-lg font-black text-black uppercase tracking-wider">Data Diri Murid</h2>
-        </div>
-        <div class="p-8 space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Nama Lengkap Murid <span class="text-red-500">*</span></label>
-              <input v-model="form.namaLengkap" type="text" required placeholder="Nama lengkap calon murid" class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">NIK Murid <span class="text-red-500">*</span></label>
-              <input v-model="form.nik" type="text" required placeholder="Masukkan 16 digit NIK" class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Tempat Lahir <span class="text-red-500">*</span></label>
-              <input v-model="form.tempatLahir" type="text" required placeholder="Kota kelahiran" class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Tanggal Lahir <span class="text-red-500">*</span></label>
-              <input v-model="form.tanggalLahir" type="date" required class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Jenis Kelamin <span class="text-red-500">*</span></label>
-              <div class="flex gap-4">
-                <label class="flex items-center gap-2 cursor-pointer group">
-                  <input type="radio" v-model="form.jenisKelamin" value="laki-laki" name="jk" class="w-4 h-4 text-brand-600 focus:ring-brand-500 dark:bg-gray-800 dark:border-gray-700" required />
-                  <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-main">Laki-laki</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer group">
-                  <input type="radio" v-model="form.jenisKelamin" value="perempuan" name="jk" class="w-4 h-4 text-brand-600 focus:ring-brand-500 dark:bg-gray-800 dark:border-gray-700" />
-                  <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-main">Perempuan</span>
-                </label>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Section 1: Data Diri -->
+        <div class="bg-card shadow-sm border border-gray-100 dark:border-gray-800/40 overflow-hidden transition-colors duration-300">
+          <div class="px-8 pt-8 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <h2 class="text-xl font-bold text-main">Data Diri Murid</h2>
+          </div>
+          <div class="p-8 space-y-6">
+            <div class="space-y-6">
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Nama Lengkap Murid <span class="text-red-500">*</span></label>
+                <input v-model="form.namaLengkap" type="text" required placeholder="Nama lengkap calon murid" class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">NIK Murid <span class="text-red-500">*</span></label>
+                <input v-model="form.nik" type="text" required placeholder="Masukkan 16 digit NIK" class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
+              
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="text-sm font-bold text-main">Tempat Lahir <span class="text-red-500">*</span></label>
+                  <input v-model="form.tempatLahir" type="text" required placeholder="Kota kelahiran" class="w-full px-4 py-3 rounded-xl theme-input" />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-sm font-bold text-main">Tanggal Lahir <span class="text-red-500">*</span></label>
+                  <input v-model="form.tanggalLahir" type="date" required class="w-full px-4 py-3 rounded-xl theme-input" />
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Jenis Kelamin <span class="text-red-500">*</span></label>
+                <div class="flex gap-4">
+                  <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="radio" v-model="form.jenisKelamin" value="laki-laki" name="jk" class="w-4 h-4 text-brand-600 focus:ring-brand-500 dark:bg-gray-800 dark:border-gray-700" required />
+                    <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-main">Laki-laki</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="radio" v-model="form.jenisKelamin" value="perempuan" name="jk" class="w-4 h-4 text-brand-600 focus:ring-brand-500 dark:bg-gray-800 dark:border-gray-700" />
+                    <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-main">Perempuan</span>
+                  </label>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Asal TK/RA <span class="text-red-500">*</span></label>
+                <input v-model="form.asalSekolah" type="text" required placeholder="Nama TK/RA asal" class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Alamat Tempat Tinggal (Sesuai KK) <span class="text-red-500">*</span></label>
+                <textarea v-model="form.alamat" required rows="3" placeholder="Alamat lengkap calon murid" class="w-full px-4 py-3 rounded-xl theme-input resize-none"></textarea>
               </div>
             </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Asal TK/RA <span class="text-red-500">*</span></label>
-              <input v-model="form.asalSekolah" type="text" required placeholder="Nama TK/RA asal" class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-          </div>
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-main">Alamat Tempat Tinggal (Sesuai KK) <span class="text-red-500">*</span></label>
-            <textarea v-model="form.alamat" required rows="3" placeholder="Alamat lengkap calon murid" class="w-full px-4 py-3 rounded-xl theme-input resize-none"></textarea>
           </div>
         </div>
-      </div>
 
-      <!-- Section 2: Data Orang Tua -->
-      <div class="bg-card rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800/40 overflow-hidden transition-colors duration-300">
-        <div class="bg-brand-500 px-8 py-4">
-          <h2 class="text-lg font-black text-black uppercase tracking-wider">Data Orang Tua / Wali</h2>
-        </div>
-        <div class="p-8 space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Nama Lengkap Ayah <span class="text-red-500">*</span></label>
-              <input v-model="form.namaAyah" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Pekerjaan Ayah <span class="text-red-500">*</span></label>
-              <input v-model="form.pekerjaanAyah" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Nama Lengkap Ibu <span class="text-red-500">*</span></label>
-              <input v-model="form.namaIbu" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">Pekerjaan Ibu <span class="text-red-500">*</span></label>
-              <input v-model="form.pekerjaanIbu" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
-            </div>
-            <div class="space-y-2">
-              <label class="text-sm font-bold text-main">No. WhatsApp Wali <span class="text-red-500">*</span></label>
-              <input v-model="form.noHp" type="tel" required placeholder="08123xxx" class="w-full px-4 py-3 rounded-xl theme-input" />
+        <!-- Section 2: Data Orang Tua -->
+        <div class="bg-card shadow-sm border border-gray-100 dark:border-gray-800/40 overflow-hidden transition-colors duration-300">
+          <div class="px-8 pt-8 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <h2 class="text-xl font-bold text-main">Data Orang Tua / Wali</h2>
+          </div>
+          <div class="p-8 space-y-6">
+            <div class="space-y-6">
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Nama Lengkap Ayah <span class="text-red-500">*</span></label>
+                <input v-model="form.namaAyah" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Pekerjaan Ayah <span class="text-red-500">*</span></label>
+                <input v-model="form.pekerjaanAyah" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
+
+               <div class="space-y-2">
+                 <div class="h-px bg-gray-100 dark:bg-gray-800 my-4"></div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Nama Lengkap Ibu <span class="text-red-500">*</span></label>
+                <input v-model="form.namaIbu" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">Pekerjaan Ibu <span class="text-red-500">*</span></label>
+                <input v-model="form.pekerjaanIbu" type="text" required class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
+
+               <div class="space-y-2">
+                 <div class="h-px bg-gray-100 dark:bg-gray-800 my-4"></div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm font-bold text-main">No. WhatsApp Wali <span class="text-red-500">*</span></label>
+                <input v-model="form.noHp" type="tel" required placeholder="08123xxx" class="w-full px-4 py-3 rounded-xl theme-input" />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Section 3: Upload Berkas -->
-      <div class="bg-card rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800/40 overflow-hidden transition-colors duration-300">
-        <div class="bg-brand-500 px-8 py-4">
-          <h2 class="text-lg font-black text-black uppercase tracking-wider">Upload Berkas (Opsional)</h2>
+      <div class="bg-card shadow-sm border border-gray-100 dark:border-gray-800/40 overflow-hidden transition-colors duration-300">
+        <div class="px-8 pt-8 pb-4 border-b border-gray-100 dark:border-gray-800">
+          <h2 class="text-xl font-bold text-main">Upload Berkas (Opsional)</h2>
         </div>
         <div class="p-8">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Ijazah TK -->
             <div class="space-y-3">
-              <label class="text-sm font-bold text-main flex items-center gap-2">
-                Scan/Foto Ijazah TK/RA
-              </label>
+              <label class="text-sm font-bold text-main">Scan/Foto Ijazah TK/RA</label>
               
               <div v-if="initialData.files?.ijazahTk && !form.files.ijazahTk" class="p-3 bg-brand-50 dark:bg-brand-900/20 rounded-xl border border-brand-100 dark:border-brand-500/20 flex items-center justify-between group">
                 <div class="flex items-center gap-2 min-w-0">
@@ -128,9 +143,7 @@
 
             <!-- Akta Kelahiran -->
             <div class="space-y-3">
-              <label class="text-sm font-bold text-main flex items-center gap-2">
-                Scan/Foto Akta Kelahiran
-              </label>
+              <label class="text-sm font-bold text-main">Scan/Foto Akta Kelahiran</label>
 
               <div v-if="initialData.files?.akta && !form.files.akta" class="p-3 bg-brand-50 dark:bg-brand-900/20 rounded-xl border border-brand-100 dark:border-brand-500/20 flex items-center justify-between group">
                 <div class="flex items-center gap-2 min-w-0">
@@ -166,9 +179,7 @@
 
             <!-- KK -->
             <div class="space-y-3">
-              <label class="text-sm font-bold text-main flex items-center gap-2">
-                Scan/Foto Kartu Keluarga
-              </label>
+              <label class="text-sm font-bold text-main">Scan/Foto Kartu Keluarga</label>
 
               <div v-if="initialData.files?.kk && !form.files.kk" class="p-3 bg-brand-50 dark:bg-brand-900/20 rounded-xl border border-brand-100 dark:border-brand-500/20 flex items-center justify-between group">
                 <div class="flex items-center gap-2 min-w-0">
@@ -206,8 +217,18 @@
         </div>
       </div>
 
-      <!-- Submit Button -->
-      <div class="flex justify-end pt-4">
+      <!-- Action Button -->
+       <div class="flex justify-between items-center pt-4 border-t border-gray-100 dark:border-gray-800">
+        <!-- Cancel Button -->
+        <button 
+          type="button" 
+          @click="$router.back()"
+          class="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-xl font-bold text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        >
+          Batal
+        </button>
+
+        <!-- Submit Button -->
         <button 
           type="submit" 
           :disabled="isLoading"
@@ -246,7 +267,11 @@ import { ref, reactive, onMounted } from 'vue'
 const props = defineProps({
   submitLabel: {
     type: String,
-    default: 'Kirim Formulir SPMB'
+    default: 'Kirim'
+  },
+  submitLabelEdit: {
+    type: String,
+    default: 'Update Data Santri'
   },
   useModal: {
     type: Boolean,
@@ -262,7 +287,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['success'])
+const emit = defineEmits(['success', 'cancel'])
 
 const isLoading = ref(false)
 const showSuccess = ref(false)
@@ -284,7 +309,7 @@ const form = reactive({
     ijazahTk: null as File | null,
     akta: null as File | null,
     kk: null as File | null
-  }
+  } as Record<string, File | null>
 })
 
 onMounted(() => {
@@ -294,8 +319,8 @@ onMounted(() => {
     form.nik = data.nik || ''
     form.tempatLahir = data.tempatLahir || ''
     form.tanggalLahir = data.tanggalLahir || ''
-    form.jenisKelamin = data.jenisKelamin || ''
-    form.asalSekolah = data.class || data.asalSekolah || ''
+    form.jenisKelamin = data.pondokType || data.jenisKelamin || ''
+    form.asalSekolah = data.asalSekolah || ''
     form.alamat = data.alamat || ''
     form.namaAyah = data.namaAyah || ''
     form.pekerjaanAyah = data.pekerjaanAyah || ''
@@ -318,11 +343,26 @@ const handleSubmit = async () => {
   // Simulate API call
   try {
     await new Promise(resolve => setTimeout(resolve, 2000))
-    console.log('SPMB SDQTA Form data:', form)
-    showSuccess.value = true
-    emit('success', { ...form })
+    console.log('Santri Form data:', form)
     
-    // Reset form
+    if (props.useModal) {
+      showSuccess.value = true
+    } else {
+      emit('success', { ...form })
+    }
+  } catch (error) {
+    console.error('Submission error:', error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const closeSuccess = () => {
+  showSuccess.value = false
+  emit('success', { ...form })
+  
+  // Reset form
+  if (!props.isEdit) {
     Object.assign(form, {
       namaLengkap: '',
       nik: '',
@@ -342,10 +382,6 @@ const handleSubmit = async () => {
         kk: null
       }
     })
-  } catch (error) {
-    console.error('Submission error:', error)
-  } finally {
-    isLoading.value = false
   }
 }
 </script>
