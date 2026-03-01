@@ -23,7 +23,7 @@
 
     <!-- Filter Categories -->
     <section class="container mx-auto px-6 -mt-8 relative z-20">
-      <div class="bg-card rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
+      <div class="bg-card rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
         <!-- Mobile View: Dropdown -->
         <div class="block md:hidden relative">
           <select 
@@ -64,7 +64,7 @@
         <NuxtLink 
           v-for="item in filteredGallery" 
           :key="item.id"
-          :to="`/user/galeri/${item.slug}`"
+          :to="`/user/galeri/${item.id}`"
           class="group bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
         >
           <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
@@ -169,17 +169,36 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useContentStore } from '~/stores/content'
+import { useFetch } from '#app'
 
-const store = useContentStore()
 const categories = ref(['Semua', 'Juara', 'Literasi', 'Kesenian', 'Khitobah'])
 const selectedCategory = ref('Semua')
 
+const { data: gallery } = await useFetch('/api/gallery?public=true')
+
 const filteredGallery = computed(() => {
-  if (selectedCategory.value === 'Semua') {
-    return store.gallery
+  if (!gallery.value) return []
+  let items = gallery.value as any[]
+
+  if (selectedCategory.value !== 'Semua') {
+    items = items.filter(item => item.category === selectedCategory.value)
   }
-  return store.gallery.filter(item => item.category === selectedCategory.value)
+  
+  return items.map(item => {
+    const words = item.description ? item.description.trim().split(/\s+/) : [];
+    const excerpt = words.length > 40 ? words.slice(0, 40).join(' ') + '...' : item.description;
+    
+    return {
+      id: item.id,
+      title: item.title,
+      image: item.image_url,
+      category: item.category,
+      author: item.author,
+      date: new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+      excerpt: excerpt,
+      slug: item.id // Use ID as slug/link parameter
+    };
+  })
 })
 </script>
 

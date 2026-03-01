@@ -9,7 +9,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
         </svg>
-        Tambah Admin
+        Admin
       </NuxtLink>
     </div>
 
@@ -27,7 +27,7 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
               <div class="h-12 w-12 rounded-xl bg-brand-100 dark:bg-brand-900/40 overflow-hidden flex items-center justify-center text-brand-600 dark:text-brand-400 font-bold text-lg ring-2 ring-white dark:ring-gray-800">
-                <img v-if="user.image" :src="user.image" class="h-full w-full object-cover">
+                <img v-if="user.image_url" :src="user.image_url" class="h-full w-full object-cover">
                 <span v-else>{{ user.name.charAt(0) }}</span>
               </div>
               <div>
@@ -105,6 +105,7 @@
               <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nama</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Email</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
                 <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Aksi</th>
               </tr>
             </thead>
@@ -113,14 +114,25 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="h-10 w-10 rounded-xl bg-purple-100 overflow-hidden flex items-center justify-center text-purple-600 font-bold mr-3 uppercase text-xs ring-2 ring-gray-50">
-                      <img v-if="user.image" :src="user.image" class="h-full w-full object-cover">
+                      <img v-if="user.image_url" :src="user.image_url" class="h-full w-full object-cover">
                       <span v-else>{{ user.name.charAt(0) }}</span>
                     </div>
                     <div class="text-sm font-bold text-gray-900">{{ user.name }}</div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span :class="[
+                    'px-2.5 py-1 rounded-lg text-xs font-bold border',
+                    user.status === 'verified' ? 'bg-green-50 text-green-700 border-green-100' :
+                    user.status === 'pending' ? 'bg-yellow-50 text-yellow-700 border-yellow-100' :
+                    'bg-red-50 text-red-700 border-red-100'
+                  ]">
+                    {{ user.status || 'verified' }}
+                  </span>
+                </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <button v-if="user.status === 'pending'" @click="verifyUser(user.id)" class="text-green-600 hover:text-green-900 font-bold mr-4">Verifikasi</button>
                   <NuxtLink :to="`/super-admin/users/${user.id}`" class="text-brand-600 hover:text-brand-900 font-bold mr-4">Edit</NuxtLink>
                   <button @click="deleteUser(user.id)" class="text-red-500 hover:text-red-700 font-bold">Hapus</button>
                 </td>
@@ -141,18 +153,7 @@ import { ref, computed } from 'vue'
 
 definePageMeta({ layout: 'super-admin' })
 
-// Mock Data updated to reflect requirements
-const users = ref([
-  { id: 1, name: 'Ahmad Muzakki', email: 'super1@annawa.id', role: 'super', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop' },
-  { id: 2, name: 'Siti Rohmah', email: 'super2@annawa.id', role: 'super', image: null },
-  { id: 3, name: 'Admin Pondok 1', email: 'pondok1@annawa.id', role: 'admin:pondok', image: null },
-  { id: 4, name: 'Admin Pondok 2', email: 'pondok2@annawa.id', role: 'admin:pondok', image: null },
-  { id: 5, name: 'Admin PAUD 1', email: 'paud1@annawa.id', role: 'admin:paud', image: null },
-  { id: 7, name: 'Admin SDQTA 1', email: 'sdqta1@annawa.id', role: 'admin:sdqta', image: null },
-  { id: 8, name: 'Ustadz Abdullah', email: 'abdullah@annawa.id', role: 'author', image: null },
-  { id: 9, name: 'Ustadzah Aminah', email: 'aminah@annawa.id', role: 'author', image: null },
-  { id: 10, name: 'Ustadz Fauzi', email: 'fauzi@annawa.id', role: 'author', image: null },
-])
+const { data: users, refresh } = await useFetch('/api/users')
 
 const groupedUsers = computed(() => {
   const groups = {
@@ -165,25 +166,53 @@ const groupedUsers = computed(() => {
     author: [] as any[]
   }
 
-  users.value.forEach(user => {
+  if (!users.value) return groups
+
+  users.value.forEach((user: any) => {
     if (user.role === 'super') {
       groups.super.push(user)
     } else if (user.role === 'author') {
       groups.author.push(user)
     } else if (user.role.startsWith('admin:')) {
-      const unit = user.role.split(':')[1].toUpperCase()
-      if (unit === 'PONDOK') groups.admin['Pondok'].push(user)
-      else if (unit === 'PAUD') groups.admin['PAUD'].push(user)
-      else if (unit === 'SDQTA') groups.admin['SDQTA'].push(user)
+      const parts = user.role.split(':')
+      if (parts.length > 1) {
+        let unit = parts[1].toUpperCase()
+        if (unit === 'SDQTA' || unit === 'SD') {
+          groups.admin['SDQTA'].push(user)
+        } else if (unit === 'PONDOK') {
+          groups.admin['Pondok'].push(user)
+        } else if (unit === 'PAUD') {
+          groups.admin['PAUD'].push(user)
+        }
+      }
     }
   })
 
   return groups
 })
 
-function deleteUser(id: number) {
-  if (confirm('Apakah Anda yakin ingin menghapus user ini?')) {
-    users.value = users.value.filter(u => u.id !== id)
+async function verifyUser(id: number) {
+  if (!confirm('Apakah Anda yakin ingin memverifikasi user ini?')) return
+
+  try {
+    await $fetch(`/api/users/${id}`, {
+      method: 'PUT',
+      body: { status: 'verified' }
+    })
+    refresh()
+  } catch (error) {
+    alert('Gagal memverifikasi user')
+  }
+}
+
+async function deleteUser(id: number) {
+  if (!confirm('Apakah Anda yakin ingin menghapus user ini?')) return
+
+  try {
+    await $fetch(`/api/users/${id}`, { method: 'DELETE' })
+    refresh() // Reload data
+  } catch (error) {
+    alert('Gagal menghapus user')
   }
 }
 </script>

@@ -1,8 +1,10 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div class="mb-6">
-      <NuxtLink :to="basePath" class="text-gray-500 hover:text-gray-700 text-sm mb-2 inline-block">&larr; Kembali ke Daftar</NuxtLink>
+    <div class="mb-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-gray-900">{{ isEdit ? 'Edit Karya' : 'Tambah Karya Baru' }}</h1>
+      <NuxtLink :to="basePath" class="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 rounded-lg text-[10px] font-black uppercase tracking-widest text-white transition-all shadow-md shrink-0">
+        <img src="https://img.icons8.com/?size=100&id=99287&format=png&color=FFFFFF" alt="Back Arrow" class="w-4 h-4">
+      </NuxtLink>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
@@ -41,28 +43,39 @@
 
         <div>
            <label class="block text-sm font-bold text-gray-700 mb-2">Gambar Karya</label>
-           <div @click="triggerFileInput" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center bg-gray-50 hover:bg-gray-100 transition cursor-pointer relative overflow-hidden">
-             <template v-if="form.image">
-               <img :src="form.image" class="absolute inset-0 w-full h-full object-cover opacity-20">
-               <div class="relative z-10">
-                 <p class="font-bold text-brand-600">Gambar Terpilih</p>
-                 <p class="text-xs text-gray-400">Klik untuk mengganti</p>
-               </div>
-             </template>
-             <template v-else>
-               <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-               </svg>
-               <span class="text-sm text-gray-500">Klik untuk upload gambar (Opsional untuk Literasi)</span>
-             </template>
-             <input type="file" ref="fileInput" class="hidden" accept="image/*" @change="handleFileUpload">
+           
+           <!-- File Upload Input -->
+           <div class="mb-4">
+             <div class="flex items-center justify-center w-full">
+                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6" v-if="!form.image && !isUploading">
+                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-bold">Klik untuk upload</span></p>
+                        <p class="text-xs text-gray-500">PNG, JPG atau WEBP</p>
+                    </div>
+                    <div v-else-if="isUploading" class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-600 mb-3"></div>
+                        <p class="text-sm text-gray-500">Mengupload...</p>
+                    </div>
+                    <div v-else class="relative w-full h-full p-2">
+                        <img :src="form.image" class="w-full h-full object-contain rounded-lg">
+                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity rounded-lg">
+                            <p class="text-white font-bold">Ganti Gambar</p>
+                        </div>
+                    </div>
+                    <input id="dropzone-file" type="file" class="hidden" accept="image/*" @change="handleFileUpload" />
+                </label>
+             </div> 
            </div>
+           
+           <!-- Hidden URL Input for fallback/debugging if needed, or just keep it synced -->
+           <input type="hidden" v-model="form.image">
         </div>
 
         <div class="pt-4 border-t border-gray-100 flex justify-end gap-3">
           <NuxtLink :to="basePath" class="px-6 py-2.5 border border-gray-300 text-gray-600 font-bold rounded-lg hover:bg-gray-50 transition">Batal</NuxtLink>
-          <button type="submit" class="px-6 py-2.5 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 transition shadow-lg shadow-brand-500/20">
-            {{ isEdit ? 'Simpan Perubahan' : 'Tambah ke Galeri' }}
+          <button type="submit" :disabled="isLoading || isUploading" :class="['px-6 py-2.5 text-white font-bold rounded-lg transition shadow-lg shadow-brand-500/20', isLoading || isUploading ? 'bg-gray-400 cursor-not-allowed' : 'bg-brand-600 hover:bg-brand-700']">
+            {{ isUploading ? 'Mengupload...' : (isLoading ? 'Menyimpan...' : (isEdit ? 'Simpan Perubahan' : 'Tambah ke Galeri')) }}
           </button>
         </div>
       </form>
@@ -73,7 +86,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useContentStore } from '~/stores/content'
 import { useAuthStore } from '~/stores/auth'
 
 const props = defineProps<{
@@ -82,10 +94,47 @@ const props = defineProps<{
 }>()
 
 const router = useRouter()
-const store = useContentStore()
 const auth = useAuthStore()
 const isEdit = !!props.id
-const fileInput = ref<HTMLInputElement | null>(null)
+const isLoading = ref(false)
+const isUploading = ref(false)
+
+async function handleFileUpload(event: Event) {
+  const input = event.target as HTMLInputElement
+  if (!input.files || input.files.length === 0) return
+
+  const file = input.files[0]
+  if (!file.type.startsWith('image/')) {
+    alert('Mohon upload file gambar valid.')
+    return
+  }
+  
+  // Max 5MB
+  if (file.size > 5 * 1024 * 1024) {
+      alert('Ukuran gambar maksimal 5MB')
+      return
+  }
+
+  const formData = new FormData()
+  formData.append('file', file)
+
+  isUploading.value = true
+  try {
+    const response: any = await $fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+    
+    if (response && response.url) {
+      form.value.image = response.url
+    }
+  } catch (error) {
+    console.error('Upload failed:', error)
+    alert('Gagal mengupload gambar. Silakan coba lagi.')
+  } finally {
+    isUploading.value = false
+  }
+}
 
 const form = ref({
   title: '',
@@ -94,58 +143,84 @@ const form = ref({
   date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
   image: '',
   excerpt: '',
-  slug: ''
+  slug: '',
+  description: ''
 })
 
-onMounted(() => {
+onMounted(async () => {
   if (isEdit) {
-    const existing = store.gallery.find(g => g.id === parseInt(props.id!))
-    if (existing) {
-      // Security check: if author, only can edit their own
-      if (auth.user?.role === 'author' && existing.author !== auth.user?.name) {
-        alert('Anda tidak memiliki akses untuk mengedit karya ini.')
-        router.push(props.basePath)
-        return
+    try {
+      const data: any = await $fetch(`/api/gallery/${props.id}`)
+      if (data) {
+        if (auth.user?.role === 'author' && data.author !== auth.user?.name) {
+             alert('Anda tidak memiliki akses untuk mengedit karya ini.')
+             router.push(props.basePath)
+             return
+        }
+        form.value = {
+            title: data.title,
+            category: data.category,
+            author: data.author,
+            date: new Date(data.created_at).toLocaleDateString('id-ID'),
+            image: data.image_url,
+            excerpt: data.description, // UI uses excerpt, DB uses description
+            description: data.description,
+            slug: ''
+        }
       }
-      form.value = { ...existing }
+    } catch (e) {
+      console.error('Failed to fetch gallery', e)
     }
   } else if (auth.user?.role === 'author') {
     // Auto-fill author for new items
-    form.value.author = auth.user.name
+    form.value.author = auth.user.name || ''
   }
 })
 
-function triggerFileInput() {
-  fileInput.value?.click()
-}
-
-function handleFileUpload(event: Event) {
-  const target = event.target as HTMLInputElement
-  if (target.files && target.files[0]) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      form.value.image = e.target?.result as string
-    }
-    reader.readAsDataURL(target.files[0])
-  }
-}
-
-function saveContent() {
+async function saveContent() {
+  isLoading.value = true
   if (auth.user?.role === 'author') {
-    form.value.author = auth.user.name
+    form.value.author = auth.user.name || ''
   }
 
-  if (!form.value.slug) {
-    form.value.slug = form.value.title.toLowerCase().replace(/ /g, '-')
+  if (!form.value.image) {
+      alert('Mohon upload gambar karya terlebih dahulu.')
+      isLoading.value = false
+      return
   }
 
-  if (isEdit) {
-    store.updateGallery(parseInt(props.id!), { ...form.value })
-    alert('Karya berhasil diperbarui!')
-  } else {
-    store.addGallery({ ...form.value })
-    alert('Karya berhasil ditambahkan!')
+  // Use description field as excerpt for API
+  // form.value.description = form.value.excerpt
+
+  try {
+      const payload = {
+          title: form.value.title,
+          image_url: form.value.image,
+          category: form.value.category,
+          author: form.value.author,
+          author_id: auth.user?.id, // Send author_id
+          description: form.value.excerpt, // Using excerpt input as description
+          user_role: auth.user?.role // Send role so backend can set is_approved
+      }
+
+      if (isEdit) {
+        await $fetch(`/api/gallery/${props.id}`, {
+            method: 'PUT',
+            body: payload
+        })
+        alert('Karya berhasil diperbarui!')
+      } else {
+        await $fetch('/api/gallery', {
+            method: 'POST',
+            body: payload
+        })
+        alert('Karya berhasil ditambahkan!')
+      }
+      router.push(props.basePath)
+  } catch (error: any) {
+      alert(error.data?.statusMessage || 'Gagal menyimpan karya')
+  } finally {
+      isLoading.value = false
   }
-  router.push(props.basePath)
 }
 </script>

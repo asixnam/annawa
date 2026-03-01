@@ -1,3 +1,4 @@
+```html
 <template>
   <div class="space-y-6">
     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
@@ -127,9 +128,14 @@ const selectedYear = ref('')
 const availableYears = ['2023', '2024', '2025', '2026']
 
 const filteredItems = computed(() => {
+  if (!props.students) return []
   return props.students.filter(s => {
-    const matchYear = !selectedYear.value || s.tahunPendaftaran === selectedYear.value
+    // Year filter: if selectedYear is empty, match all. Else match exact string.
+    const matchYear = !selectedYear.value || String(s.tahunPendaftaran) === String(selectedYear.value)
+    
+    // Gender filter: if selectedGender is empty, match all. Else match exact string.
     const matchGender = !selectedGender.value || s.jk === selectedGender.value
+
     return matchYear && matchGender
   })
 })

@@ -18,20 +18,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useFetch } from '#app'
 import PondokStudentList from '~/components/students/PondokStudentList.vue'
 
 definePageMeta({ layout: 'super-admin' })
 
-const students = ref([
-  { id: 1, nama: 'Zaidan Al-Fatih', nisn: '0123456789', jk: 'putra', asalSekolah: 'SDN 1 Blora', noHp: '081234567890', tahunPendaftaran: '2025' },
-  { id: 2, nama: 'Aisyah Humaira', nisn: '0123456790', jk: 'putri', asalSekolah: 'MI Khozinatul Ulum', noHp: '081234567891', tahunPendaftaran: '2025' },
-  { id: 3, nama: 'Muhammad Ali', nisn: '0123456791', jk: 'putra', asalSekolah: 'SDN 2 Blora', noHp: '081234567892', tahunPendaftaran: '2024' }
-])
+const { data: students, refresh } = await useFetch('/api/students', {
+  query: { unit_id: 'SANTRI' }, // Pondok 'SANTRI'
+  transform: (data: any[]) => data.map(s => ({
+    ...s,
+    nama: s.name,
+    jk: s.gender === 'laki-laki' ? 'putra' : 'putri',
+    tahunPendaftaran: s.registration_year,
+    noHp: s.phone,
+    asalSekolah: s.school_origin
+  }))
+})
 
-function deleteStudent(id: number) {
+async function deleteStudent(id: number) {
   if (confirm('Apakah Anda yakin ingin menghapus data santri ini?')) {
-    students.value = students.value.filter(s => s.id !== id)
+    try {
+      await $fetch(`/api/students/${id}`, { method: 'DELETE' })
+      refresh()
+    } catch (e) {
+      alert('Gagal menghapus data')
+    }
   }
 }
 </script>

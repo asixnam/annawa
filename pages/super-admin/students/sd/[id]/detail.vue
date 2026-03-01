@@ -26,51 +26,39 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useFetch } from '#app'
 import SdStudentDetail from '~/components/students/SdStudentDetail.vue'
 
 definePageMeta({ layout: 'super-admin' })
 const route = useRoute()
 
 const loading = ref(true)
-const student = reactive({
-  namaLengkap: '',
-  nik: '',
-  tempatLahir: '',
-  tanggalLahir: '',
-  jenisKelamin: '',
-  asalSekolah: '',
-  alamat: '',
-  namaAyah: '',
-  pekerjaanAyah: '',
-  namaIbu: '',
-  pekerjaanIbu: '',
-  noHp: '',
-  tahunPendaftaran: '',
-  files: {
-    ijazahTk: 'ijazah_tk_rayyan.pdf',
-    akta: 'akta_rayyan_ghifari.pdf',
-    kk: 'kk_hendra_wijaya.jpg'
-  } as Record<string, string>
-})
+const student = reactive({} as any)
 
-onMounted(() => {
-  setTimeout(() => {
+onMounted(async () => {
+  try {
+    const data: any = await $fetch(`/api/students/${route.params.id}`)
     Object.assign(student, {
-      namaLengkap: 'Rayyan Al-Ghifari',
-      nik: '3316012345678001',
-      tempatLahir: 'Blora',
-      tanggalLahir: '2017-03-12',
-      jenisKelamin: 'laki-laki',
-      asalSekolah: 'TK IT An-Nawa',
-      alamat: 'Jln. Gajah Mada No. 88, Blora, Jawa Tengah',
-      namaAyah: 'Haryono',
-      pekerjaanAyah: 'PNS',
-      namaIbu: 'Endang Suci',
-      pekerjaanIbu: 'Wiraswasta',
-      noHp: '081234567990',
-      tahunPendaftaran: '2025'
+      namaLengkap: data.name,
+      nik: data.nik,
+      nisn: data.nis,
+      tempatLahir: data.birth_place,
+      tanggalLahir: data.birth_date ? new Date(data.birth_date).toISOString().split('T')[0] : '',
+      jenisKelamin: data.gender === 'laki-laki' ? 'putra' : (data.gender === 'perempuan' ? 'putri' : data.gender),
+      asalSekolah: data.school_origin,
+      alamat: data.address,
+      namaAyah: data.father_name,
+      pekerjaanAyah: data.father_job,
+      namaIbu: data.mother_name,
+      pekerjaanIbu: data.mother_job,
+      noHp: data.phone,
+      tahunPendaftaran: data.registration_year,
+      files: data.files || {}
     })
+  } catch (e) {
+    // Handle error
+  } finally {
     loading.value = false
-  }, 800)
+  }
 })
 </script>

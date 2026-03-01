@@ -62,7 +62,7 @@
             <div class="space-y-2">
               <label class="block text-sm font-bold text-gray-700">Role / Akses Lembaga</label>
               <div class="relative">
-                <select v-model="form.role" class="appearance-none w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all font-medium cursor-pointer">
+                <select v-model="form.role" class="appearance-none w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all font-medium cursor-pointer text-black">
                   <optgroup label="Admin Lembaga">
                     <option value="admin:pondok">Admin Pondok</option>
                     <option value="admin:paud">Admin PAUD</option>
@@ -82,17 +82,31 @@
             </div>
 
             <div class="space-y-2">
-              <label class="block text-sm font-bold text-gray-700">Password Sementara</label>
-              <input type="password" v-model="form.password" required placeholder="Minimal 6 karakter" class="w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all font-medium">
+              <label class="block text-sm font-bold text-gray-700">No. HP / WhatsApp</label>
+              <input type="tel" v-model="form.phone" placeholder="Contoh: 081234567890" class="w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all font-medium text-black">
             </div>
+          </div>
+
+          <!-- Author Specific Fields -->
+          <div v-if="form.role === 'author'" class="space-y-4 pt-4 border-t border-gray-100">
+            <div class="space-y-2">
+              <label class="block text-sm font-bold text-gray-700">Bio / Profil Ringkas</label>
+              <textarea v-model="form.bio" rows="3" placeholder="Tuliskan bio singkat author di sini..." class="w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all font-medium text-black resize-none"></textarea>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-4 border-t border-gray-100">
+            <label class="block text-sm font-bold text-gray-700">Password Sementara</label>
+            <input type="password" v-model="form.password" required placeholder="Minimal 6 karakter" class="w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all font-medium text-black">
           </div>
         </div>
 
         <div class="p-8 bg-gray-50/30 flex justify-end items-center gap-4">
           <NuxtLink to="/super-admin/users" class="px-6 py-3 text-sm font-bold text-gray-600 hover:text-gray-900 transition-colors">Batal</NuxtLink>
-          <button type="submit" class="px-8 py-3 bg-brand-600 text-white font-extrabold text-sm rounded-2xl hover:bg-brand-700 transition-all shadow-xl shadow-brand-500/20 active:scale-95 flex items-center gap-2">
-            Simpan & Aktifkan User
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button type="submit" :disabled="isLoading" class="px-8 py-3 bg-brand-600 text-white font-extrabold text-sm rounded-2xl hover:bg-brand-700 transition-all shadow-xl shadow-brand-500/20 active:scale-95 flex items-center gap-2">
+            <span v-if="isLoading">Sedang Menyimpan...</span>
+            <span v-else>Simpan & Aktifkan User</span>
+            <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </button>
@@ -111,13 +125,17 @@ const router = useRouter()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const previewImage = ref<string | null>(null)
+const isLoading = ref(false)
 
 const form = ref({
   name: '',
   email: '',
   password: '',
   role: 'admin:paud',
-  image: null as File | null
+  bio: '',
+  phone: '',
+  image: null as File | null,
+  image_url: ''
 })
 
 function triggerFileInput() {
@@ -138,10 +156,30 @@ function onFileChange(e: Event) {
   }
 }
 
-function saveUser() {
-  // TODO: Call API to create user with FormData if image exists
-  console.log('Saving User:', form.value)
-  alert('User baru berhasil ditambahkan!')
-  router.push('/super-admin/users')
+async function saveUser() {
+  isLoading.value = true
+  try {
+    // Note: Image upload is not yet implemented in backend for users
+    // We only send text data for now
+    await $fetch('/api/users', {
+      method: 'POST',
+      body: {
+        name: form.value.name,
+        email: form.value.email,
+        password: form.value.password,
+        role: form.value.role,
+        bio: form.value.bio,
+        phone: form.value.phone,
+        status: 'verified' // Super Admin additions are verified by default
+      }
+    })
+    
+    alert('User baru berhasil ditambahkan!')
+    router.push('/super-admin/users')
+  } catch (error: any) {
+    alert(error.data?.statusMessage || 'Gagal menambahkan user')
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>

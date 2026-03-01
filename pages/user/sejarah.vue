@@ -92,16 +92,30 @@
           </p>
           </div>
         </div>
+        <!-- Empty State -->
+        <div v-if="founders.length === 0" class="col-span-full py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Tokoh</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi tokoh pendiri akan segera hadir di sini. Data tokoh akan segera diperbarui.</p>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useContentStore } from '~/stores/content'
 
 const store = useContentStore()
+
+onMounted(() => {
+  store.fetchHistory()
+})
 
 const milestones = computed(() => store.history.milestones)
 const founders = computed(() => store.figures)

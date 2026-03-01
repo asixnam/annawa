@@ -28,7 +28,7 @@ onMounted(() => {
 
   if (role === 'admin:paud') {
     return navigateTo('/admin/paud')
-  } else if (role === 'admin:sd') {
+  } else if (role === 'admin:sdqta') {
     return navigateTo('/admin/sdqta')
   } else if (role === 'admin:pondok') {
     return navigateTo('/admin/pondok')

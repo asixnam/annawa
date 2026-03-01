@@ -1,6 +1,12 @@
 <template>
   <div>
+    <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+      <strong class="font-bold">Error!</strong>
+      <span class="block sm:inline">{{ error }}</span>
+    </div>
+    <div v-if="loading" class="text-center py-4">Memuat data...</div>
     <PaudStudentList 
+       v-else
       :students="students"
       @create="() => navigateTo('/admin/paud/students/create')"
       @detail="(s: any) => navigateTo('/admin/paud/students/' + s.id + '/detail')"
@@ -25,15 +31,46 @@ definePageMeta({
   }
 })
 
-const students = ref([
-  { id: 1, nama: 'Muhammad Fatih', nik: '3316012345678901', jk: 'laki-laki', anakKe: 1, noHp: '081234567890', tahunPendaftaran: '2025' },
-  { id: 2, nama: 'Siti Fatimah', nik: '3316012345678902', jk: 'perempuan', anakKe: 2, noHp: '081234567891', tahunPendaftaran: '2025' },
-  { id: 3, nama: 'Abdurrahman', nik: '3316012345678903', jk: 'laki-laki', anakKe: 1, noHp: '081234567892', tahunPendaftaran: '2024' }
-])
+const students = ref<any[]>([])
+const loading = ref(true)
+const error = ref('')
 
-function deleteStudent(id: number) {
+async function fetchStudents() {
+  loading.value = true
+  error.value = ''
+  try {
+    const data: any[] = await $fetch('/api/students?unit_id=PAUD')
+    students.value = data.map(s => ({
+      ...s,
+      nama: s.name,
+      jk: s.gender,
+      tahunPendaftaran: s.registration_year?.toString() || '-',
+      noHp: s.phone,
+      nik: s.nik,
+      id: s.id
+    }))
+  } catch (e: any) {
+    console.error('Failed to fetch students', e)
+    error.value = e.message || 'Gagal memuat data murid.'
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchStudents()
+})
+
+async function deleteStudent(id: number) {
   if (confirm('Apakah Anda yakin ingin menghapus data murid ini?')) {
-    students.value = students.value.filter(s => s.id !== id)
+    try {
+      await $fetch(`/api/students/${id}`, { method: 'DELETE' })
+      students.value = students.value.filter(s => s.id !== id)
+      alert('Data murid berhasil dihapus')
+    } catch (e) {
+      console.error('Failed to delete', e)
+      alert('Gagal menghapus data murid.')
+    }
   }
 }
 </script>

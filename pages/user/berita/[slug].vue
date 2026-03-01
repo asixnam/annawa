@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50/50">
+  <div class="min-h-screen transition-colors duration-300">
     <div v-if="berita" class="container mx-auto px-6 py-24">
       <div class="max-w-4xl mx-auto">
         <!-- Breadcrumb -->
@@ -25,7 +25,7 @@
         </header>
 
         <!-- Image -->
-        <div class="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden mb-12 shadow-2xl shadow-gray-200/50">
+        <div class="relative h-[400px] md:h-[500px] rounded overflow-hidden mb-12 shadow-2xl transition-colors duration-300">
           <img 
             v-if="berita.image" 
             :src="berita.image" 
@@ -40,14 +40,37 @@
         </div>
 
         <!-- Content -->
-        <div class="prose prose-lg max-w-none text-gray-600 leading-relaxed font-serif bg-white p-10 md:p-16 rounded-3xl border border-gray-100 shadow-sm">
+        <div class="prose prose-lg max-w-none text-gray-600 leading-relaxed font-serif bg-white p-10 md:p-16 rounded border border-gray-100 shadow-sm">
           <p class="mb-6 whitespace-pre-wrap">{{ berita.content }}</p>
-          <p class="mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
         </div>
       </div>
     </div>
     
+    <!-- Berita Terkait / Lainnya -->
+    <div v-if="berita && otherNews.length > 0" class="container mx-auto px-6 pb-24 border-t border-gray-100 pt-16 mt-8">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl md:text-3xl font-black text-main font-heading">Berita Terbaru Lainnya</h2>
+          <NuxtLink to="/user/berita" class="text-brand-600 font-bold uppercase tracking-wider text-xs hover:text-black transition-colors flex items-center">
+            Lihat Semua
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </NuxtLink>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <BeritaCard
+            v-for="item in otherNews"
+            :key="item.id"
+            :title="item.title"
+            :excerpt="item.excerpt"
+            :image="item.image"
+            :date="item.date"
+            :slug="item.slug"
+          />
+        </div>
+      </div>
+    </div>
     <div v-else class="container mx-auto px-6 py-24 text-center">
       <h2 class="text-2xl font-bold text-gray-900">Berita tidak ditemukan</h2>
       <NuxtLink to="/user/berita" class="mt-4 inline-block px-6 py-3 bg-brand-500 text-black font-bold rounded-xl">Kembali ke Berita</NuxtLink>
@@ -58,13 +81,36 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useContentStore } from '~/stores/content'
+import { useFetch } from '#app'
+import BeritaCard from '~/components/BeritaCard.vue'
 
 const route = useRoute()
 const slug = route.params.slug
-const store = useContentStore()
 
-const berita = computed(() => store.news.find(b => b.slug === slug))
+const { data: berita } = await useFetch(`/api/news/slug/${slug}`, {
+  transform: (data: any) => ({
+    ...data,
+    image: data.image_url,
+    date: data.created_at
+  })
+})
+
+const { data: newsData } = await useFetch('/api/news')
+
+const otherNews = computed(() => {
+  if (!newsData.value) return []
+  return (newsData.value as any[])
+    .filter(n => (!n.type || n.type === 'Berita') && n.slug !== slug)
+    .slice(0, 3)
+    .map(n => ({
+      id: n.id,
+      title: n.title,
+      excerpt: n.content ? n.content.substring(0, 100) + '...' : '',
+      image: n.image_url,
+      date: new Date(n.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+      slug: n.slug
+    }))
+})
 
 const formattedDate = computed(() => {
   if (!berita.value) return ''

@@ -116,13 +116,22 @@
               <label class="text-sm font-bold text-main">Scan/Foto Akta Kelahiran</label>
               
               <div v-if="initialData.files?.akta && !form.files.akta" class="p-3 bg-brand-50 dark:bg-brand-900/20 rounded-xl border border-brand-100 dark:border-brand-500/20 flex items-center justify-between group">
-                <div class="flex items-center gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span class="text-xs font-bold text-brand-700 dark:text-brand-400 truncate">{{ initialData.files.akta }}</span>
                 </div>
-                <span class="text-[10px] font-black uppercase text-brand-400 tracking-widest whitespace-nowrap">Sudah Ada</span>
+                <div class="flex items-center gap-2">
+                  <a :href="'/uploads/students/' + initialData.files.akta" target="_blank" class="text-[10px] font-bold text-blue-600 hover:text-blue-800 hover:underline uppercase tracking-wider">Lihat</a>
+                  <span class="text-[10px] font-black uppercase text-brand-400 tracking-widest whitespace-nowrap">Sudah Ada</span>
+                </div>
+              </div>
+              <div v-else-if="props.isEdit && !form.files.akta" class="p-3 bg-gray-50 dark:bg-gray-800/40 rounded-xl border border-gray-100 dark:border-gray-700/50 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span class="text-[10px] font-bold text-gray-400 italic">Data file belum di-upload</span>
               </div>
 
               <div class="relative group">
@@ -152,13 +161,22 @@
               <label class="text-sm font-bold text-main">Scan/Foto Kartu Keluarga</label>
               
               <div v-if="initialData.files?.kk && !form.files.kk" class="p-3 bg-brand-50 dark:bg-brand-900/20 rounded-xl border border-brand-100 dark:border-brand-500/20 flex items-center justify-between group">
-                <div class="flex items-center gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span class="text-xs font-bold text-brand-700 dark:text-brand-400 truncate">{{ initialData.files.kk }}</span>
                 </div>
-                <span class="text-[10px] font-black uppercase text-brand-400 tracking-widest whitespace-nowrap">Sudah Ada</span>
+                <div class="flex items-center gap-2">
+                  <a :href="'/uploads/students/' + initialData.files.kk" target="_blank" class="text-[10px] font-bold text-blue-600 hover:text-blue-800 hover:underline uppercase tracking-wider">Lihat</a>
+                  <span class="text-[10px] font-black uppercase text-brand-400 tracking-widest whitespace-nowrap">Sudah Ada</span>
+                </div>
+              </div>
+              <div v-else-if="props.isEdit && !form.files.kk" class="p-3 bg-gray-50 dark:bg-gray-800/40 rounded-xl border border-gray-100 dark:border-gray-700/50 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span class="text-[10px] font-bold text-gray-400 italic">Data file belum di-upload</span>
               </div>
 
               <div class="relative group">
@@ -198,18 +216,23 @@
           Batal
         </button>
 
-        <!-- Submit Button -->
-        <button 
-          type="submit" 
-          :disabled="isLoading"
-          class="group px-6 py-3 bg-brand-500 text-black rounded-xl font-bold text-sm hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-        >
-          <span v-if="isLoading">Sedang Mengirim...</span>
-          <span v-else>{{ submitLabel }}</span>
-          <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg>
-        </button>
+        <div class="flex items-center gap-3">
+          <!-- Extra Actions Slot -->
+          <slot name="actions"></slot>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            :disabled="isLoading"
+            class="group px-6 py-3 bg-brand-500 text-black rounded-xl font-bold text-sm hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            <span v-if="isLoading">Sedang Mengirim...</span>
+            <span v-else>{{ submitLabel }}</span>
+            <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
+        </div>
       </div>
     </form>
 
@@ -232,7 +255,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 
 const props = defineProps({
   submitLabel: {
@@ -277,24 +300,31 @@ const form = reactive({
   }
 })
 
+function populateForm(data: Record<string, any>) {
+  if (!data || Object.keys(data).length === 0) return
+  form.namaLengkap = data.name || data.namaLengkap || ''
+  form.nik = data.nik || ''
+  form.tempatLahir = data.birth_place || data.tempatLahir || ''
+  form.tanggalLahir = data.birth_date ? data.birth_date.split('T')[0] : (data.tanggalLahir || '')
+  form.jenisKelamin = data.gender || data.jk || data.jenisKelamin || ''
+  form.anakKe = data.child_order || data.anakKe || ''
+  form.alamat = data.address || data.alamat || ''
+  form.namaAyah = data.father_name || data.parent_name || data.namaAyah || ''
+  form.pekerjaanAyah = data.father_job || data.pekerjaanAyah || ''
+  form.namaIbu = data.mother_name || data.namaIbu || ''
+  form.pekerjaanIbu = data.mother_job || data.pekerjaanIbu || ''
+  form.noHp = data.phone || data.noHp || ''
+}
+
 onMounted(() => {
-  if (props.initialData && Object.keys(props.initialData).length > 0) {
-    // Map initialData fields to form fields
-    const data = props.initialData
-    form.namaLengkap = data.nama || data.namaLengkap || ''
-    form.nik = data.nik || ''
-    form.tempatLahir = data.tempatLahir || ''
-    form.tanggalLahir = data.tanggalLahir || ''
-    form.jenisKelamin = data.jk || data.jenisKelamin || ''
-    form.anakKe = data.anakKe || ''
-    form.alamat = data.alamat || ''
-    form.namaAyah = data.namaAyah || ''
-    form.pekerjaanAyah = data.pekerjaanAyah || ''
-    form.namaIbu = data.namaIbu || ''
-    form.pekerjaanIbu = data.pekerjaanIbu || ''
-    form.noHp = data.noHp || ''
-  }
+  populateForm(props.initialData)
 })
+
+watch(() => props.initialData, (newData) => {
+  if (newData && Object.keys(newData).length > 0) {
+    populateForm(newData)
+  }
+}, { deep: true })
 
 const handleFileUpload = (event: Event, type: keyof typeof form.files) => {
   const target = event.target as HTMLInputElement
@@ -306,34 +336,80 @@ const handleFileUpload = (event: Event, type: keyof typeof form.files) => {
 const handleSubmit = async () => {
   isLoading.value = true
   
-  // Simulate API call
   try {
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    console.log('SPMB PAUD Form data:', form)
-    showSuccess.value = true
-    emit('success', { ...form })
+    const formData = new FormData()
+    formData.append('name', form.namaLengkap)
+    formData.append('nik', form.nik) // Changed from 'nis' to 'nik' as per existing form
+    formData.append('birth_place', form.tempatLahir)
+    formData.append('birth_date', form.tanggalLahir)
+    formData.append('gender', form.jenisKelamin)
+    formData.append('address', form.alamat)
+    formData.append('father_name', form.namaAyah) // Changed from 'parent_name' to 'father_name'
+    formData.append('father_job', form.pekerjaanAyah)
+    formData.append('mother_name', form.namaIbu)
+    formData.append('mother_job', form.pekerjaanIbu)
+    formData.append('phone', form.noHp)
+    formData.append('registration_year', new Date().getFullYear().toString())
+    formData.append('unit', 'PAUD')
+    formData.append('status', 'active')
+    formData.append('child_order', form.anakKe)
+
+    if (form.files.akta) {
+      formData.append('akta', form.files.akta)
+    }
+    if (form.files.kk) {
+      formData.append('kk', form.files.kk)
+    }
+    
+    let response;
+     if (props.isEdit && props.initialData?.id) {
+       response = await $fetch(`/api/students/${props.initialData.id}`, {
+         method: 'PUT',
+         body: formData
+       })
+    } else {
+       response = await $fetch('/api/students', {
+         method: 'POST',
+         body: formData
+       })
+    }
+
+    console.log('PAUD Form submitted:', response)
+    
+    if (props.useModal) {
+      showSuccess.value = true
+    } else {
+      emit('success', { ...form, ...response })
+    }
     
     // Reset form
-    Object.assign(form, {
-      namaLengkap: '',
-      nik: '',
-      tempatLahir: '',
-      tanggalLahir: '',
-      jenisKelamin: '',
-      anakKe: '',
-      alamat: '',
-      namaAyah: '',
-      pekerjaanAyah: '',
-      namaIbu: '',
-      pekerjaanIbu: '',
-      noHp: '',
-      files: {
-        akta: null,
-        kk: null
-      }
-    })
-  } catch (error) {
+    if (!props.isEdit) {
+      Object.assign(form, {
+        namaLengkap: '',
+        nik: '',
+        tempatLahir: '',
+        tanggalLahir: '',
+        jenisKelamin: '',
+        anakKe: '',
+        alamat: '',
+        namaAyah: '',
+        pekerjaanAyah: '',
+        namaIbu: '',
+        pekerjaanIbu: '',
+        noHp: '',
+        files: {
+          akta: null,
+          kk: null
+        }
+      })
+    }
+  } catch (error: any) {
     console.error('Submission error:', error)
+     if (error.response?.status === 409 || error.statusCode === 409) {
+      alert('Gagal: NIK atau NISN sudah terdaftar. Data murid ini sudah ada.')
+    } else {
+      alert('Terjadi kesalahan saat menyimpan data: ' + (error.data?.statusMessage || error.message))
+    }
   } finally {
     isLoading.value = false
   }

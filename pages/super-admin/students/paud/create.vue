@@ -24,8 +24,8 @@ import PaudStudentEdit from '../../../../components/students/PaudStudentEdit.vue
 definePageMeta({ layout: 'super-admin' })
 const router = useRouter()
 
-function saveStudent(formData: any) {
-  console.log('Saving PAUD Student:', formData)
+async function saveStudent(formData: any) {
+  console.log('Student saved successfully via component:', formData)
   alert('Data murid PAUD baru berhasil ditambahkan!')
   router.push('/super-admin/students/paud')
 }

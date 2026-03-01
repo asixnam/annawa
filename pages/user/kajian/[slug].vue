@@ -111,15 +111,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useContentStore } from '~/stores/content'
+import { useFetch } from '#app'
 
 const route = useRoute()
 const slug = route.params.slug
-const store = useContentStore()
 
-const kajian = computed(() => store.kajian.find(k => k.slug === slug))
+const { data: kajian } = await useFetch(`/api/kajian/slug/${slug}`, {
+  transform: (data: any) => ({
+    ...data,
+    ustadz: data.ustadz_name,
+    time: data.schedule,
+    // other fields match (title, location, description, category)
+  })
+})
 </script>
 
 <style scoped>

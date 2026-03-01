@@ -1,39 +1,31 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { useCookie } from '#imports'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null as null | { id: string; name: string; role: string })
+  const user = useCookie<null | { id: string; name: string; role: string; image_url?: string }>('auth_user', {
+    default: () => null,
+    watch: true
+  })
 
   function setUser(u: any) { user.value = u }
 
   async function login(payload: { email: string; password: string }) {
-    // TODO: replace with real API call
-    if (payload.email === 'super@local' && payload.password === 'pass') {
-      setUser({ id: '1', name: 'Super Admin', role: 'super' })
-      return
-    }
-    if (payload.email === 'paud@local' && payload.password === 'pass') {
-      setUser({ id: '2', name: 'Admin PAUD', role: 'admin:paud' })
-      return
-    }
+    try {
+      const { data, error } = await useFetch('/api/auth/login', {
+        method: 'POST',
+        body: payload
+      })
 
-    if (payload.email === 'sd@local' && payload.password === 'pass') {
-      setUser({ id: '6', name: 'Admin SDQTA', role: 'admin:sd' })
-      return
+      if (error.value) {
+        throw new Error(error.value.statusMessage || 'Login failed')
+      }
+
+      if (data.value && data.value.user) {
+        setUser(data.value.user)
+      }
+    } catch (err: any) {
+      throw new Error(err.message || 'Login failed')
     }
-    if (payload.email === 'pondok@local' && payload.password === 'pass') {
-      setUser({ id: '7', name: 'Admin Pondok', role: 'admin:pondok' })
-      return
-    }
-    if (payload.email === 'user@local' && payload.password === 'pass') {
-      setUser({ id: '3', name: 'Santri', role: 'user' })
-      return
-    }
-    if (payload.email === 'author@local' && payload.password === 'pass') {
-      setUser({ id: '4', name: 'Ustadz Author', role: 'author' })
-      return
-    }
-    throw new Error('Invalid credentials')
   }
 
   function logout() { user.value = null }

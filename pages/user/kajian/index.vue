@@ -23,7 +23,7 @@
 
     <!-- Filter Section -->
     <section class="container mx-auto px-6 -mt-8 relative z-20">
-      <div class="bg-card rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
+      <div class="bg-card rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
         <!-- Mobile View: Dropdown -->
         <div class="block md:hidden relative">
           <select 
@@ -90,18 +90,32 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useFetch } from '#app'
 import KajianCard from '~/components/KajianCard.vue'
-import { useContentStore } from '~/stores/content'
 
-const store = useContentStore()
 const categories = ref(['Semua', 'Sorogan', 'Tahfidzul Quran', 'Bahtsul Masail', 'Bandongan'])
 const selectedCategory = ref('Semua')
 
+const { data: kajian } = await useFetch('/api/kajian')
+
 const filteredKajian = computed(() => {
-  if (selectedCategory.value === 'Semua') {
-    return store.kajian
+  if (!kajian.value) return []
+  let items = kajian.value as any[]
+
+  if (selectedCategory.value !== 'Semua') {
+    items = items.filter(k => k.category === selectedCategory.value)
   }
-  return store.kajian.filter(k => k.category === selectedCategory.value)
+
+  return items.map(k => ({
+    id: k.id,
+    title: k.title,
+    ustadz: k.ustadz_name,
+    time: k.schedule,
+    location: k.location,
+    description: k.description,
+    category: k.category,
+    slug: k.slug
+  }))
 })
 </script>
 

@@ -29,19 +29,24 @@
         <div class="flex justify-center lg:justify-start">
           <div class="w-64 h-64 lg:w-80 lg:h-80 flex-shrink-0">
             <img 
-              src="/annawa.png" 
-              alt="SDQTA An-Nawa" 
-              class="w-full h-full object-contain shadow-xl border-4 border-card bg-card p-8 hover:scale-105 transition-all duration-500 dark:border-gray-800"
+              :src="sdUnit?.image_url || '/annawa.png'" 
+              :alt="sdUnit?.name || 'SDQTA An-Nawa'" 
+              class="w-full h-full object-cover rounded-2xl shadow-xl border-4 border-card hover:scale-105 transition-all duration-500 dark:border-gray-800"
             />
           </div>
         </div>
         <div class="space-y-6 text-gray-600 dark:text-gray-400 leading-relaxed text-lg text-justify pt-6 lg:max-w-2xl">
-          <p>
-            SDQTA (Sekolah Dasar Qur'an Terpadu) An-Nawa Khozinatul Ulum adalah institusi pendidikan dasar yang mengintegrasikan kurikulum nasional dengan pendidikan agama yang mendalam, khususnya dalam bidang Tahfidz Al-Qur'an.
+          <p v-if="sdUnit?.description">
+            {{ sdUnit.description }}
           </p>
-          <p>
-            Kami berkomitmen untuk melahirkan lulusan yang cerdas secara intelektual, memiliki hafalan Al-Qur'an yang mutqin, serta berakhlak mulia sesuai dengan tuntunan Rasulullah SAW.
-          </p>
+          <template v-else>
+            <p>
+              SDQTA (Sekolah Dasar Qur'an Terpadu) An-Nawa Khozinatul Ulum adalah institusi pendidikan dasar yang mengintegrasikan kurikulum nasional dengan pendidikan agama yang mendalam, khususnya dalam bidang Tahfidz Al-Qur'an.
+            </p>
+            <p>
+              Kami berkomitmen untuk melahirkan lulusan yang cerdas secara intelektual, memiliki hafalan Al-Qur'an yang mutqin, serta berakhlak mulia sesuai dengan tuntunan Rasulullah SAW.
+            </p>
+          </template>
         </div>
       </div>
     </section>
@@ -55,7 +60,7 @@
               Visi <span class="text-brand-500 ml-1">SDQTA</span>
             </h3>
             <p class="text-main text-lg font-medium leading-relaxed italic border-l-4 border-brand-500 pl-4">
-              "Mewujudkan generasi Rabbani yang hafidz Al-Qur'an, unggul dalam prestasi, dan berkarakter islami."
+              "{{ sdUnit?.vision || 'Mewujudkan generasi Rabbani yang hafidz Al-Qur\'an, unggul dalam prestasi, dan berkarakter islami.' }}"
             </p>
           </div>
 
@@ -66,7 +71,7 @@
             <ul class="space-y-4">
               <li v-for="(misi, index) in misis" :key="index" class="flex items-start gap-3">
                 <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500 text-black flex items-center justify-center font-bold text-xs">
-                  {{ index + 1 }}
+                  {{ Number(index) + 1 }}
                 </span>
                 <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{{ misi }}</p>
               </li>
@@ -86,9 +91,22 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div v-for="item in facilities" :key="item.name" class="bg-card p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800/40 text-center group hover:border-brand-500 transition-all">
-            <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">{{ item.icon }}</div>
+            <div class="w-16 h-16 rounded-xl bg-brand-50 flex items-center justify-center mx-auto mb-4 overflow-hidden group-hover:bg-brand-500/10 transition-colors duration-300">
+               <img v-if="item.icon && (item.icon.startsWith('http') || item.icon.startsWith('data:') || item.icon.startsWith('/'))" :src="item.icon" class="w-full h-full object-cover">
+               <span v-else class="text-3xl group-hover:scale-110 transition-transform duration-300">{{ item.icon }}</span>
+            </div>
             <h4 class="text-sm font-bold text-main">{{ item.name }}</h4>
           </div>
+        </div>
+        <!-- Empty State -->
+        <div v-if="facilities.length === 0" class="col-span-full py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Fasilitas</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi fasilitas akan segera hadir di sini. Data fasilitas akan segera diperbarui.</p>
         </div>
       </div>
     </section>
@@ -108,6 +126,16 @@
               <h4 class="text-white font-bold text-lg leading-tight">{{ activity.title }}</h4>
             </div>
           </div>
+        </div>
+        <!-- Empty State -->
+        <div v-if="activities.length === 0" class="col-span-full py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Kegiatan</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi kegiatan akan segera hadir di sini. Data kegiatan akan segera diperbarui.</p>
         </div>
       </div>
     </section>
@@ -129,13 +157,23 @@
             <img 
               :src="teacher.photo" 
               :alt="teacher.name" 
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+              class="w-full h-full object-cover transition-all duration-500" 
             />
           </div>
           <h4 class="text-lg font-bold text-main mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ teacher.name }}</h4>
           <p class="text-brand-600 text-[11px] font-bold uppercase tracking-wider mb-1">
             {{ teacher.position }}
           </p>
+        </div>
+        <!-- Empty State -->
+        <div v-if="teachers.length === 0" class="col-span-full py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Guru</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi guru akan segera hadir di sini. Data guru akan segera diperbarui.</p>
         </div>
       </div>
     </section>
@@ -165,53 +203,36 @@
 </template>
 
 <script setup lang="ts">
-const misis = [
-  "Menyelenggarakan pendidikan dasar IT (Islam Terpadu) yang berkualitas tinggi.",
-  "Membekali santri dengan hafalan Al-Qur'an minimal 5-10 juz (sesuai target jenjang).",
-  "Menumbuhkan kecintaan terhadap ilmu pengetahuan dan teknologi.",
-  "Menerapkan kedisiplinan dan pembiasaan islami dalam kehidupan sehari-hari.",
-  "Mengembangkan bakat dan minat santri melalui berbagai kegiatan ekstrakurikuler."
-]
+import { computed, onMounted } from 'vue'
+import { useContentStore } from '~/stores/content'
 
-const facilities = [
-  { name: "Gedung Representatif", icon: "🏛️" },
-  { name: "Laboratorium Komputer", icon: "💻" },
-  { name: "Perpustakaan Lengkap", icon: "📚" },
-  { name: "Lapangan Olahraga", icon: "⚽" },
-  { name: "Musholla Nyaman", icon: "🕌" },
-  { name: "Kantin Sehat", icon: "🍱" },
-  { name: "UKS", icon: "🏥" },
-  { name: "Studio Tahfidz", icon: "🎙️" }
-]
+const store = useContentStore()
 
-const activities = [
-  { title: "Mukhayyam Al-Qur'an", image: "https://images.unsplash.com/photo-1544027993-37dbfe43552e?q=80&w=800&auto=format&fit=crop" },
-  { title: "Pramuka & Kepanduan", image: "https://images.unsplash.com/photo-1510522134121-2236c571001e?q=80&w=800&auto=format&fit=crop" },
-  { title: "Lomba Kreativitas Siswa", image: "https://images.unsplash.com/photo-1491321447008-4c8a5979bc75?q=80&w=800&auto=format&fit=crop" }
-]
-
-const teachers = [
-  {
-    name: "Ustadz H. Abdullah, M.Pd",
-    position: "Kepala SDQTA",
-    photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&h=500&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadzah Siti Zulaikha, S.Pd",
-    position: "Koordinator Kurikulum",
-    photo: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=400&h=500&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadz Mansyur Al-Hafidz",
-    position: "Koordinator Tahfidz",
-    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&h=500&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadzah Rohmah, S.Pd",
-    position: "Guru Tematik",
-    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&h=500&auto=format&fit=crop"
+// Fetch Data
+onMounted(() => {
+  if (store.units.length === 0) {
+    store.fetchUnits()
   }
-]
+})
+
+// Find SD Unit
+const sdUnit = computed(() => {
+  if (store.units.length === 0) return null
+  return (store.units as any[]).find(u => u.id === 'sd') || (store.units as any[]).find(u => u.name.toLowerCase().includes('sd'))
+})
+
+const misis = computed(() => {
+  if (!sdUnit.value?.mission) return [
+    "Menyelenggarakan pendidikan dasar IT (Islam Terpadu) yang berkualitas tinggi.",
+    "Membekali santri dengan hafalan Al-Qur'an minimal 5-10 juz (sesuai target jenjang).",
+    "Menumbuhkan kecintaan terhadap ilmu pengetahuan dan teknologi."
+  ]
+  return Array.isArray(sdUnit.value.mission) ? sdUnit.value.mission : [sdUnit.value.mission]
+})
+
+const facilities = computed(() => sdUnit.value?.facilities || [])
+const activities = computed(() => sdUnit.value?.activities || [])
+const teachers = computed(() => sdUnit.value?.staff || [])
 </script>
 
 <style scoped>

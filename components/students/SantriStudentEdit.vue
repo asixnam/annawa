@@ -11,14 +11,18 @@
       <p class="text-gray-500 font-medium">Memuat data...</p>
     </div>
 
-    <div v-else class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+    <div v-else class="rounded-0 shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
       <PpdbSantriForm 
         :initial-data="initialData"
         :is-edit="isEdit"
         :use-modal="false"
         @success="(data) => $emit('success', data)"
         @cancel="() => $emit('cancel')"
-      />
+      >
+        <template #actions>
+          <slot name="actions"></slot>
+        </template>
+      </PpdbSantriForm>
       <slot name="footer"></slot>
     </div>
   </div>
@@ -42,7 +46,7 @@ defineProps({
   },
   title: {
     type: String,
-    default: 'Edit Data Santri'
+    default: 'Edit'
   }
 })
 

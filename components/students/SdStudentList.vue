@@ -129,7 +129,7 @@ const availableYears = ['2023', '2024', '2025', '2026']
 
 const filteredItems = computed(() => {
   return props.students.filter(s => {
-    const matchYear = !selectedYear.value || s.tahunPendaftaran === selectedYear.value
+    const matchYear = !selectedYear.value || s.tahunPendaftaran == selectedYear.value
     const matchGender = !selectedGender.value || (s.jenisKelamin || s.jk) === selectedGender.value
     return matchYear && matchGender
   })

@@ -12,30 +12,31 @@
         </NuxtLink>
 
         <!-- Menu Desktop (Center) -->
-        <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 text-main font-bold uppercase text-[13px] tracking-wide">
-          <NuxtLink to="/" class="hover:text-primary transition-colors">Home</NuxtLink>
+        <nav class="hidden md:flex items-center space-x-2 text-main font-bold uppercase text-[12px] tracking-wide">
+          <NuxtLink to="/" class="px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-all" active-class="bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10">Home</NuxtLink>
           
           <!-- Dropdown About -->
-          <div class="relative group h-full py-2" @mouseenter="isAboutOpen = true" @mouseleave="isAboutOpen = false">
-            <button class="hover:text-primary transition-colors flex items-center gap-1 uppercase">
+          <div class="relative group h-full" @mouseenter="isAboutOpen = true" @mouseleave="isAboutOpen = false">
+            <button 
+              class="px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-all flex items-center gap-1 uppercase"
+              :class="{ 'bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10': isAboutActive }"
+            >
               About
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            <div v-show="isAboutOpen" class="absolute top-full left-0 mt-0 w-48 bg-card shadow-xl py-2 border-t-2 border-primary">
-              <NuxtLink to="/user/profil" class="block px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 hover:text-primary transition-colors text-[11px] text-main">Profil</NuxtLink>
-              <NuxtLink to="/user/sejarah" class="block px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 hover:text-primary transition-colors text-[11px] text-main">Sejarah</NuxtLink>
-              <NuxtLink to="/user/paud" class="block px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 hover:text-primary transition-colors text-[11px] text-main">PAUD An-Nawa Khozinatul Ulum
-              </NuxtLink>
-              <NuxtLink to="/user/sdqta" class="block px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 hover:text-primary transition-colors text-[11px] text-main">SDQTA An-Nawa Khozinatul Ulum
-              </NuxtLink>
+            <div v-show="isAboutOpen" class="absolute top-full left-0 mt-0 w-56 bg-white dark:bg-gray-900 shadow-xl py-2 border-t-2 border-primary z-[60]">
+              <NuxtLink to="/user/profil" class="block px-4 py-3 hover:bg-primary hover:text-white transition-colors text-[11px] text-main font-bold">Profil</NuxtLink>
+              <NuxtLink to="/user/sejarah" class="block px-4 py-3 hover:bg-primary hover:text-white transition-colors text-[11px] text-main font-bold">Sejarah</NuxtLink>
+              <NuxtLink to="/user/paud" class="block px-4 py-3 hover:bg-primary hover:text-white transition-colors text-[11px] text-main font-bold">PAUD An-Nawa Khozinatul Ulum</NuxtLink>
+              <NuxtLink to="/user/sdqta" class="block px-4 py-3 hover:bg-primary hover:text-white transition-colors text-[11px] text-main font-bold">SDQTA An-Nawa Khozinatul Ulum</NuxtLink>
             </div>
           </div>
 
-          <NuxtLink to="/user/kajian" class="hover:text-primary transition-colors">Kajian</NuxtLink>
-          <NuxtLink to="/user/berita" class="hover:text-primary transition-colors">Berita</NuxtLink>
-          <NuxtLink to="/user/galeri" class="hover:text-primary transition-colors">Galeri</NuxtLink>
+          <NuxtLink to="/user/kajian" class="px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-all" active-class="bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10">Kajian</NuxtLink>
+          <NuxtLink to="/user/berita" class="px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-all" active-class="bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10">Berita</NuxtLink>
+          <NuxtLink to="/user/galeri" class="px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-all" active-class="bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10">Galeri</NuxtLink>
         </nav>
 
         <!-- CTA & Tools -->
@@ -49,9 +50,9 @@
               </svg>
             </button>
             <div v-show="isCtaOpen" class="absolute right-0 top-full mt-0 w-56 bg-white dark:bg-gray-900 shadow-xl py-2 border-t-2 border-primary z-[60]">
-              <NuxtLink to="/user/psb" class="block px-4 py-3 hover:bg-primary/10 hover:text-primary transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar Santri (PSB)</NuxtLink>
-              <NuxtLink to="/user/ppdb/paud" class="block px-4 py-3 hover:bg-primary/10 hover:text-primary transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar PAUD</NuxtLink>
-              <NuxtLink to="/user/ppdb/sd" class="block px-4 py-3 hover:bg-primary/10 hover:text-primary transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar SDQTA</NuxtLink>
+              <NuxtLink to="/user/psb" class="block px-4 py-3 hover:bg-primary hover:text-white transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar Santri (PSB)</NuxtLink>
+              <NuxtLink to="/user/ppdb/paud" class="block px-4 py-3 hover:bg-primary hover:text-white transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar PAUD</NuxtLink>
+              <NuxtLink to="/user/ppdb/sd" class="block px-4 py-3 hover:bg-primary hover:text-white transition-colors text-[11px] font-bold uppercase tracking-wider">Daftar SDQTA</NuxtLink>
             </div>
           </div>
           
@@ -70,7 +71,7 @@
     <!-- Mobile menu -->
     <div v-if="isOpen" class="md:hidden mt-4">
       <div class="bg-white/90 dark:bg-gray-950/90 backdrop-blur-md rounded-2xl shadow-lg px-6 py-4 space-y-1">
-        <NuxtLink to="/" class="block py-2 hover:text-primary transition-colors">Home</NuxtLink>
+        <NuxtLink to="/" class="block py-2 hover:text-primary transition-colors" @click="isOpen = false">Home</NuxtLink>
         
         <!-- Mobile About Dropdown -->
         <div>
@@ -81,12 +82,10 @@
             </svg>
           </button>
           <div v-show="isAboutMobileOpen" class="pl-4 space-y-1 border-l-2 border-primary ml-1 font-bold text-sm">
-            <NuxtLink to="/user/profil" class="block py-2 text-gray-600 hover:text-primary transition-colors">Profil</NuxtLink>
-            <NuxtLink to="/user/sejarah" class="block py-2 text-gray-600 hover:text-primary transition-colors">Sejarah</NuxtLink>
-            <NuxtLink to="/user/paud" class="block py-2 text-gray-600 hover:text-primary transition-colors">PAUD An-Nawa Khozinatul Ulum
-            </NuxtLink>
-            <NuxtLink to="/user/sdqta" class="block py-2 text-gray-600 hover:text-primary transition-colors">SDQTA An-Nawa Khozinatul Ulum
-            </NuxtLink>
+            <NuxtLink to="/user/profil" class="block py-2 text-gray-600 hover:text-primary transition-colors" @click="isOpen = false">Profil</NuxtLink>
+            <NuxtLink to="/user/sejarah" class="block py-2 text-gray-600 hover:text-primary transition-colors" @click="isOpen = false">Sejarah</NuxtLink>
+            <NuxtLink to="/user/paud" class="block py-2 text-gray-600 hover:text-primary transition-colors" @click="isOpen = false">PAUD An-Nawa Khozinatul Ulum</NuxtLink>
+            <NuxtLink to="/user/sdqta" class="block py-2 text-gray-600 hover:text-primary transition-colors" @click="isOpen = false">SDQTA An-Nawa Khozinatul Ulum</NuxtLink>
           </div>
         </div>
 
@@ -99,22 +98,23 @@
             </svg>
           </button>
           <div v-show="isCtaMobileOpen" class="pl-4 space-y-1 border-l-2 border-primary ml-1 font-bold text-sm">
-            <NuxtLink to="/user/psb" class="block py-2 text-gray-600 hover:text-primary transition-colors">Daftar Santri</NuxtLink>
-            <NuxtLink to="/user/ppdb/paud" class="block py-2 text-gray-600 hover:text-primary transition-colors">Daftar PAUD</NuxtLink>
-            <NuxtLink to="/user/ppdb/sd" class="block py-2 text-gray-600 hover:text-primary transition-colors">Daftar SDQTA</NuxtLink>
+            <NuxtLink to="/user/psb" class="block py-2 text-gray-600 hover:text-primary transition-colors" @click="isOpen = false">Daftar Santri</NuxtLink>
+            <NuxtLink to="/user/ppdb/paud" class="block py-2 text-gray-600 hover:text-primary transition-colors" @click="isOpen = false">Daftar PAUD</NuxtLink>
+            <NuxtLink to="/user/ppdb/sd" class="block py-2 text-gray-600 hover:text-primary transition-colors" @click="isOpen = false">Daftar SDQTA</NuxtLink>
           </div>
         </div>
 
-        <NuxtLink to="/user/kajian" class="block py-2 hover:text-primary transition-colors font-bold text-sm uppercase">Kajian</NuxtLink>
-        <NuxtLink to="/user/berita" class="block py-2 hover:text-primary transition-colors font-bold text-sm uppercase">Berita</NuxtLink>
-        <NuxtLink to="/user/galeri" class="block py-2 hover:text-primary transition-colors font-bold text-sm uppercase">Galeri</NuxtLink>
+        <NuxtLink to="/user/kajian" class="block py-2 hover:text-primary transition-colors font-bold text-sm uppercase" @click="isOpen = false">Kajian</NuxtLink>
+        <NuxtLink to="/user/berita" class="block py-2 hover:text-primary transition-colors font-bold text-sm uppercase" @click="isOpen = false">Berita</NuxtLink>
+        <NuxtLink to="/user/galeri" class="block py-2 hover:text-primary transition-colors font-bold text-sm uppercase" @click="isOpen = false">Galeri</NuxtLink>
       </div>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import ThemeToggle from './ThemeToggle.vue'
 
 const isOpen = ref(false)
@@ -122,4 +122,9 @@ const isAboutOpen = ref(false)
 const isCtaOpen = ref(false)
 const isAboutMobileOpen = ref(false)
 const isCtaMobileOpen = ref(false)
+
+const route = useRoute()
+const isAboutActive = computed(() => {
+  return ['/user/profil', '/user/sejarah', '/user/paud', '/user/sdqta'].some(path => route.path === path)
+})
 </script>

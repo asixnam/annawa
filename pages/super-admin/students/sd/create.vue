@@ -24,8 +24,8 @@ import SdStudentEdit from '../../../../components/students/SdStudentEdit.vue'
 definePageMeta({ layout: 'super-admin' })
 const router = useRouter()
 
-function saveStudent(formData: any) {
-  console.log('Saving SD Student:', formData)
+async function saveStudent(formData: any) {
+  console.log('Student saved successfully via component:', formData)
   alert('Data murid SDQTA baru berhasil ditambahkan!')
   router.push('/super-admin/students/sd')
 }

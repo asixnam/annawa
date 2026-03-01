@@ -26,53 +26,38 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useFetch } from '#app'
 import SantriStudentDetail from '~/components/students/SantriStudentDetail.vue'
 
 definePageMeta({ layout: 'super-admin' })
 const route = useRoute()
 
 const loading = ref(true)
-const santri = reactive({
-  namaLengkap: '',
-  nisn: '',
-  tempatLahir: '',
-  tanggalLahir: '',
-  jenisKelamin: '',
-  asalSekolah: '',
-  alamat: '',
-  namaAyah: '',
-  pekerjaanAyah: '',
-  namaIbu: '',
-  pekerjaanIbu: '',
-  noHp: '',
-  tahunPendaftaran: '',
-  files: {
-    ktp: 'ktp_ayah_zaidan.pdf',
-    kk: 'kk_zaidan.jpg',
-    akta: 'akta_zaidan.pdf',
-    ijazah: 'ijazah_sd_zaidan.pdf',
-    foto: 'foto_zaidan.jpg'
-  } as Record<string, string>
-})
+const santri = reactive({} as any)
 
-onMounted(() => {
-  setTimeout(() => {
+onMounted(async () => {
+  try {
+    const data: any = await $fetch(`/api/students/${route.params.id}`)
     Object.assign(santri, {
-      namaLengkap: 'Zaidan Al-Fatih',
-      nisn: '0123456789',
-      tempatLahir: 'Blora',
-      tanggalLahir: '2012-05-15',
-      jenisKelamin: 'putra',
-      asalSekolah: 'SD Negeri 1 Blora',
-      alamat: 'Jln. Gajah Mada No. 12, Blora, Jawa Tengah',
-      namaAyah: 'Ahmad Muzaki',
-      pekerjaanAyah: 'Wiraswasta',
-      namaIbu: 'Laila Husna',
-      pekerjaanIbu: 'Guru',
-      noHp: '081234567890',
-      tahunPendaftaran: '2025'
+      namaLengkap: data.name,
+      nisn: data.nis,
+      tempatLahir: data.birth_place,
+      tanggalLahir: data.birth_date ? new Date(data.birth_date).toISOString().split('T')[0] : '',
+      jenisKelamin: data.gender === 'laki-laki' ? 'putra' : (data.gender === 'perempuan' ? 'putri' : data.gender),
+      asalSekolah: data.school_origin,
+      alamat: data.address,
+      namaAyah: data.father_name,
+      pekerjaanAyah: data.father_job,
+      namaIbu: data.mother_name,
+      pekerjaanIbu: data.mother_job,
+      noHp: data.phone,
+      tahunPendaftaran: data.registration_year,
+      files: data.files || {}
     })
+  } catch (e) {
+    // Handle error or redirect
+  } finally {
     loading.value = false
-  }, 800)
+  }
 })
 </script>

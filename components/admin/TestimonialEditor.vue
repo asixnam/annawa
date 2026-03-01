@@ -1,30 +1,33 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div class="mb-6">
-      <NuxtLink :to="basePath" class="text-gray-500 hover:text-gray-700 text-sm mb-2 inline-block">&larr; Kembali ke Daftar</NuxtLink>
+    <div class="mb-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-gray-900">{{ isEdit ? 'Edit Testimoni' : 'Tambah Testimoni' }}</h1>
+      <NuxtLink :to="basePath" class="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 rounded-lg text-[10px] font-black uppercase tracking-widest text-white transition-all shadow-md shrink-0">
+        <img src="https://img.icons8.com/?size=100&id=99287&format=png&color=FFFFFF" alt="Back Arrow" class="w-4 h-4">
+      </NuxtLink>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
       <form @submit.prevent="saveContent" class="space-y-6">
         <div class="flex flex-col items-center mb-6">
-           <div class="relative group">
-             <div class="h-24 w-24 rounded-full bg-gray-100 overflow-hidden border-2 border-brand-500 shadow-lg">
+           <label class="block text-sm font-bold text-gray-700 mb-2">Foto Alumni</label>
+           
+           <div class="relative group mt-2">
+             <div class="h-32 w-32 rounded-full bg-gray-100 overflow-hidden border-2 border-brand-500 shadow-lg flex items-center justify-center">
                <img v-if="form.image" :src="form.image" class="w-full h-full object-cover">
-               <div v-else class="w-full h-full flex items-center justify-center text-gray-400">
-                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                 </svg>
+               <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+               </svg>
+               
+               <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                 <div v-if="isUploading" class="animate-spin h-6 w-6 border-2 border-white border-t-transparent rounded-full"></div>
+                 <span v-else class="text-xs font-bold text-white uppercase tracking-widest">Ubah Foto</span>
                </div>
-               <div @click="triggerFileInput" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px] cursor-pointer">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  </svg>
-               </div>
-               <input type="file" ref="fileInput" class="hidden" accept="image/*" @change="handleFileUpload">
+               
+               <input type="file" @change="handleFileUpload" accept="image/*" :disabled="isUploading" class="absolute inset-0 opacity-0 cursor-pointer">
              </div>
            </div>
-           <span class="mt-2 text-[10px] font-black uppercase text-gray-400 tracking-widest">Foto Alumni</span>
+           <p class="mt-2 text-xs text-gray-400">Klik foto untuk upload (Max 2MB)</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -50,8 +53,8 @@
 
         <div class="pt-4 border-t border-gray-100 flex justify-end gap-3">
           <NuxtLink :to="basePath" class="px-6 py-2.5 border border-gray-300 text-gray-600 font-bold rounded-lg hover:bg-gray-50 transition">Batal</NuxtLink>
-          <button type="submit" class="px-6 py-2.5 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 transition shadow-lg shadow-brand-500/20">
-            {{ isEdit ? 'Simpan Perubahan' : 'Simpan Testimoni' }}
+          <button type="submit" :disabled="isLoading || isUploading" class="px-6 py-2.5 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 transition shadow-lg shadow-brand-500/20 disabled:bg-gray-400 disabled:cursor-not-allowed">
+            {{ isLoading ? 'Menyimpan...' : (isEdit ? 'Simpan Perubahan' : 'Simpan Testimoni') }}
           </button>
         </div>
       </form>
@@ -62,7 +65,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useContentStore } from '~/stores/content'
 
 const props = defineProps<{
   id?: string
@@ -70,9 +72,8 @@ const props = defineProps<{
 }>()
 
 const router = useRouter()
-const store = useContentStore()
 const isEdit = !!props.id
-const fileInput = ref<HTMLInputElement | null>(null)
+const isLoading = ref(false)
 
 const form = ref({
   name: '',
@@ -82,38 +83,88 @@ const form = ref({
   image: ''
 })
 
-onMounted(() => {
+onMounted(async () => {
   if (isEdit) {
-    const existing = store.testimonials.find(t => t.id === parseInt(props.id!))
-    if (existing) {
-      form.value = { ...existing }
+    try {
+      const data: any = await $fetch(`/api/testimonials/${props.id}`)
+      if (data) {
+        form.value = {
+            name: data.name,
+            batch: data.batch,           // Map batch
+            profession: data.role,       // Map role to profession
+            quote: data.content,         // Map content to quote
+            image: data.avatar_url       // Map avatar_url to image
+        }
+      }
+    } catch (e) {
+      console.error('Failed to fetch testimonial', e)
     }
   }
 })
 
-function triggerFileInput() {
-  fileInput.value?.click()
-}
+const isUploading = ref(false)
 
-function handleFileUpload(event: Event) {
+async function handleFileUpload(event: Event) {
   const target = event.target as HTMLInputElement
   if (target.files && target.files[0]) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      form.value.image = e.target?.result as string
+    const file = target.files[0]
+    
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Ukuran foto maksimal 2MB')
+      return
     }
-    reader.readAsDataURL(target.files[0])
+
+    const formData = new FormData()
+    formData.append('file', file)
+
+    isUploading.value = true
+    try {
+      const response: any = await $fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+      
+      if (response && response.url) {
+        form.value.image = response.url
+      }
+    } catch (e) {
+      alert('Gagal mengupload foto')
+    } finally {
+      isUploading.value = false
+    }
   }
 }
 
-function saveContent() {
-  if (isEdit) {
-    store.updateTestimonial(parseInt(props.id!), { ...form.value })
-    alert('Testimoni berhasil diperbarui!')
-  } else {
-    store.addTestimonial({ ...form.value })
-    alert('Testimoni berhasil disimpan!')
+async function saveContent() {
+  if (isUploading.value) return
+  isLoading.value = true
+  try {
+      const payload = {
+          name: form.value.name,
+          batch: form.value.batch,
+          role: form.value.profession, // Map profession to role
+          content: form.value.quote,   // Map quote to content
+          avatar_url: form.value.image // Map image to avatar_url
+      }
+
+      if (isEdit) {
+        await $fetch(`/api/testimonials/${props.id}`, {
+            method: 'PUT',
+            body: payload
+        })
+        alert('Testimoni berhasil diperbarui!')
+      } else {
+        await $fetch('/api/testimonials', {
+            method: 'POST',
+            body: payload
+        })
+        alert('Testimoni berhasil disimpan!')
+      }
+      router.push(props.basePath)
+  } catch (error: any) {
+      alert(error.data?.statusMessage || 'Gagal menyimpan testimoni')
+  } finally {
+      isLoading.value = false
   }
-  router.push(props.basePath)
 }
 </script>

@@ -5,7 +5,6 @@
       <!-- Decoration Circles (like plai style) -->
       <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-50 rounded-full blur-3xl opacity-30"></div>
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-20"></div>
-
       <div class="container mx-auto px-6 relative z-10">
         <div class="flex flex-col lg:flex-row items-center gap-16">
           <div class="flex-1 text-left">
@@ -19,7 +18,7 @@
               {{ hero.subtitle }}
             </p>
             <div class="flex flex-wrap gap-4">
-              <NuxtLink to="/user/psb/putra" class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1">
+              <NuxtLink to="#" class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1">
                 Daftar Sekarang
               </NuxtLink>
               <NuxtLink to="/user/profil" class="px-8 py-4 border-2 border-gray-200 text-gray-800 rounded font-black uppercase text-sm tracking-widest hover:border-brand-500 hover:text-brand-500 transition-all transform hover:-translate-y-1">
@@ -34,7 +33,7 @@
             <!-- Floating badge -->
             <div class="absolute -bottom-6 -left-6 z-20 bg-card p-6 rounded-xl shadow-xl flex items-center gap-4 border border-gray-100 dark:border-brand-400/20">
               <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-black font-bold">
-                500+
+                {{ santriTotal }}+
               </div>
               <div class="text-sm">
                 <span class="block font-bold text-main leading-none">Santri Aktif</span>
@@ -49,25 +48,25 @@
     <!-- Tentang Pondok -->
     <section class="container mx-auto px-6 py-16">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-main mb-6">Pondok Pesantren Khozinatul Ulum An-Nawa</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-main mb-6">Yayasan Khozinatul Ulum An-Nawa</h2>
         <p class="text-gray-600 text-lg leading-relaxed mb-8">
-          Pondok Pesantren Khozinatul Ulum An-Nawa adalah lembaga pendidikan Islam yang berfokus pada pembentukan karakter Islami dan penguasaan ilmu agama. Kami menyediakan berbagai program pendidikan mulai dari PAUD, SD/QTA, hingga pendidikan pesantren untuk putra dan putri.
+          Yayasan Khozinatul Ulum An-Nawa adalah lembaga pendidikan Islam yang berfokus pada pembentukan karakter Islami dan penguasaan ilmu agama. Kami menyediakan berbagai program pendidikan mulai dari PAUD, SD/QTA, hingga pendidikan pesantren untuk putra dan putri.
         </p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">500+</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ santriTotal }}+</div>
             <div class="text-gray-600">Santri Aktif</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">50+</div>
-            <div class="text-gray-600">Ustadz & Ustadzah</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ authorTotal }}+</div>
+            <div class="text-gray-600">Author</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">15+</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ tahunBerdiri }}+</div>
             <div class="text-gray-600">Tahun Berdiri</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">10+</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ kajianTotal }}</div>
             <div class="text-gray-600">Program Kajian</div>
           </div>
         </div>
@@ -174,6 +173,17 @@
         />
       </div>
 
+       <!-- Empty State -->
+      <div v-if="featuredKajian.length === 0" class="text-center py-20">
+        <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2v-6a2 2 0 012-2h2m-6-4h.01M17 16h.01" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-main mb-2">Belum Ada Kajian</h3>
+        <p class="text-gray-600 mb-6">Informasi kajian akan segera hadir di sini.</p>
+      </div>
+
       <div class="text-center mt-8 md:hidden">
         <NuxtLink to="/user/kajian" class="inline-flex items-center px-6 py-3 bg-brand-500 text-black rounded font-bold uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all">
           Lihat Semua Kajian
@@ -212,6 +222,17 @@
           />
         </div>
 
+        <!-- Empty State -->
+        <div v-if="featuredBerita.length === 0" class="text-center py-20">
+          <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2v-6a2 2 0 012-2h2m-6-4h.01M17 16h.01" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-main mb-2">Belum Ada Berita</h3>
+          <p class="text-gray-600 mb-6">Informasi kegiatan akan segera hadir di sini.</p>
+        </div>
+
         <div class="text-center mt-8 md:hidden">
           <NuxtLink to="/user/berita" class="inline-flex items-center px-6 py-3 bg-brand-500 text-black rounded font-bold uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all">
             Lihat Semua Berita
@@ -224,15 +245,20 @@
     </section>
 
     <!-- Testimoni Alumni -->
-    <section class="py-16 overflow-hidden">
-      <div class="container mx-auto px-6">
-        <div class="text-center mb-12">
+    <section class="py-16 overflow-hidden bg-card/30">
+      <div class="container mx-auto px-6 mb-12">
+        <div class="text-center">
           <h2 class="text-3xl md:text-4xl font-bold text-main mb-4">Apa Kata Alumni!</h2>
           <p class="text-gray-600 text-lg">Apa kata mereka yang telah menempuh pendidikan di Pondok Pesantren Khozinatul Ulum An-Nawa</p>
         </div>
+      </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="testi in testimonials" :key="testi.id" class="bg-card p-8 rounded-3xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800/40 flex flex-col relative transition-all hover:shadow-2xl hover:-translate-y-1">
+      <!-- Scrolling Container -->
+      <div class="relative flex overflow-hidden group">
+        <!-- Main Scrolling List -->
+        <div class="flex animate-scroll hover:pause-scroll gap-8 py-4 px-4">
+          <!-- Double items to ensure seamless loop -->
+          <div v-for="testi in [...testimonials, ...testimonials]" :key="testi.id + '-' + Math.random()" class="w-[350px] md:w-[400px] shrink-0 bg-card p-8 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800/40 flex flex-col relative transition-all hover:scale-[1.02] hover:border-brand-500">
             <!-- Quote Icon -->
             <div class="absolute -top-4 -left-4 bg-brand-500 w-10 h-10 rounded-full flex items-center justify-center text-black shadow-lg">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -305,42 +331,94 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useFetch } from '#app'
 import { useContentStore } from '~/stores/content'
 
 const store = useContentStore()
 const hero = computed(() => store.hero)
 
+// Fetch Data
+const { data: kajianData } = await useFetch('/api/kajian')
+const { data: newsData } = await useFetch('/api/news')
+const { data: testimonialsData } = await useFetch('/api/testimonials')
+const { data: studentsData } = await useFetch('/api/students')
+const { data: usersData } = await useFetch('/api/users')
+
+const santriTotal = computed(() => {
+  if (!studentsData.value) return 500
+  // Filter only students with unit 'SANTRI'
+  const filterSantri = (studentsData.value as any[]).filter(s => s.unit === 'SANTRI')
+  return filterSantri.length + 50
+})
+
+const tahunBerdiri = computed(() => {
+  return new Date().getFullYear() - 2012
+})
+
+const authorTotal = computed(() => {
+  if (!usersData.value) return 50
+  const filterAuthor = (usersData.value as any[]).filter(u => u.role && u.role.toLowerCase() === 'author')
+  return filterAuthor.length > 0 ? filterAuthor.length : 50
+})
+
+const kajianTotal = computed(() => {
+  if (!kajianData.value) return 0
+  return (kajianData.value as any[]).length
+})
+
 // Featured Kajian (3 items)
-const featuredKajian = computed(() => store.kajian.slice(0, 3))
+const featuredKajian = computed(() => {
+  if (!kajianData.value) return []
+  return (kajianData.value as any[]).slice(0, 3).map(k => ({
+    id: k.id,
+    title: k.title,
+    ustadz: k.ustadz_name,
+    time: k.schedule,
+    location: k.location,
+    description: k.description,
+    category: k.category,
+    slug: k.slug
+  }))
+})
 
 // Featured Berita (3 items)
-const featuredBerita = computed(() => store.news.slice(0, 3))
+const featuredBerita = computed(() => {
+  if (!newsData.value) return []
+  return (newsData.value as any[]).filter(n => n.type === 'Berita' || !n.type).slice(0, 3).map(n => ({
+    id: n.id,
+    title: n.title,
+    excerpt: n.content ? n.content.substring(0, 100) + '...' : '',
+    image: n.image_url,
+    date: new Date(n.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+    slug: n.slug
+  }))
+})
 
 // Testimonials Data
-const testimonials = ref([
-  {
-    id: 1,
-    name: 'Ahmad Muzaki',
-    batch: 'Alumni 2018',
-    profession: 'Mahasiswa Al-Azhar, Kairo',
-    quote: 'Belajar di Annawa memberikan pondasi keagamaan yang kuat sekaligus memotivasi saya untuk terus mengejar ilmu hingga ke negeri para nabi.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop'
-  },
-  {
-    id: 2,
-    name: 'Siti Fatimah',
-    batch: 'Alumni 2019',
-    profession: 'Pendidik & Hafidzah',
-    quote: 'Metode hafalan yang diterapkan sangat sistematis. Kekeluargaan antar santri dan ustadz membuat lingkungan belajar terasa sangat nyaman.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&h=150&auto=format&fit=crop'
-  },
-  {
-    id: 3,
-    name: 'Budi Santoso',
-    batch: 'Alumni 2017',
-    profession: 'Wirausaha Muda',
-    quote: 'Nilai-nilai kemandirian dan kedisiplinan yang diajarkan di pesantren sangat membantu saya dalam membangun usaha dari nol.',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&h=150&auto=format&fit=crop'
-  }
-])
+const testimonials = computed(() => {
+  if (!testimonialsData.value) return []
+  return (testimonialsData.value as any[]).map(t => ({
+    id: t.id,
+    name: t.name,
+    batch: t.batch,
+    profession: t.role,
+    quote: t.content,
+    image: t.avatar_url
+  }))
+})
 </script>
+
+<style scoped>
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 1rem)); }
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+.pause-scroll:hover {
+  animation-play-state: paused;
+}
+</style>

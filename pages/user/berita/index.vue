@@ -25,7 +25,7 @@
     <section class="container mx-auto px-6 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <BeritaCard
-          v-for="berita in filteredBerita"
+          v-for="berita in paginatedBerita"
           :key="berita.id"
           :title="berita.title"
           :excerpt="berita.excerpt"
@@ -36,17 +36,30 @@
       </div>
 
       <!-- Empty State -->
+      <div v-if="filteredBerita.length === 0" class="text-center py-20">
+        <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2v-6a2 2 0 012-2h2m-6-4h.01M17 16h.01" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-main mb-2">Belum Ada Berita</h3>
+        <p class="text-gray-600 mb-6">Informasi kegiatan akan segera hadir di sini.</p>
+      </div>
 
       <!-- Pagination -->
-      <div v-if="filteredBerita.length > 0" class="flex justify-center mt-12 gap-2">
-        <button class="w-10 h-10 flex items-center justify-center bg-brand-500 text-white font-bold shadow-md hover:scale-105 transition-transform">
-          1
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-brand-500 hover:bg-gray-50 font-bold transition-colors">
-          2
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-brand-500 hover:bg-gray-50 font-bold transition-colors">
-          3
+      <div v-if="totalPages > 1" class="flex justify-center mt-12 gap-2">
+        <button 
+          v-for="page in totalPages" 
+          :key="page"
+          @click="currentPage = page"
+          :class="[
+            'w-10 h-10 flex items-center justify-center font-bold transition-all',
+            currentPage === page 
+              ? 'bg-brand-500 text-white shadow-md hover:scale-105'
+              : 'text-gray-600 hover:text-brand-500 hover:bg-gray-50'
+          ]"
+        >
+          {{ page }}
         </button>
       </div>
     </section>
@@ -54,16 +67,47 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useFetch } from '#app'
 import BeritaCard from '~/components/BeritaCard.vue'
-import { useContentStore } from '~/stores/content'
 
-const store = useContentStore()
 const filter = ref('all')
+const currentPage = ref(1)
+const itemsPerPage = 6
+
+const { data: news } = await useFetch('/api/news')
 
 const filteredBerita = computed(() => {
-  if (filter.value === 'all') return store.news
-  return store.news.filter(item => item.type.toLowerCase() === filter.value)
+  if (!news.value) return []
+  let items = news.value as any[]
+  
+  if (filter.value !== 'all') {
+    items = items.filter(item => item.type && item.type.toLowerCase() === filter.value)
+  }
+
+  return items.map(n => ({
+    id: n.id,
+    title: n.title,
+    excerpt: n.content ? n.content.substring(0, 100) + '...' : '',
+    image: n.image_url,
+    date: new Date(n.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+    slug: n.slug
+  }))
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredBerita.value.length / itemsPerPage)
+})
+
+const paginatedBerita = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return filteredBerita.value.slice(start, end)
+})
+
+// Reset to page 1 when filter changes
+watch(filter, () => {
+  currentPage.value = 1
 })
 </script>
 

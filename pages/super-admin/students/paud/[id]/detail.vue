@@ -25,50 +25,38 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useFetch } from '#app'
 import PaudStudentDetail from '~/components/students/PaudStudentDetail.vue'
 
 definePageMeta({ layout: 'super-admin' })
 const route = useRoute()
 
 const loading = ref(true)
-const student = reactive({
-  namaLengkap: '',
-  nik: '',
-  tempatLahir: '',
-  tanggalLahir: '',
-  jenisKelamin: '',
-  anakKe: '',
-  alamat: '',
-  namaAyah: '',
-  pekerjaanAyah: '',
-  namaIbu: '',
-  pekerjaanIbu: '',
-  noHp: '',
-  tahunPendaftaran: '',
-  files: {
-    akta: 'akta_muhammad_fatih.pdf',
-    kk: 'kk_budi_santoso.jpg'
-  } as Record<string, string>
-})
+const student = reactive({} as any)
 
-onMounted(() => {
-  setTimeout(() => {
+onMounted(async () => {
+  try {
+    const data: any = await $fetch(`/api/students/${route.params.id}`)
     Object.assign(student, {
-      namaLengkap: 'Muhammad Fatih',
-      nik: '3316012345678901',
-      tempatLahir: 'Blora',
-      tanggalLahir: '2019-08-20',
-      jenisKelamin: 'laki-laki',
-      anakKe: 1,
-      alamat: 'Jln. Pemuda No. 45, Blora, Jawa Tengah',
-      namaAyah: 'Budi Santoso',
-      pekerjaanAyah: 'Guru',
-      namaIbu: 'Siti Maryam',
-      pekerjaanIbu: 'Perawat',
-      noHp: '081234567890',
-      tahunPendaftaran: '2025'
+      namaLengkap: data.name,
+      nik: data.nik,
+      tempatLahir: data.birth_place,
+      tanggalLahir: data.birth_date ? new Date(data.birth_date).toISOString().split('T')[0] : '',
+      jenisKelamin: data.gender === 'laki-laki' ? 'putra' : (data.gender === 'perempuan' ? 'putri' : data.gender),
+      anakKe: data.child_order,
+      alamat: data.address,
+      namaAyah: data.father_name,
+      pekerjaanAyah: data.father_job,
+      namaIbu: data.mother_name,
+      pekerjaanIbu: data.mother_job,
+      noHp: data.phone,
+      tahunPendaftaran: data.registration_year,
+      files: data.files || {}
     })
+  } catch (e) {
+    // Handle error
+  } finally {
     loading.value = false
-  }, 800)
+  }
 })
 </script>

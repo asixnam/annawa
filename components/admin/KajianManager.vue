@@ -93,25 +93,34 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useContentStore } from '~/stores/content'
 
 const props = defineProps<{
   basePath: string
 }>()
 
-const store = useContentStore()
+const { data: kajian, refresh } = await useFetch('/api/kajian')
 const categories = ref(['Semua', 'Sorogan', 'Tahfidzul Quran', 'Bahtsul Masail', 'Bandongan'])
 const selectedCategory = ref('Semua')
 
 const filteredKajian = computed(() => {
-  if (selectedCategory.value === 'Semua') return store.kajian
-  return store.kajian.filter(k => k.category === selectedCategory.value)
+  if (!kajian.value) return []
+  
+  // Map DB fields to UI fields
+  const mapped = kajian.value.map((k: any) => ({
+    ...k,
+    ustadz: k.ustadz_name,
+    time: k.schedule,
+    // location, category are same
+  }))
+
+  if (selectedCategory.value === 'Semua') return mapped
+  return mapped.filter((k: any) => k.category === selectedCategory.value)
 })
 
-function deleteKajian(id: number) {
-  if (confirm('Hapus jadwal kajian ini?')) {
-    store.removeKajian(id)
-  }
+async function deleteKajian(id: number) {
+  if (!confirm('Hapus jadwal kajian ini?')) return
+  await $fetch(`/api/kajian/${id}`, { method: 'DELETE' })
+  refresh()
 }
 </script>
 

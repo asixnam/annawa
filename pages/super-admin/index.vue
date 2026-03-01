@@ -15,7 +15,7 @@
           </div>
           <span class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">+12%</span>
         </div>
-        <div class="text-3xl font-bold text-main mb-1">24</div>
+        <div class="text-3xl font-bold text-main mb-1">{{ data?.stats?.users || 0 }}</div>
         <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Total Admin & Users</p>
       </div>
 
@@ -29,7 +29,7 @@
           </div>
            <span class="text-xs font-bold text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-full">0%</span>
         </div>
-        <div class="text-3xl font-bold text-main mb-1">142</div>
+        <div class="text-3xl font-bold text-main mb-1">{{ data?.stats?.articles || 0 }}</div>
         <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Artikel & Konten</p>
       </div>
 
@@ -43,7 +43,7 @@
           </div>
            <span class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">+5%</span>
         </div>
-        <div class="text-3xl font-bold text-main mb-1">850</div>
+        <div class="text-3xl font-bold text-main mb-1">{{ data?.stats?.photos || 0 }}</div>
         <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Total Galeri Foto</p>
       </div>
 
@@ -57,7 +57,7 @@
           </div>
           <span class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">+24%</span>
         </div>
-        <div class="text-3xl font-bold text-main mb-1">45</div>
+        <div class="text-3xl font-bold text-main mb-1">{{ data?.stats?.registrations || 0 }}</div>
         <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Pendaftaran Baru</p>
       </div>
     </div>
@@ -68,33 +68,15 @@
       <div class="lg:col-span-2 bg-card rounded-2xl shadow-sm border border-gray-100 dark:border-brand-400/20 p-6 transition-colors duration-300">
         <h2 class="text-lg font-bold text-main mb-6">Aktivitas Terkini</h2>
         <div class="space-y-6">
-          <div class="flex gap-4">
-            <div class="w-2 h-2 mt-2 rounded-full bg-brand-500 shrink-0"></div>
+          <div v-for="act in data?.activities" :key="act.id" class="flex gap-4">
+            <div class="w-2 h-2 mt-2 rounded-full shrink-0" :class="act.color"></div>
             <div>
-              <p class="text-sm text-main font-medium">Author <span class="font-bold">Ahmad</span> mengupload 5 foto baru ke galeri.</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">2 menit yang lalu</p>
+              <p class="text-sm text-main font-medium">{{ act.message }}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ formatRelativeTime(act.date) }}</p>
             </div>
           </div>
-          <div class="flex gap-4">
-            <div class="w-2 h-2 mt-2 rounded-full bg-blue-500 shrink-0"></div>
-             <div>
-              <p class="text-sm text-main font-medium">Admin PAUD memverifikasi pendaftaran <span class="font-bold">Siti Aminah</span>.</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">1 jam yang lalu</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-             <div class="w-2 h-2 mt-2 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0"></div>
-             <div>
-              <p class="text-sm text-main font-medium">Sistem melakukan backup otomatis database.</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">5 jam yang lalu</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-             <div class="w-2 h-2 mt-2 rounded-full bg-red-500 shrink-0"></div>
-             <div>
-              <p class="text-sm text-main font-medium">Pendaftaran baru masuk untuk unit SDQTA.</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Kemarin</p>
-            </div>
+          <div v-if="!data?.activities?.length" class="text-center py-10">
+            <p class="text-gray-500">Belum ada aktivitas terbaru.</p>
           </div>
         </div>
         <div class="mt-8 pt-6 border-t border-gray-100 dark:border-brand-400/20">
@@ -121,7 +103,7 @@
              </div>
            </NuxtLink>
 
-           <NuxtLink to="/author/register" class="flex items-center w-full p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-all border border-white/10 group">
+           <NuxtLink to="/super-admin/gallery" class="flex items-center w-full p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-all border border-white/10 group">
              <div class="bg-purple-500 p-2 rounded-lg text-white mr-4 group-hover:scale-110 transition-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -140,6 +122,8 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '../../stores/auth'
+
 definePageMeta({
   layout: 'super-admin',
   middleware: (to, from) => {
@@ -150,5 +134,23 @@ definePageMeta({
   }
 })
 
-import { useAuthStore } from '../../stores/auth'
+const { data } = await useFetch('/api/super-admin/stats')
+
+const formatRelativeTime = (date: string) => {
+  if (!date) return '-'
+  const now = new Date()
+  const then = new Date(date)
+  const diffInSeconds = Math.floor((now.getTime() - then.getTime()) / 1000)
+
+  if (diffInSeconds < 60) return 'Baru saja'
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} menit yang lalu`
+  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} jam yang lalu`
+  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} hari yang lalu`
+  
+  return then.toLocaleDateString('id-ID', { 
+    day: 'numeric', 
+    month: 'long', 
+    year: 'numeric' 
+  })
+}
 </script>

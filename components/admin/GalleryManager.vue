@@ -53,15 +53,30 @@
           <span class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-[10px] font-bold uppercase tracking-wider text-gray-800 shadow-sm">{{ item.category }}</span>
         </div>
         <div class="p-6 flex-1 flex flex-col">
-          <h3 class="font-bold text-lg text-gray-900 mb-2 leading-tight group-hover:text-brand-600 transition-colors">{{ item.title }}</h3>
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-bold text-lg text-gray-900 leading-tight group-hover:text-brand-600 transition-colors">{{ item.title }}</h3>
+            <!-- Status Badge -->
+            <span v-if="item.is_approved" class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">Disetujui</span>
+            <span v-else class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">Menunggu</span>
+          </div>
           <p class="text-gray-500 text-xs mb-4">Oleh: <span class="font-bold">{{ item.author }}</span> · {{ item.date }}</p>
           
-          <div class="mt-auto pt-4 border-t border-gray-50 flex justify-between items-center">
+          <div class="mt-auto pt-4 border-t border-gray-50 flex justify-between items-center flex-wrap gap-2">
             <div class="flex space-x-2">
               <NuxtLink :to="`${basePath}/${item.id}`" class="text-brand-600 hover:text-brand-800 font-bold text-xs uppercase px-2 py-1 bg-brand-50 rounded">Edit</NuxtLink>
-              <button @click="deleteItem(item.id)" class="text-red-500 hover:text-red-700 font-bold text-xs uppercase px-2 py-1 bg-red-50 rounded">Hapus</button>
+              <button @click="deleteItem(item.id)" class="text-red-500 hover:text-red-700 font-bold text-xs uppercase px-2 py-1 bg-red-50 rounded">
+                {{ !item.is_approved ? 'Tolak' : 'Hapus' }}
+              </button>
             </div>
-            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400">
+            
+            <button 
+              v-if="!item.is_approved && (auth.user?.role === 'super' || auth.user?.role === 'admin')" 
+              @click="approveItem(item.id)" 
+              class="w-auto px-3 h-8 flex items-center justify-center rounded-lg bg-green-50 text-green-600 hover:bg-green-100 font-bold text-xs tracking-wide transition-colors"
+            >
+              Approve
+            </button>
+            <button v-else class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -87,33 +102,57 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useContentStore } from '~/stores/content'
 import { useAuthStore } from '~/stores/auth'
 
 const props = defineProps<{
   basePath: string
 }>()
 
-const store = useContentStore()
+const { data: gallery, refresh } = await useFetch('/api/gallery')
 const auth = useAuthStore()
 const categories = ref(['Semua', 'Juara', 'Literasi', 'Kesenian', 'Khitobah'])
 const selectedCategory = ref('Semua')
 
 const filteredGallery = computed(() => {
-  let list = store.gallery
+  if (!gallery.value) return []
+  
+  let list = gallery.value.map((item: any) => ({
+    ...item,
+    image: item.image_url,
+    date: new Date(item.created_at).toLocaleDateString('id-ID'),
+    excerpt: item.description // Map description to excerpt
+  }))
   
   // Filter by author if user is an author
   if (auth.user?.role === 'author') {
-    list = list.filter(item => item.author === auth.user?.name)
+    list = list.filter((item: any) => item.author === auth.user?.name)
   }
 
   if (selectedCategory.value === 'Semua') return list
-  return list.filter(item => item.category === selectedCategory.value)
+  return list.filter((item: any) => item.category === selectedCategory.value)
 })
 
-function deleteItem(id: number) {
-  if (confirm('Hapus karya galeri ini?')) {
-    store.removeGallery(id)
+async function deleteItem(id: number) {
+  if (!confirm('Hapus karya galeri ini?')) return
+  try {
+    await $fetch(`/api/gallery/${id}`, { method: 'DELETE' })
+    refresh()
+  } catch (e) {
+    alert('Gagal menghapus karya')
+  }
+}
+
+async function approveItem(id: number) {
+  if (!confirm('Setujui karya galeri ini untuk ditampilkan ke publik?')) return
+  try {
+    await $fetch(`/api/gallery/${id}/approve`, { 
+      method: 'PUT',
+      body: { is_approved: true } 
+    })
+    alert('Karya berhasil disetujui')
+    refresh()
+  } catch (e) {
+    alert('Gagal menyetujui karya')
   }
 }
 </script>

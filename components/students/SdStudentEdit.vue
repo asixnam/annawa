@@ -19,7 +19,11 @@
         :use-modal="false"
         @success="(data) => $emit('success', data)"
         @cancel="() => $emit('cancel')"
-      />
+      >
+        <template #actions>
+          <slot name="actions"></slot>
+        </template>
+      </PpdbSdForm>
       <slot name="footer"></slot>
     </div>
   </div>

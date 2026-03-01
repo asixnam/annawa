@@ -24,7 +24,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api'
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
+      googleClientId: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID'
     }
   }
 })

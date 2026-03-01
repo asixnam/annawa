@@ -13,11 +13,12 @@
       :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
     >
       <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-brand-400/20 justify-between">
-        <NuxtLink to="/author" class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center text-white font-bold">
-            AU
+        <NuxtLink to="/author" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold overflow-hidden ring-2 ring-white dark:ring-gray-800 shrink-0 shadow-sm">
+            <img v-if="auth.user?.image_url" :src="auth.user.image_url" class="w-full h-full object-cover">
+            <span v-else>{{ authorInitials }}</span>
           </div>
-          <span class="font-bold text-main tracking-tight">Author Panel</span>
+          <span class="font-bold text-main tracking-tight truncate">{{ auth.user?.name || 'Author Panel' }}</span>
         </NuxtLink>
         <div class="flex items-center gap-2">
           <ThemeToggle />
@@ -92,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import ThemeToggle from '../components/ThemeToggle.vue'
@@ -100,6 +101,13 @@ import ThemeToggle from '../components/ThemeToggle.vue'
 const isSidebarOpen = ref(false)
 const auth = useAuthStore()
 const router = useRouter()
+
+const authorInitials = computed(() => {
+  if (!auth.user?.name) return 'AU'
+  const names = auth.user.name.trim().split(/\s+/)
+  if (names.length === 1) return names[0].charAt(0).toUpperCase()
+  return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase()
+})
 
 function logout() {
   auth.logout()

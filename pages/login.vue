@@ -37,7 +37,7 @@
                   required 
                   v-model="email"
                   class="appearance-none block w-full px-4 py-3.5 bg-gray-50 border border-gray-200 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-sm" 
-                  placeholder="Contoh: user@annawa.com" 
+                  placeholder="user@gmail.com" 
                 />
               </div>
               
@@ -87,9 +87,9 @@
               </div>
 
               <div class="text-sm">
-                <a href="#" class="font-medium text-brand-600 hover:text-brand-500">
+                <NuxtLink to="/forgot-password" class="font-medium text-brand-600 hover:text-brand-500">
                   Lupa Password?
-                </a>
+                </NuxtLink>
               </div>
             </div>
 
@@ -125,6 +125,21 @@
               </button>
             </div>
           </form> 
+
+          <!-- Google Login Section -->
+          <div class="mt-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500">Atau masuk dengan</span>
+              </div>
+            </div>
+            <div class="mt-6 flex justify-center">
+              <div id="googleButton"></div>
+            </div>
+          </div>
 
           <!-- Register Link -->
           <p class="text-center text-sm text-gray-500">
@@ -168,9 +183,10 @@
   </template>
 
   <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
   import { useAuthStore } from '../stores/auth'
+  import { useRuntimeConfig } from '#app'
 
   definePageMeta({
     layout: 'auth'
@@ -209,4 +225,65 @@
       isLoading.value = false
     }
   }
+
+  async function handleGoogleLogin(response: any) {
+    if (!response.credential) return;
+
+    isLoading.value = true
+    errorMsg.value = ''
+    try {
+      const { user } = await $fetch<{ user: any }>('/api/auth/google', {
+        method: 'POST',
+        body: { credential: response.credential }
+      })
+      
+      auth.setUser(user)
+      
+      const role = auth.user?.role
+      if (role === 'super') {
+        router.push('/super-admin')
+      } else if (role?.startsWith('admin')) {
+        router.push('/admin')
+      } else if (role === 'author') {
+        router.push('/author')
+      } else {
+        router.push('/user')
+      }
+    } catch (e: any) {
+      errorMsg.value = e.data?.statusMessage || e.message || 'Login dengan Google gagal.'
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  onMounted(() => {
+    const renderButton = () => {
+      if (window.google) {
+        window.google.accounts.id.initialize({
+          client_id: useRuntimeConfig().public.googleClientId,
+          callback: handleGoogleLogin,
+        });
+        window.google.accounts.id.renderButton(
+          document.getElementById("googleButton"),
+          { theme: "outline", size: "large", type: "standard", shape: "rectangular" }
+        );
+      }
+    };
+
+    if (window.google) {
+      renderButton();
+    } else {
+      const scriptId = 'google-login-script';
+      let script = document.getElementById(scriptId) as HTMLScriptElement;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = scriptId;
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+      script.addEventListener('load', renderButton);
+    }
+  })
   </script>

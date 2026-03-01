@@ -25,7 +25,7 @@ definePageMeta({
   layout: 'admin',
   middleware: (to, from) => {
     const auth = useAuthStore()
-    if (!auth.hasRole('admin:sd') && !auth.hasRole('super')) {
+    if (!auth.hasRole('admin:sdqta') && !auth.hasRole('super')) {
       return navigateTo('/user/unauthorized')
     }
   }

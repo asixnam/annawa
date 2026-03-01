@@ -18,20 +18,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useFetch } from '#app'
 import SdStudentList from '~/components/students/SdStudentList.vue'
 
 definePageMeta({ layout: 'super-admin' })
 
-const students = ref([
-  { id: 1, namaLengkap: 'Rayyan Al-Ghifari', nik: '3316012345678001', nisn: '0123456001', jenisKelamin: 'laki-laki', asalSekolah: 'TK IT An-Nawa', noHp: '081234567990', tahunPendaftaran: '2025' },
-  { id: 2, namaLengkap: 'Zahra Amira', nik: '3316012345678002', nisn: '0123456002', jenisKelamin: 'perempuan', asalSekolah: 'TK Pembina Blora', noHp: '081234567991', tahunPendaftaran: '2025' },
-  { id: 3, namaLengkap: 'Ibrahim Khalil', nik: '3316012345678003', nisn: '0123456003', jenisKelamin: 'laki-laki', asalSekolah: 'TK IT An-Nawa', noHp: '081234567992', tahunPendaftaran: '2024' }
-])
+const { data: students, refresh } = await useFetch('/api/students', {
+  query: { unit_id: 'SD' }, // SD 'SD'
+  transform: (data: any[]) => data.map(s => ({
+    ...s,
+    namaLengkap: s.name,
+    jenisKelamin: s.gender,
+    tahunPendaftaran: s.registration_year,
+    noHp: s.phone,
+    asalSekolah: s.school_origin,
+    nisn: s.nis // mapping nis to nisn if that's intended, or separate column? setup-db had 'nis', missing 'nisn' column. I added 'nis' column.
+  }))
+})
 
-function deleteStudent(id: number) {
+async function deleteStudent(id: number) {
   if (confirm('Apakah Anda yakin ingin menghapus data murid ini?')) {
-    students.value = students.value.filter(s => s.id !== id)
+    try {
+      await $fetch(`/api/students/${id}`, { method: 'DELETE' })
+      refresh()
+    } catch (e) {
+      alert('Gagal menghapus data')
+    }
   }
 }
 </script>

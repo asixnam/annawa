@@ -36,23 +36,24 @@ definePageMeta({
 
 const route = useRoute()
 const student = ref(null as any)
+const loading = ref(true)
 
-onMounted(() => {
-  // Simulate fetching student data
-  setTimeout(() => {
-    student.value = {
-      id: route.params.id,
-      nama: 'Muhammad Fatih',
-      nik: '3316012345678901',
-      jk: 'laki-laki',
-      noHp: '081234567890',
-      tahunPendaftaran: '2025'
-    }
-  }, 500)
+onMounted(async () => {
+  loading.value = true
+  try {
+    const data = await $fetch(`/api/students/${route.params.id}`)
+    student.value = data
+  } catch (e) {
+    console.error('Failed to fetch student', e)
+    alert('Gagal memuat data murid.')
+    navigateTo('/admin/paud/students')
+  } finally {
+    loading.value = false
+  }
 })
 
 function onUpdate(formData: any) {
-  console.log('Updating PAUD Student:', formData)
+  console.log('Updated PAUD Student:', formData)
   alert('Data murid PAUD berhasil diperbarui!')
   navigateTo('/admin/paud/students')
 }

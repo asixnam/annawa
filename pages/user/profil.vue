@@ -30,19 +30,24 @@
         <div class="flex justify-center lg:justify-start">
           <div class="w-64 h-64 lg:w-80 lg:h-80 flex-shrink-0">
             <img 
-              src="/images/pengasuh.jpeg" 
-              alt="Pengasuh Pondok" 
-              class="w-full h-full object-cover rounded-1xl shadow-xl border-4 bg-gray-100 transition-all duration-500"
+              :src="pondokUnit?.image_url || '/images/pengasuh.jpeg'" 
+              :alt="pondokUnit?.name || 'Pengasuh Pondok'" 
+              class="w-full h-full object-cover rounded-2xl shadow-xl border-4 border-card hover:scale-105 transition-all duration-500 dark:border-gray-800"
             />
           </div>
         </div>
         <div class="space-y-6 text-gray-600 leading-relaxed text-lg text-justify pt-6 lg:max-w-2xl">
-          <p>
-            Pondok Pesantren Khozinatul Ulum An-Nawa adalah sebuah lembaga pendidikan Islam yang berkomitmen untuk mencetak generasi yang tidak hanya unggul dalam ilmu pengetahuan, namun juga memiliki karakter Qur'ani yang kuat.
+          <p v-if="pondokUnit?.description">
+            {{ pondokUnit.description }}
           </p>
-          <p>
-            Berdiri di bawah naungan Yayasan Khozinatul Ulum, kami mengintegrasikan kurikulum pesantren salaf dengan sistem pendidikan modern. Fokus utama kami adalah pada tahfidz Al-Qur'an, pemahaman kitab kuning, dan pembentukan akhlakul karimah.
-          </p>
+          <template v-else>
+            <p>
+              Pondok Pesantren Khozinatul Ulum An-Nawa adalah sebuah lembaga pendidikan Islam yang berkomitmen untuk mencetak generasi yang tidak hanya unggul dalam ilmu pengetahuan, namun juga memiliki karakter Qur'ani yang kuat.
+            </p>
+            <p>
+              Berdiri di bawah naungan Yayasan Khozinatul Ulum, kami mengintegrasikan kurikulum pesantren salaf dengan sistem pendidikan modern. Fokus utama kami adalah pada tahfidz Al-Qur'an, pemahaman kitab kuning, dan pembentukan akhlakul karimah.
+            </p>
+          </template>
         </div>
       </div>
     </section>
@@ -69,7 +74,7 @@
             <ul class="space-y-4">
               <li v-for="(misi, index) in misis" :key="index" class="flex items-start gap-3">
                 <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500 text-black flex items-center justify-center font-bold text-xs">
-                  {{ index + 1 }}
+                  {{ Number(index) + 1 }}
                 </span>
                 <p class="text-gray-700 text-sm leading-relaxed">{{ misi }}</p>
               </li>
@@ -93,15 +98,21 @@
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           <div v-for="facility in facilities" :key="facility.id" class="bg-card p-8 rounded-3xl border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group text-center">
-            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-5 overflow-hidden group-hover:bg-brand-500 transition-colors duration-300">
+            <div class="w-16 h-16 rounded-xl bg-brand-50 flex items-center justify-center mx-auto mb-4 overflow-hidden group-hover:bg-brand-500/10 transition-colors duration-300">
                <img v-if="facility.icon && (facility.icon.startsWith('http') || facility.icon.startsWith('data:') || facility.icon.startsWith('/'))" :src="facility.icon" class="w-full h-full object-cover">
                <span v-else class="text-3xl group-hover:scale-110 transition-transform duration-300">{{ facility.icon }}</span>
             </div>
             <h4 class="text-main font-black uppercase tracking-widest text-[10px]">{{ facility.name }}</h4>
           </div>
           <!-- Empty State if no facilities -->
-          <div v-if="facilities.length === 0" class="col-span-full py-12 text-center bg-card rounded-3xl border border-dashed border-gray-200">
-            <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Fasilitas akan segera diperbarui</p>
+          <div v-if="facilities.length === 0" class="col-span-full py-16 text-center">
+            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-main mb-2">Belum Ada Fasilitas</h3>
+            <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi fasilitas akan segera hadir di sini. Data fasilitas akan segera diperbarui.</p>
           </div>
         </div>
       </div>
@@ -135,6 +146,18 @@
            Khozinatul Ulum An-Nawa
           </p>
         </div>
+
+        <!-- Empty State -->
+        <div v-if="team.length === 0" class="col-span-full py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Tim</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi tim pengembang akan segera hadir di sini. Data tim akan segera diperbarui.</p>
+        </div>
+
       </div>
     </section>
 
@@ -157,8 +180,14 @@
             </h3>
           </div>
           <!-- Empty state -->
-          <div v-if="partners.length === 0" class="text-gray-400 font-bold uppercase tracking-widest text-xs py-10">
-            Belum ada mitra lembaga yang ditambahkan
+          <div v-if="partners.length === 0" class="w-full text-center py-16">
+            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-main mb-2">Belum Ada Mitra</h3>
+            <p class="text-gray-500 text-sm max-w-sm mx-auto">Masih dalam tahap inisiasi kerja sama. Data kemitraan lembaga akan segera diperbarui.</p>
           </div>
         </div>
       </div>
@@ -193,9 +222,6 @@
               >
                 Daftar Sekarang
               </NuxtLink>
-              <!-- <NuxtLink to="/profil" class="px-12 py-5 border-2 border-brand-500 text-brand-700 rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-50 transition-all text-center"">
-                Profil Pondok
-              </NuxtLink> -->
             </div>
           </div>
         </div>
@@ -205,44 +231,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useContentStore } from '~/stores/content'
 
 const store = useContentStore()
 
-// Use computed properties to stay reactive to store updates
-const vision = computed(() => store.identity.vision)
-const misis = computed(() => store.identity.mission)
-
-const facilities = computed(() => {
-  // Aggregate facilities from all units for the general profile, 
-  // or just show Pondok's if specific. Let's show Pondok's for now.
-  const pondok = store.units.find(u => u.id === 'pondok')
-  return pondok ? pondok.facilities : []
+// Fetch Data
+onMounted(() => {
+  if (store.units.length === 0) {
+    store.fetchUnits()
+  }
 })
-const team = computed(() => {
-  // Combine all staff from all units or filter specific leadership?
-  // For now, let's just grab main figures or leaders if we had them extended
-  // Or reuse existing figures/founders if that matches "Tim Kami" intent
-  // The original looked like staff list.
-  // Ideally, store should have a 'team' section or we aggregate unit heads.
-  // For demo sync, let's use the 'figures' from store as 'Tim Kami' or map Store Staff
+
+// Find Pondok Unit (assuming name contains 'Pondok')
+const pondokUnit = computed(() => {
+  if (store.units.length === 0) return null
+  return (store.units as any[]).find(u => u.name.toLowerCase().includes('pondok')) || (store.units as any[])[0]
+})
+
+const vision = computed(() => pondokUnit.value?.vision || 'Mewujudkan generasi Qurani yang berakhlakul karimah dan berwawasan global.')
+const misis = computed(() => {
+  if (!pondokUnit.value?.mission) return ['Menyelenggarakan pendidikan tahfidz Al-Quran yang berkualitas.', 'Mengembangkan kurikulum yang terintegrasi antara ilmu agama dan umum.']
   
-  // Let's use the figures as key people for now to show sync
-  // Or better, aggregate unit heads:
-  const heads = []
-  store.units.forEach(u => {
-    const head = u.staff.find(s => s.position.includes('Kepala') || s.position.includes('Pengasuh'))
-    if (head) heads.push(head)
-  })
-  return heads.length ? heads : store.figures // Fallback
+  // Mission is already parsed in store, but just in case
+  return Array.isArray(pondokUnit.value.mission) ? pondokUnit.value.mission : [pondokUnit.value.mission]
 })
 
-// Partners (Mitra Lembaga) from store
-const partners = computed(() => {
-  const pondok = store.units.find(u => u.id === 'pondok')
-  return pondok ? pondok.partners : []
-})
+const facilities = computed(() => pondokUnit.value?.facilities || [])
+const team = computed(() => pondokUnit.value?.staff || [])
+const partners = computed(() => pondokUnit.value?.partners || [])
 </script>
 
 <style scoped>

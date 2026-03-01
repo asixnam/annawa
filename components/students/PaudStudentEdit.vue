@@ -19,7 +19,11 @@
         :use-modal="false"
         @success="(data) => $emit('success', data)"
         @cancel="() => $emit('cancel')"
-      />
+      >
+        <template #actions>
+          <slot name="actions"></slot>
+        </template>
+      </PpdbPaudForm>
       <slot name="footer"></slot>
     </div>
   </div>
@@ -47,7 +51,7 @@ defineProps({
   },
   submitLabel: {
     type: String,
-    default: 'Simpan Perubahan'
+    default: 'Simpan'
   }
 })
 

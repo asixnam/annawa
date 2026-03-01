@@ -28,7 +28,7 @@ definePageMeta({
   layout: 'admin',
   middleware: (to, from) => {
     const auth = useAuthStore()
-    if (!auth.hasRole('admin:sd') && !auth.hasRole('super')) {
+    if (!auth.hasRole('admin:sdqta') && !auth.hasRole('super')) {
       return navigateTo('/user/unauthorized')
     }
   }
@@ -36,21 +36,24 @@ definePageMeta({
 
 const route = useRoute()
 const student = ref(null as any)
+const loading = ref(true)
 
-onMounted(() => {
-  // Simulate fetching student data
-  setTimeout(() => {
-    student.value = {
-      id: route.params.id,
-      name: 'Muhammad Ali',
-      nisn: '1234567890',
-      class: '1A'
-    }
-  }, 500)
+onMounted(async () => {
+  loading.value = true
+  try {
+    const data = await $fetch(`/api/students/${route.params.id}`)
+    student.value = data
+  } catch (e) {
+    console.error('Failed to fetch student', e)
+    alert('Gagal memuat data murid.')
+    navigateTo('/admin/sdqta/students')
+  } finally {
+    loading.value = false
+  }
 })
 
 function onUpdate(formData: any) {
-  console.log('Updating SDQTA Student:', formData)
+  console.log('Updated SDQTA Student:', formData)
   alert('Data murid SDQTA berhasil diperbarui!')
   navigateTo('/admin/sdqta/students')
 }

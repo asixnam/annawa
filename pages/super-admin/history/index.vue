@@ -26,7 +26,7 @@
       </div>
       
       <div class="space-y-4">
-        <div v-for="(event, idx) in contentStore.history.milestones" :key="idx" class="flex flex-col md:flex-row gap-4 items-start p-4 bg-gray-50 rounded-xl group relative border border-gray-100 hover:border-brand-200 transition-all">
+        <div v-for="(event, idx) in milestones" :key="idx" class="flex flex-col md:flex-row gap-4 items-start p-4 bg-gray-50 rounded-xl group relative border border-gray-100 hover:border-brand-200 transition-all">
           <div class="w-full md:w-20 font-black text-brand-600 text-lg py-1">
             {{ event.year }}
           </div>
@@ -40,7 +40,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </button>
-            <button @click="deleteMilestone(idx)" class="p-2 text-red-500 hover:bg-white rounded-lg transition">
+            <button @click="deleteMilestone(event)" class="p-2 text-red-500 hover:bg-white rounded-lg transition">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
               </svg>
@@ -58,7 +58,7 @@
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div v-for="fig in contentStore.figures" :key="fig.id" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative group hover:border-brand-200 transition-all">
+        <div v-for="fig in figures" :key="fig.id" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative group hover:border-brand-200 transition-all">
           <div class="flex items-start gap-4">
             <div class="w-16 h-20 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100 shadow-sm">
               <img :src="fig.photo" class="w-full h-full object-cover">
@@ -160,7 +160,9 @@
           </div>
           <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
              <button type="button" @click="modals.figure = false" class="px-6 py-2 text-gray-500 font-bold hover:text-gray-700 transition">Batal</button>
-             <button type="submit" class="px-8 py-2 bg-brand-600 text-white font-bold rounded-xl hover:bg-brand-700 transition shadow-lg shadow-brand-500/20">Simpan Tokoh</button>
+             <button type="submit" :disabled="isUploading" :class="['px-8 py-2 text-white font-bold rounded-xl transition shadow-lg shadow-brand-500/20', isUploading ? 'bg-gray-400 cursor-not-allowed' : 'bg-brand-600 hover:bg-brand-700']">
+               {{ isUploading ? 'Mengupload...' : 'Simpan Tokoh' }}
+             </button>
           </div>
         </form>
       </div>
@@ -169,16 +171,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { useContentStore } from '~/stores/content'
+import { ref, reactive, computed, watch } from 'vue'
 
 definePageMeta({
   layout: 'super-admin'
 })
 
-const contentStore = useContentStore()
+// Fetch Data
+const { data: historyData, refresh } = await useFetch('/api/history')
+
 const isSaving = ref(false)
-const historyText = ref(contentStore.history.text)
+const historyText = ref('')
+
+// Sync text from API
+watch(() => historyData.value, (newVal: any) => {
+  if (newVal) {
+    historyText.value = newVal.text || ''
+  }
+}, { immediate: true })
+
+const milestones = computed(() => historyData.value?.milestones || [])
+const figures = computed(() => historyData.value?.figures || [])
 
 // Modals State
 const modals = reactive({
@@ -187,7 +200,6 @@ const modals = reactive({
 })
 
 const isEditing = ref(false)
-const editIndex = ref<number | null>(null)
 const editId = ref<number | null>(null)
 
 // Forms State
@@ -200,7 +212,6 @@ function resetForms() {
   forms.milestone = { year: '', title: '', description: '' }
   forms.figure = { name: '', role: '', photo: '' }
   isEditing.value = false
-  editIndex.value = null
   editId.value = null
 }
 
@@ -210,28 +221,43 @@ function openAddMilestone() {
   modals.milestone = true
 }
 
-function openEditMilestone(index: number, event: any) {
+function openEditMilestone(idx: number, event: any) {
   resetForms()
   isEditing.value = true
-  editIndex.value = index
+  editId.value = event.id // Use ID for DB update
   forms.milestone = { ...event }
   modals.milestone = true
 }
 
-function submitMilestone() {
+async function submitMilestone() {
   if (!forms.milestone.year || !forms.milestone.title) return
   
-  if (isEditing.value && editIndex.value !== null) {
-    contentStore.updateMilestone(editIndex.value, { ...forms.milestone })
-  } else {
-    contentStore.addMilestone({ ...forms.milestone })
+  try {
+    if (isEditing.value && editId.value) {
+      await $fetch(`/api/history/milestones/${editId.value}`, {
+        method: 'PUT',
+        body: forms.milestone
+      })
+    } else {
+      await $fetch('/api/history/milestones', {
+        method: 'POST',
+        body: forms.milestone
+      })
+    }
+    await refresh()
+    modals.milestone = false
+  } catch (e) {
+    alert('Gagal menyimpan peristiwa')
   }
-  modals.milestone = false
 }
 
-function deleteMilestone(index: number) {
-  if (confirm('Hapus peristiwa sejarah ini?')) {
-    contentStore.removeMilestone(index)
+async function deleteMilestone(item: any) {
+  if (!confirm('Hapus peristiwa sejarah ini?')) return
+  try {
+    await $fetch(`/api/history/milestones/${item.id}`, { method: 'DELETE' })
+    await refresh()
+  } catch (e) {
+    alert('Gagal menghapus peristiwa')
   }
 }
 
@@ -249,42 +275,86 @@ function openEditFigure(fig: any) {
   modals.figure = true
 }
 
-function handlePhotoUpload(event: Event) {
+const isUploading = ref(false)
+
+async function handlePhotoUpload(event: Event) {
   const target = event.target as HTMLInputElement
   if (target.files && target.files[0]) {
     const file = target.files[0]
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      forms.figure.photo = e.target?.result as string
+    
+    // Max 2MB
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Ukuran foto maksimal 2MB')
+      return
     }
-    reader.readAsDataURL(file)
+
+    const formData = new FormData()
+    formData.append('file', file)
+
+    isUploading.value = true
+    try {
+      const response: any = await $fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+      
+      if (response && response.url) {
+        forms.figure.photo = response.url
+      }
+    } catch (e) {
+      console.error('Upload failed', e)
+      alert('Gagal mengupload foto')
+    } finally {
+      isUploading.value = false
+    }
   }
 }
 
-function submitFigure() {
+async function submitFigure() {
   if (!forms.figure.name) return
   
-  if (isEditing.value && editId.value !== null) {
-    contentStore.updateFigure(editId.value, { ...forms.figure })
-  } else {
-    contentStore.addFigure({ ...forms.figure })
+  try {
+    if (isEditing.value && editId.value) {
+      await $fetch(`/api/history/figures/${editId.value}`, {
+        method: 'PUT',
+        body: forms.figure
+      })
+    } else {
+      await $fetch('/api/history/figures', {
+        method: 'POST',
+        body: forms.figure
+      })
+    }
+    await refresh()
+    modals.figure = false
+  } catch (e) {
+    alert('Gagal menyimpan tokoh')
   }
-  modals.figure = false
 }
 
-function deleteFigure(id: number) {
-  if (confirm('Hapus tokoh inspiratif ini?')) {
-    contentStore.removeFigure(id)
+async function deleteFigure(id: number) {
+  if (!confirm('Hapus tokoh inspiratif ini?')) return
+  try {
+    await $fetch(`/api/history/figures/${id}`, { method: 'DELETE' })
+    await refresh()
+  } catch (e) {
+    alert('Gagal menghapus tokoh')
   }
 }
 
 // --- Save Global Change ---
-function saveChanges() {
+async function saveChanges() {
   isSaving.value = true
-  contentStore.updateHistory(historyText.value)
-  setTimeout(() => {
-    isSaving.value = false
+  try {
+    await $fetch('/api/history', { 
+       method: 'PUT',
+       body: { text: historyText.value }
+    })
     alert('Sejarah berhasil diperbarui!')
-  }, 800)
+  } catch (e) {
+    alert('Gagal menyimpan sejarah')
+  } finally {
+    isSaving.value = false
+  }
 }
 </script>

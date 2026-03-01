@@ -15,9 +15,9 @@
       <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-brand-400/20 justify-between">
         <NuxtLink to="/admin" class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-black font-bold">
-            AD
+            {{ adminInitials }}
           </div>
-          <span class="font-bold text-main tracking-tight">Admin Unit</span>
+          <span class="font-bold text-main tracking-tight">{{ auth.user?.name || 'Admin Unit' }}</span>
         </NuxtLink>
         <div class="flex items-center gap-2">
           <ThemeToggle />
@@ -96,15 +96,25 @@ import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import ThemeToggle from '../components/ThemeToggle.vue'
+import { useInactivityTimeout } from '../composables/useInactivityTimeout'
 
 const isSidebarOpen = ref(false)
 const auth = useAuthStore()
 const router = useRouter()
 
+useInactivityTimeout(30000)
+
+const adminInitials = computed(() => {
+  if (!auth.user?.name) return 'AD'
+  const names = auth.user.name.trim().split(/\s+/)
+  if (names.length === 1) return names[0].charAt(0).toUpperCase()
+  return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase()
+})
+
 const dashboardPath = computed(() => {
   const role = auth.user?.role
   if (role === 'admin:paud') return '/admin/paud'
-  if (role === 'admin:sd') return '/admin/sdqta'
+  if (role === 'admin:sdqta') return '/admin/sdqta'
   if (role === 'admin:pondok') return '/admin/pondok'
   if (role === 'admin:santri') return '/admin/santri'
   return '/admin'
@@ -126,7 +136,10 @@ const menuGroups = computed(() => {
   
   if (role === 'admin:paud') {
     return [
-      { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/paud', icon: icons.dashboard }] },
+      { label: 'Main Menu', items: [
+        { name: 'Dashboard', path: '/admin/paud', icon: icons.dashboard },
+        { name: 'Profil Saya', path: '/admin/profil', icon: icons.users }
+      ] },
       { label: 'Lembaga PAUD', items: [
         { name: 'Data Siswa PAUD', path: '/admin/paud/students', icon: icons.users },
         { name: 'Profil PAUD', path: '/admin/paud/units', icon: icons.news },
@@ -136,9 +149,12 @@ const menuGroups = computed(() => {
     ]
   }
 
-  if (role === 'admin:sd') {
+  if (role === 'admin:sdqta') {
     return [
-      { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/sdqta', icon: icons.dashboard }] },
+      { label: 'Main Menu', items: [
+        { name: 'Dashboard', path: '/admin/sdqta', icon: icons.dashboard },
+        { name: 'Profil Saya', path: '/admin/profil', icon: icons.users }
+      ] },
       { label: 'Lembaga SDQTA', items: [
         { name: 'Data Murid SDQTA', path: '/admin/sdqta/students', icon: icons.users },
         { name: 'Profil SDQTA', path: '/admin/sdqta/units', icon: icons.news },
@@ -150,7 +166,10 @@ const menuGroups = computed(() => {
 
   if (role === 'admin:pondok') {
     return [
-      { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin/pondok', icon: icons.dashboard }] },
+      { label: 'Main Menu', items: [
+        { name: 'Dashboard', path: '/admin/pondok', icon: icons.dashboard },
+        { name: 'Profil Saya', path: '/admin/profil', icon: icons.users }
+      ] },
       { label: 'Pondok Pesantren', items: [
         { name: 'Data Santri', path: '/admin/pondok/students', icon: icons.users },
         { name: 'Profil Pondok', path: '/admin/pondok/units', icon: icons.news },
@@ -164,7 +183,10 @@ const menuGroups = computed(() => {
 
   // Super or Default
   return [
-    { label: 'Main Menu', items: [{ name: 'Dashboard', path: '/admin', icon: icons.dashboard }] },
+    { label: 'Main Menu', items: [
+      { name: 'Dashboard', path: '/admin', icon: icons.dashboard },
+      { name: 'Profil Saya', path: '/admin/profil', icon: icons.users }
+    ] },
     { label: 'Settings', items: [
       { name: 'User Management', path: '#', icon: icons.users },
       { name: 'Logs', path: '#', icon: icons.news },

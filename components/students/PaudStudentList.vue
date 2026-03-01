@@ -7,15 +7,18 @@
       </div>
       <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
         <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
-          <select v-model="selectedYear" class="px-4 py-2.5 bg-card border border-gray-200 dark:border-brand-400/30 rounded-2xl text-xs font-bold text-main focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all cursor-pointer uppercase">
-            <option value="">Semua Tahun</option>
-            <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
-          </select>
+          
           <select v-model="selectedGender" class="px-4 py-2.5 bg-card border border-gray-200 dark:border-brand-400/30 rounded-2xl text-xs font-bold text-main focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all cursor-pointer uppercase">
             <option value="">Semua Jenis</option>
             <option value="laki-laki">Laki Laki</option>
             <option value="perempuan">Perempuan</option>
           </select>
+
+          <select v-model="selectedYear" class="px-4 py-2.5 bg-card border border-gray-200 dark:border-brand-400/30 rounded-2xl text-xs font-bold text-main focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all cursor-pointer uppercase">
+            <option value="">Semua Tahun</option>
+            <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
+          </select>
+
         </div>
         <div class="w-full sm:w-auto">
           <slot name="header-actions">
@@ -132,7 +135,7 @@ const headers = [
 
 const filteredStudents = computed(() => {
   return props.students.filter(s => {
-    const matchYear = !selectedYear.value || s.tahunPendaftaran === selectedYear.value
+    const matchYear = !selectedYear.value || s.tahunPendaftaran == selectedYear.value
     const matchGender = !selectedGender.value || (s.jk === selectedGender.value || s.jenisKelamin === selectedGender.value)
     return matchYear && matchGender
   })

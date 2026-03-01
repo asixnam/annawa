@@ -1,7 +1,7 @@
 <template>
   <PaudStudentDetail 
-    :student="student" 
-    :loading="loading"
+    :student="student || {}" 
+    :loading="loading || !student"
   >
     <template #back-link>
       <NuxtLink to="/admin/paud/students" class="group flex items-center text-gray-500 hover:text-brand-600 transition-colors text-sm mb-3">
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
 import PaudStudentDetail from '~/components/students/PaudStudentDetail.vue'
@@ -40,44 +40,19 @@ definePageMeta({
 
 const route = useRoute()
 const loading = ref(true)
-const student = reactive({
-  namaLengkap: '',
-  nik: '',
-  tempatLahir: '',
-  tanggalLahir: '',
-  jenisKelamin: '',
-  anakKe: '',
-  alamat: '',
-  namaAyah: '',
-  pekerjaanAyah: '',
-  namaIbu: '',
-  pekerjaanIbu: '',
-  noHp: '',
-  tahunPendaftaran: '',
-  files: {
-    akta: 'akta_muhammad_fatih.pdf',
-    kk: 'kk_budi_santoso.jpg'
-  } as Record<string, string>
-})
+const student = ref<any>(null)
 
-onMounted(() => {
-  setTimeout(() => {
-    Object.assign(student, {
-      namaLengkap: 'Muhammad Fatih',
-      nik: '3316012345678901',
-      tempatLahir: 'Blora',
-      tanggalLahir: '2019-08-20',
-      jenisKelamin: 'laki-laki',
-      anakKe: 1,
-      alamat: 'Jln. Pemuda No. 45, Blora, Jawa Tengah',
-      namaAyah: 'Budi Santoso',
-      pekerjaanAyah: 'Guru',
-      namaIbu: 'Siti Maryam',
-      pekerjaanIbu: 'Perawat',
-      noHp: '081234567890',
-      tahunPendaftaran: '2025'
-    })
+onMounted(async () => {
+  loading.value = true
+  try {
+    const data = await $fetch(`/api/students/${route.params.id}`)
+    student.value = data
+  } catch (e) {
+    console.error('Failed to fetch student details', e)
+    alert('Gagal memuat detail murid.')
+    navigateTo('/admin/paud/students')
+  } finally {
     loading.value = false
-  }, 800)
+  }
 })
 </script>

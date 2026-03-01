@@ -23,8 +23,8 @@ import SantriStudentEdit from '../../../../components/students/SantriStudentEdit
 definePageMeta({ layout: 'super-admin' })
 const router = useRouter()
 
-function saveStudent(formData: any) {
-  console.log('Saving Santri:', formData)
+async function saveStudent(formData: any) {
+  console.log('Student saved successfully via component:', formData)
   alert('Data santri baru berhasil ditambahkan!')
   router.push('/super-admin/students/santri')
 }

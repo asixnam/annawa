@@ -36,21 +36,24 @@ definePageMeta({
 
 const route = useRoute()
 const student = ref(null as any)
+const loading = ref(true)
 
-onMounted(() => {
-  // Simulate fetching student data
-  setTimeout(() => {
-    student.value = {
-      id: route.params.id,
-      name: 'Zaid Al-Khoir',
-      pondokType: 'Salafiyah',
-      room: 'B1'
-    }
-  }, 500)
+onMounted(async () => {
+  loading.value = true
+  try {
+    const data = await $fetch(`/api/students/${route.params.id}`)
+    student.value = data
+  } catch (e) {
+    console.error('Failed to fetch student', e)
+    alert('Gagal memuat data santri.')
+    navigateTo('/admin/pondok/students')
+  } finally {
+    loading.value = false
+  }
 })
 
 function onUpdate(formData: any) {
-  console.log('Updating Pondok Student:', formData)
+  console.log('Updated Pondok Student:', formData)
   alert('Data santri berhasil diperbarui!')
   navigateTo('/admin/pondok/students')
 }

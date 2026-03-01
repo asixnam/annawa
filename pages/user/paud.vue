@@ -29,19 +29,24 @@
         <div class="flex justify-center lg:justify-start">
           <div class="w-64 h-64 lg:w-80 lg:h-80 flex-shrink-0">
             <img 
-              src="/annawa.png" 
-              alt="PAUD An-Nawa" 
-              class="w-full h-full object-contain rounded-0 shadow-xl border-4 border-card bg-card p-8 hover:scale-105 transition-all duration-500 dark:border-gray-800"
+              :src="paudUnit?.image_url || '/annawa.png'" 
+              :alt="paudUnit?.name || 'PAUD An-Nawa'" 
+              class="w-full h-full object-cover rounded-2xl shadow-xl border-4 border-card hover:scale-105 transition-all duration-500 dark:border-gray-800"
             />
           </div>
         </div>
         <div class="space-y-6 text-gray-600 dark:text-gray-400 leading-relaxed text-lg text-justify pt-6 lg:max-w-2xl">
-          <p>
-            PAUD Islam Terpadu An-Nawa Khozinatul Ulum adalah jenjang pendidikan anak usia dini yang berfokus pada pengembangan fitrah anak. Kami percaya bahwa setiap anak adalah unik dan memiliki potensi yang luar biasa.
+          <p v-if="paudUnit?.description">
+            {{ paudUnit.description }}
           </p>
-          <p>
-            Dengan pendekatan "Learning through Play" yang diintegrasikan dengan nilai-nilai Al-Qur'an, kami menciptakan lingkungan belajar yang aman, nyaman, dan stimulatif bagi tumbuh kembang anak secara holistik.
-          </p>
+          <template v-else>
+            <p>
+              PAUD Islam Terpadu An-Nawa Khozinatul Ulum adalah jenjang pendidikan anak usia dini yang berfokus pada pengembangan fitrah anak. Kami percaya bahwa setiap anak adalah unik dan memiliki potensi yang luar biasa.
+            </p>
+            <p>
+              Dengan pendekatan "Learning through Play" yang diintegrasikan dengan nilai-nilai Al-Qur'an, kami menciptakan lingkungan belajar yang aman, nyaman, dan stimulatif bagi tumbuh kembang anak secara holistik.
+            </p>
+          </template>
         </div>
       </div>
     </section>
@@ -55,7 +60,7 @@
               Visi <span class="text-brand-500 ml-1">PAUD</span>
             </h3>
             <p class="text-main text-lg font-medium leading-relaxed italic border-l-4 border-brand-500 pl-4">
-              "Terwujudnya anak usia dini yang berakhlak mulia, sehat, cerdas, ceria, dan mandiri berlandaskan nilai-nilai Al-Qur'an."
+              "{{ paudUnit?.vision || 'Terwujudnya anak usia dini yang berakhlak mulia, sehat, cerdas, ceria, dan mandiri berlandaskan nilai-nilai Al-Qur\'an.' }}"
             </p>
           </div>
 
@@ -66,7 +71,7 @@
             <ul class="space-y-4">
               <li v-for="(misi, index) in misis" :key="index" class="flex items-start gap-3">
                 <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500 text-black flex items-center justify-center font-bold text-xs">
-                  {{ index + 1 }}
+                  {{ Number(index) + 1 }}
                 </span>
                 <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{{ misi }}</p>
               </li>
@@ -85,10 +90,23 @@
           </h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div v-for="item in facilities" :key="item.name" class="bg-card p-6  shadow-sm border border-gray-100 dark:border-gray-800/40 text-center group hover:border-brand-500 transition-all">
-            <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">{{ item.icon }}</div>
+          <div v-for="item in facilities" :key="item.name" class="bg-card p-6 shadow-sm border border-gray-100 dark:border-gray-800/40 text-center group hover:border-brand-500 transition-all rounded-2xl">
+            <div class="w-16 h-16 rounded-xl bg-brand-50 flex items-center justify-center mx-auto mb-4 overflow-hidden group-hover:bg-brand-500/10 transition-colors duration-300">
+               <img v-if="item.icon && (item.icon.startsWith('http') || item.icon.startsWith('data:') || item.icon.startsWith('/'))" :src="item.icon" class="w-full h-full object-cover">
+               <span v-else class="text-3xl group-hover:scale-110 transition-transform duration-300">{{ item.icon }}</span>
+            </div>
             <h4 class="text-sm font-bold text-main">{{ item.name }}</h4>
           </div>
+        </div>
+        <!-- Empty State -->
+        <div v-if="facilities.length === 0" class="col-span-full py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Fasilitas</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi fasilitas akan segera hadir di sini. Data fasilitas akan segera diperbarui.</p>
         </div>
       </div>
     </section>
@@ -108,6 +126,16 @@
               <h4 class="text-white font-bold text-lg leading-tight">{{ activity.title }}</h4>
             </div>
           </div>
+        </div>
+        <!-- Empty State -->
+        <div v-if="activities.length === 0" class="col-span-full py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Kegiatan</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi kegiatan akan segera hadir di sini. Data kegiatan akan segera diperbarui.</p>
         </div>
       </div>
     </section>
@@ -129,7 +157,7 @@
             <img 
               :src="teacher.photo" 
               :alt="teacher.name" 
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+              class="w-full h-full object-cover transition-all duration-500" 
             />
           </div>
           <h4 class="text-lg font-bold text-main mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ teacher.name }}</h4>
@@ -137,6 +165,16 @@
             {{ teacher.position }}
           </p>
         </div>
+      </div>
+      <!-- Empty State -->
+      <div v-if="teachers.length === 0" class="col-span-full py-16 text-center">
+        <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-main mb-2">Belum Ada Guru</h3>
+        <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi guru akan segera hadir di sini. Data guru akan segera diperbarui.</p>
       </div>
     </section>
 
@@ -165,53 +203,35 @@
 </template>
 
 <script setup lang="ts">
-const misis = [
-  "Menyelenggarakan pendidikan anak usia dini yang berbasis pada nilai-nilai keislaman.",
-  "Menciptakan lingkungan belajar yang aktif, inovatif, kreatif, dan menyenangkan.",
-  "Mengoptimalkan potensi kecerdasan majemuk anak.",
-  "Membangun pembiasaan akhlakul karimah sejak dini.",
-  "Menjalin kerjasama yang harmonis dengan orang tua dan masyarakat."
-]
+import { computed, onMounted } from 'vue'
+import { useContentStore } from '~/stores/content'
 
-const facilities = [
-  { name: "Ruang Kelas AC", icon: "🏫" },
-  { name: "Area Bermain", icon: "🎡" },
-  { name: "Perpustakaan Mini", icon: "📚" },
-  { name: "Alat Peraga Edukasi", icon: "🧩" },
-  { name: "Musholla", icon: "🕌" },
-  { name: "Taman Kreatif", icon: "🌳" },
-  { name: "Area Makan Bersama", icon: "🍱" },
-  { name: "Pojok Baca", icon: "📖" }
-]
+const store = useContentStore()
 
-const activities = [
-  { title: "Manasik Haji Cilik", image: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=800&auto=format&fit=crop" },
-  { title: "Outing Class & Field Trip", image: "https://images.unsplash.com/photo-1472289065668-ce6a9a442c23?q=80&w=800&auto=format&fit=crop" },
-  { title: "Market Day & Kewirausahaan", image: "https://images.unsplash.com/photo-1516627145497-ae69688bc554?q=80&w=800&auto=format&fit=crop" }
-]
-
-const teachers = [
-  {
-    name: "Ustadzah Fatimah, S.Pd",
-    position: "Kepala PAUD",
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=500&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadzah Aisyah",
-    position: "Wali Kelas A",
-    photo: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=400&h=500&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadzah Khadijah",
-    position: "Wali Kelas B",
-    photo: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=400&h=500&auto=format&fit=crop"
-  },
-  {
-    name: "Ustadzah Maryam",
-    position: "Guru Pendamping",
-    photo: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=400&h=500&auto=format&fit=crop"
+// Fetch Data
+onMounted(() => {
+  if (store.units.length === 0) {
+    store.fetchUnits()
   }
-]
+})
+
+// Find PAUD Unit
+const paudUnit = computed(() => {
+  if (store.units.length === 0) return null
+  return (store.units as any[]).find(u => u.id === 'paud') || (store.units as any[]).find(u => u.name.toLowerCase().includes('paud'))
+})
+
+const misis = computed(() => {
+  if (!paudUnit.value?.mission) return [
+    "Menyelenggarakan pendidikan anak usia dini yang berbasis pada nilai-nilai keislaman.",
+    "Menciptakan lingkungan belajar yang aktif, inovatif, kreatif, dan menyenangkan."
+  ]
+  return Array.isArray(paudUnit.value.mission) ? paudUnit.value.mission : [paudUnit.value.mission]
+})
+
+const facilities = computed(() => paudUnit.value?.facilities || [])
+const activities = computed(() => paudUnit.value?.activities || [])
+const teachers = computed(() => paudUnit.value?.staff || [])
 </script>
 
 <style scoped>

@@ -1,8 +1,10 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div class="mb-6">
-      <NuxtLink :to="basePath" class="text-gray-500 hover:text-gray-700 text-sm mb-2 inline-block">&larr; Kembali ke Daftar Kajian</NuxtLink>
+    <div class="mb-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-gray-900">{{ isEdit ? 'Edit Jadwal Kajian' : 'Tambah Jadwal Kajian' }}</h1>
+      <NuxtLink :to="basePath" class="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 rounded-lg text-[10px] font-black uppercase tracking-widest text-white transition-all shadow-md shrink-0">
+        <img src="https://img.icons8.com/?size=100&id=99287&format=png&color=FFFFFF" alt="Back Arrow" class="w-4 h-4">
+      </NuxtLink>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
@@ -60,7 +62,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { useContentStore } from '~/stores/content'
 
 const props = defineProps<{
   id?: string
@@ -68,8 +69,8 @@ const props = defineProps<{
 }>()
 
 const router = useRouter()
-const store = useContentStore()
 const isEdit = !!props.id
+const isLoading = ref(false)
 const categories = ['Sorogan', 'Tahfidzul Quran', 'Bahtsul Masail', 'Bandongan']
 
 const form = ref({
@@ -82,11 +83,23 @@ const form = ref({
   description: ''
 })
 
-onMounted(() => {
+onMounted(async () => {
   if (isEdit) {
-    const existing = store.kajian.find(k => k.id === parseInt(props.id!))
-    if (existing) {
-      form.value = { ...existing }
+    try {
+      const data: any = await $fetch(`/api/kajian/${props.id}`)
+      if (data) {
+        form.value = {
+            title: data.title,
+            category: data.category,
+            ustadz: data.ustadz_name,
+            time: data.schedule,
+            location: data.location,
+            slug: data.slug,
+            description: data.description
+        }
+      }
+    } catch (e) {
+      console.error('Failed to fetch kajian', e)
     }
   }
 })
@@ -102,14 +115,37 @@ watch(() => form.value.title, (newTitle) => {
   }
 })
 
-function saveKajian() {
-  if (isEdit) {
-    store.updateKajian(parseInt(props.id!), { ...form.value })
-    alert('Jadwal kajian berhasil diperbarui!')
-  } else {
-    store.addKajian({ ...form.value })
-    alert('Jadwal kajian berhasil ditambahkan!')
+async function saveKajian() {
+  isLoading.value = true
+  try {
+    const payload = {
+      title: form.value.title,
+      category: form.value.category,
+      ustadz_name: form.value.ustadz,
+      schedule: form.value.time,
+      location: form.value.location,
+      slug: form.value.slug,
+      description: form.value.description
+    }
+
+    if (isEdit) {
+      await $fetch(`/api/kajian/${props.id}`, {
+        method: 'PUT',
+        body: payload
+      })
+      alert('Jadwal kajian berhasil diperbarui!')
+    } else {
+      await $fetch('/api/kajian', {
+        method: 'POST',
+        body: payload
+      })
+      alert('Jadwal kajian berhasil ditambahkan!')
+    }
+    router.push(props.basePath)
+  } catch (error: any) {
+    alert(error.data?.statusMessage || 'Gagal menyimpan kajian')
+  } finally {
+    isLoading.value = false
   }
-  router.push(props.basePath)
 }
 </script>
