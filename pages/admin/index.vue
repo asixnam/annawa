@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center min-h-[60vh]">
     <div class="text-center">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-brand-500 border-t-transparent mb-4"></div>
-      <p class="text-gray-600 font-medium">Memindahkan Anda ke dashboard yang sesuai...</p>
+      <p class="text-gray-600 font-medium">Memindahkan Anda ke dashboard yang sesuaiaaaa...</p>
     </div>
   </div>
 </template>
