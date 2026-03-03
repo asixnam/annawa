@@ -18,7 +18,7 @@
               {{ hero.subtitle }}
             </p>
             <div class="flex flex-wrap gap-4">
-              <NuxtLink to="#" class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1">
+              <NuxtLink to="#layanan-pendaftaran" class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1">
                 Daftar Sekarang
               </NuxtLink>
               <NuxtLink to="/user/profil" class="px-8 py-4 border-2 border-gray-200 text-gray-800 rounded font-black uppercase text-sm tracking-widest hover:border-brand-500 hover:text-brand-500 transition-all transform hover:-translate-y-1">
@@ -74,7 +74,7 @@
     </section>
 
     <!-- Layanan Utama -->
-    <section class="bg-card py-16 transition-colors duration-300">
+    <section id="layanan-pendaftaran" class="bg-card py-16 transition-colors duration-300">
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
           <h2 class="text-3xl md:text-4xl font-bold text-main mb-4">Layanan Pendaftaran</h2>
