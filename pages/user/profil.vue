@@ -11,7 +11,7 @@
           Official Profil
         </div>
         <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-          Profil <span class="text-brand-500 uppercase">Pondok Pesantren</span>
+          Profil <span class="text-brand-500">Pondok Pesantren</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
           Mengenal lebih dekat Pondok Pesantren Khozinatul Ulum An-Nawa melalui visi, misi, dan tim pengembang kami.

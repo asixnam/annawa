@@ -10,7 +10,9 @@
           Official Profil
         </div>
         <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-          Profil <span class="text-brand-500 uppercase">PAUD An-Nawa</span>
+          Profil 
+          <!-- <span class="text-brand-500 uppercase">PAUD An-Nawa</span> -->
+           <span class="text-brand-500">PAUD An-Nawa</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
           Membentuk landasan karakter dan kecerdasan anak sejak dini dalam lingkungan yang islami dan menyenangkan.
@@ -21,8 +23,8 @@
     <!-- Tentang PAUD -->
     <section class="mx-auto px-4 md:px-10 lg:px-20 py-16 w-full transition-colors duration-300">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-black text-main uppercase tracking-tight font-heading">
-          Tentang <span class="text-brand-500">PAUD</span>
+        <h2 class="text-3xl md:text-4xl font-black text-main tracking-tight font-heading">
+          Aboute
         </h2>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 items-start max-w-6xl mx-auto">

@@ -10,7 +10,7 @@
           Official Profil
         </div>
         <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-          Profil <span class="text-brand-500 uppercase">SDQTA An-Nawa</span>
+          Profil <span class="text-brand-500">SDQTA An-Nawa</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
           Sekolah Dasar Qur'an Terpadu An-Nawa: Memadukan keunggulan akademik dengan nilai-nilai luhur Al-Qur'an.

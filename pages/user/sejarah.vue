@@ -11,7 +11,7 @@
           Tentang Kami
         </div>
         <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-          Sejarah <span class="text-brand-500 uppercase">Perjalanan</span>
+          Sejarah <span class="text-brand-500">Perjalanan</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
           Menapak tilas awal berdirinya Pondok Pesantren Khozinatul Ulum An-Nawa dan perjuangan dalam mencetak generasi Qur'ani.
