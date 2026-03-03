@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [rows] = await pool.query('SELECT * FROM testimonials WHERE id = ?', [id])
+        const { rows: rows } = await pool.query('SELECT * FROM testimonials WHERE id = $1', [id])
         if ((rows as any[]).length === 0) {
             throw createError({
                 statusCode: 404,

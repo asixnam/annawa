@@ -1,15 +1,8 @@
-import mysql from 'mysql2/promise'
+import { createPool } from '@vercel/postgres'
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'annawa',
-  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
-  ssl: process.env.DB_HOST && process.env.DB_HOST.includes('aivencloud') ? { rejectUnauthorized: true } : undefined,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+// Initialize a connection pool to Vercel Postgres
+const pool = createPool({
+  connectionString: process.env.POSTGRES_URL // Vercel injects this environment variable automatically
 })
 
 export default pool

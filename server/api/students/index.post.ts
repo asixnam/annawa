@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
     try {
         // Check for duplicate NIK
         if (body.nik) {
-            const [existing]: any = await pool.query('SELECT id FROM students WHERE nik = ?', [body.nik])
+            const { rows: existing } = await pool.query('SELECT id FROM students WHERE nik = $1', [body.nik])
             if (existing.length > 0) {
                 throw createError({ statusCode: 409, statusMessage: 'NIK sudah terdaftar' })
             }
@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
 
         // Check for duplicate NISN
         if (body.nis) {
-            const [existing]: any = await pool.query('SELECT id FROM students WHERE nis = ?', [body.nis])
+            const { rows: existing } = await pool.query('SELECT id FROM students WHERE nis = $1', [body.nis])
             if (existing.length > 0) {
                 throw createError({ statusCode: 409, statusMessage: 'NISN sudah terdaftar' })
             }
@@ -75,14 +75,14 @@ export default defineEventHandler(async (event) => {
 
         // Add ID
         fields.push('id')
-        placeholders.push('?')
+        placeholders.push(`$${values.length + 1}`)
         values.push(id)
 
         // Add standard fields
         for (const field of validFields) {
             if (body[field] !== undefined) {
                 fields.push(field)
-                placeholders.push('?')
+                placeholders.push(`$${values.length + 1}`)
                 values.push(body[field])
             }
         }
@@ -90,7 +90,7 @@ export default defineEventHandler(async (event) => {
         // Add file fields
         for (const [key, value] of Object.entries(files)) {
             fields.push(key)
-            placeholders.push('?')
+            placeholders.push(`$${values.length + 1}`)
             values.push(value)
         }
 

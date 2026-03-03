@@ -19,14 +19,14 @@ export default defineEventHandler(async (event) => {
         const fields = ['title', 'slug', 'content', 'image_url', 'author_id', 'is_published', 'type']
         for (const field of fields) {
             if (body[field] !== undefined) {
-                updates.push(`${field} = ?`)
+                updates.push(`${field} = $${values.length + 1}`)
                 values.push(body[field])
             }
         }
 
         if (updates.length > 0) {
             values.push(id)
-            await pool.query(`UPDATE news SET ${updates.join(', ')} WHERE id = ?`, values)
+            await pool.query(`UPDATE news SET ${updates.join(', ')} WHERE id = \${values.length}`, values)
         }
 
         return { message: 'News updated successfully' }

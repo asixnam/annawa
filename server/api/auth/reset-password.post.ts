@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [rows]: any = await pool.query('SELECT reset_otp, reset_otp_expires FROM users WHERE email = ?', [email])
+        const { rows: rows } = await pool.query('SELECT reset_otp, reset_otp_expires FROM users WHERE email = $1', [email])
         if (!Array.isArray(rows) || rows.length === 0) {
             throw createError({ statusCode: 404, statusMessage: 'Email tidak ditemukan' })
         }
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
             throw createError({ statusCode: 400, statusMessage: 'OTP tidak valid atau sudah kadaluwarsa' })
         }
 
-        await pool.query('UPDATE users SET password = ?, reset_otp = NULL, reset_otp_expires = NULL WHERE email = ?', [newPassword, email])
+        await pool.query('UPDATE users SET password = $1, reset_otp = NULL, reset_otp_expires = NULL WHERE email = $2', [newPassword, email])
 
         return { message: 'Password berhasil diubah' }
     } catch (error: any) {

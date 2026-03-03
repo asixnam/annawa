@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     try {
         // Upsert history text
         await pool.query(
-            `INSERT INTO content_text (key_name, content) VALUES (?, ?) 
+            `INSERT INTO content_text (key_name, content) VALUES ($1, $2) 
              ON DUPLICATE KEY UPDATE content = VALUES(content)`,
             ['history', text]
         )

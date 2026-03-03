@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         // Check if email exists
-        const [existing] = await pool.query('SELECT id FROM users WHERE email = ?', [email])
+        const { rows: existing } = await pool.query('SELECT id FROM users WHERE email = $1', [email])
         if (Array.isArray(existing) && existing.length > 0) {
             throw createError({
                 statusCode: 409,
@@ -23,8 +23,8 @@ export default defineEventHandler(async (event) => {
         }
 
         const defaultStatus = role === 'author' ? 'pending' : 'verified'
-        const [result] = await pool.query(
-            'INSERT INTO users (name, email, password, role, status, bio, phone, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        const { rows: result } = await pool.query(
+            'INSERT INTO users (name, email, password, role, status, bio, phone, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
             [name, email, password, role, status || defaultStatus, bio || null, phone || null, image_url || null]
         )
 

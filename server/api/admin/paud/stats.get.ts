@@ -4,22 +4,27 @@ import pool from '../../../utils/db'
 export default defineEventHandler(async (event) => {
     try {
         // 1. Get Totals for PAUD
-        const [[{ total: totalRegistrations }]]: any = await pool.query(
-            'SELECT COUNT(*) as total FROM students WHERE unit = "PAUD"'
+        const { rows: _res_reg } = await pool.query(
+            'SELECT COUNT(*) as total FROM students WHERE unit = $1', ['PAUD']
         )
-        const [[{ total: totalNews }]]: any = await pool.query(
+        const totalRegistrations = Number(_res_reg[0]?.total || 0)
+
+        const { rows: _res_news } = await pool.query(
             'SELECT COUNT(*) as total FROM news'
         )
-        const [[{ total: totalGallery }]]: any = await pool.query(
+        const totalNews = Number(_res_news[0]?.total || 0)
+
+        const { rows: _res_gallery } = await pool.query(
             'SELECT COUNT(*) as total FROM gallery'
         )
+        const totalGallery = Number(_res_gallery[0]?.total || 0)
 
         // 2. Get Recent Activities (PAUD related)
-        const [recentStudents]: any = await pool.query(
+        const { rows: recentStudents } = await pool.query(
             'SELECT id, name as title, created_at as date, "student" as type FROM students WHERE unit = "PAUD" ORDER BY created_at DESC LIMIT 3'
         )
 
-        const [recentGallery]: any = await pool.query(
+        const { rows: recentGallery } = await pool.query(
             'SELECT id, title, created_at as date, "gallery" as type FROM gallery ORDER BY created_at DESC LIMIT 2'
         )
 

@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [rows]: any = await pool.query('SELECT * FROM gallery WHERE id = ?', [id])
+        const { rows: rows } = await pool.query('SELECT * FROM gallery WHERE id = $1', [id])
         if (rows.length === 0) {
             throw createError({
                 statusCode: 404,

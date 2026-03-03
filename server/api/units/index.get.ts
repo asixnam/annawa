@@ -2,11 +2,11 @@ import pool from '../../utils/db'
 
 export default defineEventHandler(async (event) => {
     try {
-        const [units] = await pool.query('SELECT * FROM units ORDER BY id ASC')
-        const [facilities] = await pool.query('SELECT * FROM unit_facilities')
-        const [activities] = await pool.query('SELECT * FROM unit_activities')
-        const [staff] = await pool.query('SELECT * FROM unit_staff')
-        const [partners] = await pool.query('SELECT * FROM unit_partners')
+        const { rows: units } = await pool.query('SELECT * FROM units ORDER BY id ASC')
+        const { rows: facilities } = await pool.query('SELECT * FROM unit_facilities')
+        const { rows: activities } = await pool.query('SELECT * FROM unit_activities')
+        const { rows: staff } = await pool.query('SELECT * FROM unit_staff')
+        const { rows: partners } = await pool.query('SELECT * FROM unit_partners')
 
         const unitsWithRelations = (units as any[]).map(unit => {
             return {

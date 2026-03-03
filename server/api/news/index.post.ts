@@ -25,9 +25,9 @@ export default defineEventHandler(async (event) => {
     const slug = body.slug || slugify(title)
 
     try {
-        const [result] = await pool.query(
-            'INSERT INTO news (title, slug, content, image_url, author_id, is_published, type) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [title, slug, content, image_url, author_id, is_published ?? true, type || 'Berita']
+        const { rows: result } = await pool.query(
+            'INSERT INTO news (title, slug, content, image_url, author_id, is_published, type) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            [title, slug, content, image_url, author_id, is_published $8$9 true, type || 'Berita']
         )
 
         return { id: (result as any).insertId, title, slug }

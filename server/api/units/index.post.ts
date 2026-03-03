@@ -24,8 +24,8 @@ export default defineEventHandler(async (event) => {
     const slug = body.slug || slugify(name)
 
     try {
-        const [result] = await pool.query(
-            'INSERT INTO units (name, slug, description, image_url) VALUES (?, ?, ?, ?)',
+        const { rows: result } = await pool.query(
+            'INSERT INTO units (name, slug, description, image_url) VALUES ($1, $2, $3, $4)',
             [name, slug, description, image_url]
         )
 

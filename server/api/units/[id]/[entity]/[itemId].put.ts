@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         // Resolve actual unit ID (could be slug)
-        const [units]: any = await pool.query('SELECT id FROM units WHERE id = ? OR slug = ?', [unitId, unitId])
+        const { rows: units } = await pool.query('SELECT id FROM units WHERE id = $1 OR slug = $2', [unitId, unitId])
         if (units.length === 0) {
             throw createError({ statusCode: 404, statusMessage: 'Unit not found' })
         }
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
 
         for (const [uiKey, dbCol] of Object.entries(fieldMap)) {
             if (body[uiKey] !== undefined) {
-                updates.push(`${dbCol} = ?`)
+                updates.push(`${dbCol} = $${values.length + 1}`)
                 values.push(body[uiKey])
             }
         }
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
         if (updates.length > 0) {
             values.push(itemId)
             values.push(actualId) // Security check: ensure item belongs to unit
-            await pool.query(`UPDATE ${table} SET ${updates.join(', ')} WHERE id = ? AND unit_id = ?`, values)
+            await pool.query(`UPDATE ${table} SET ${updates.join(', ')} WHERE id = $${values.length - 1} AND unit_id = $${values.length}`, values)
         }
 
         return { message: 'Item updated successfully' }

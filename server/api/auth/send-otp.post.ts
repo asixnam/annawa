@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [rows]: any = await pool.query('SELECT id, name FROM users WHERE email = ?', [email])
+        const { rows: rows } = await pool.query('SELECT id, name FROM users WHERE email = $1', [email])
         if (!Array.isArray(rows) || rows.length === 0) {
             throw createError({ statusCode: 404, statusMessage: 'Email tidak ditemukan' })
         }
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
         const otp = Math.floor(100000 + Math.random() * 900000).toString()
         const expires = new Date(Date.now() + 15 * 60000) // 15 mins
 
-        await pool.query('UPDATE users SET reset_otp = ?, reset_otp_expires = ? WHERE email = ?', [otp, expires, email])
+        await pool.query('UPDATE users SET reset_otp = $1, reset_otp_expires = $2 WHERE email = $3', [otp, expires, email])
 
         // Send email
         const transporter = nodemailer.createTransport({

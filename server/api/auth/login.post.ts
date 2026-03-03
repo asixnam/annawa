@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email])
+        const { rows: rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email])
 
         if (Array.isArray(rows) && rows.length > 0) {
             const user = rows[0]

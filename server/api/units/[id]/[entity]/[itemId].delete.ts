@@ -21,13 +21,13 @@ export default defineEventHandler(async (event) => {
 
     try {
         // Resolve actual unit ID (could be slug)
-        const [units]: any = await pool.query('SELECT id FROM units WHERE id = ? OR slug = ?', [unitId, unitId])
+        const { rows: units } = await pool.query('SELECT id FROM units WHERE id = $1 OR slug = $2', [unitId, unitId])
         if (units.length === 0) {
             throw createError({ statusCode: 404, statusMessage: 'Unit not found' })
         }
         const actualId = units[0].id
 
-        await pool.query(`DELETE FROM ${table} WHERE id = ? AND unit_id = ?`, [itemId, actualId])
+        await pool.query(`DELETE FROM ${table} WHERE id = $1 AND unit_id = $2`, [itemId, actualId])
         return { message: 'Item deleted successfully' }
     } catch (error: any) {
         throw createError({

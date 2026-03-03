@@ -27,10 +27,10 @@ export default defineEventHandler(async (event) => {
             throw createError({ statusCode: 400, statusMessage: 'Invalid entity type' })
     }
 
-    placeholders = values.map(() => '?')
+    placeholders = values.map((_, i) => `$${i + 1}`)
 
     try {
-        const [result] = await pool.query(
+        const { rows: result } = await pool.query(
             `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders.join(', ')})`,
             values
         )

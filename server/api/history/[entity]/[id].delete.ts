@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        await pool.query(`DELETE FROM ${table} WHERE id = ?`, [id])
+        await pool.query(`DELETE FROM ${table} WHERE id = $1`, [id])
         return { message: 'Item deleted successfully' }
     } catch (error: any) {
         throw createError({

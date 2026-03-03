@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        await pool.query('DELETE FROM students WHERE id = ?', [id])
+        await pool.query('DELETE FROM students WHERE id = $1', [id])
         return { message: 'Student deleted successfully' }
     } catch (error: any) {
         throw createError({

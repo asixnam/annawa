@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [rows]: any = await pool.query('SELECT reset_otp, reset_otp_expires FROM users WHERE email = ?', [email])
+        const { rows: rows } = await pool.query('SELECT reset_otp, reset_otp_expires FROM users WHERE email = $1', [email])
         if (!Array.isArray(rows) || rows.length === 0) {
             throw createError({ statusCode: 404, statusMessage: 'Email tidak ditemukan' })
         }

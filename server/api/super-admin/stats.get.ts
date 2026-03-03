@@ -4,24 +4,31 @@ import pool from '../../utils/db'
 export default defineEventHandler(async (event) => {
     try {
         // 1. Get Totals
-        const [[{ total: totalUsers }]]: any = await pool.query('SELECT COUNT(*) as total FROM users')
-        const [[{ total: totalArticles }]]: any = await pool.query('SELECT COUNT(*) as total FROM news')
-        const [[{ total: totalPhotos }]]: any = await pool.query('SELECT COUNT(*) as total FROM gallery')
-        const [[{ total: totalStudents }]]: any = await pool.query('SELECT COUNT(*) as total FROM students')
+        const { rows: _res_users } = await pool.query('SELECT COUNT(*) as total FROM users')
+        const totalUsers = Number(_res_users[0]?.total || 0)
+
+        const { rows: _res_articles } = await pool.query('SELECT COUNT(*) as total FROM news')
+        const totalArticles = Number(_res_articles[0]?.total || 0)
+
+        const { rows: _res_photos } = await pool.query('SELECT COUNT(*) as total FROM gallery')
+        const totalPhotos = Number(_res_photos[0]?.total || 0)
+
+        const { rows: _res_students } = await pool.query('SELECT COUNT(*) as total FROM students')
+        const totalStudents = Number(_res_students[0]?.total || 0)
 
         // 2. Get Recent Activities
         // Fetch latest news
-        const [recentNews]: any = await pool.query(
+        const { rows: recentNews } = await pool.query(
             'SELECT id, title, created_at as date, "news" as type FROM news ORDER BY created_at DESC LIMIT 3'
         )
 
         // Fetch latest students
-        const [recentStudents]: any = await pool.query(
+        const { rows: recentStudents } = await pool.query(
             'SELECT id, name as title, created_at as date, "student" as type, unit FROM students ORDER BY created_at DESC LIMIT 3'
         )
 
         // Fetch latest gallery
-        const [recentGallery]: any = await pool.query(
+        const { rows: recentGallery } = await pool.query(
             'SELECT id, title, created_at as date, "gallery" as type FROM gallery ORDER BY created_at DESC LIMIT 3'
         )
 

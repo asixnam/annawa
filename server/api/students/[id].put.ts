@@ -55,20 +55,20 @@ export default defineEventHandler(async (event) => {
 
         for (const field of validFields) {
             if (body[field] !== undefined) {
-                updates.push(`${field} = ?`)
+                updates.push(`${field} = $${values.length + 1}`)
                 values.push(body[field])
             }
         }
 
         // Add file updates
         for (const [key, value] of Object.entries(files)) {
-            updates.push(`${key} = ?`)
+            updates.push(`${key} = $${values.length + 1}`)
             values.push(value)
         }
 
         if (updates.length > 0) {
             values.push(id)
-            await pool.query(`UPDATE students SET ${updates.join(', ')} WHERE id = ?`, values)
+            await pool.query(`UPDATE students SET ${updates.join(', ')} WHERE id = \${values.length}`, values)
         }
 
         return { message: 'Student updated successfully', files }

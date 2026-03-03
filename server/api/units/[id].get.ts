@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         // Get Unit
-        const [units]: any = await pool.query('SELECT * FROM units WHERE id = ? OR slug = ?', [id, id])
+        const { rows: units } = await pool.query('SELECT * FROM units WHERE id = $1 OR slug = $2', [id, id])
         if (units.length === 0) {
             throw createError({
                 statusCode: 404,
@@ -34,19 +34,19 @@ export default defineEventHandler(async (event) => {
         if (!unit.mission) unit.mission = []
 
         // Get Facilities
-        const [facilities]: any = await pool.query('SELECT * FROM unit_facilities WHERE unit_id = ?', [actualId])
+        const { rows: facilities } = await pool.query('SELECT * FROM unit_facilities WHERE unit_id = $1', [actualId])
         unit.facilities = facilities.map((f: any) => ({ ...f, icon: f.icon_url }))
 
         // Get Activities
-        const [activities]: any = await pool.query('SELECT * FROM unit_activities WHERE unit_id = ?', [actualId])
+        const { rows: activities } = await pool.query('SELECT * FROM unit_activities WHERE unit_id = $1', [actualId])
         unit.activities = activities.map((a: any) => ({ ...a, image: a.image_url })) // Map image_url to image
 
         // Get Staff
-        const [staff]: any = await pool.query('SELECT * FROM unit_staff WHERE unit_id = ?', [actualId])
+        const { rows: staff } = await pool.query('SELECT * FROM unit_staff WHERE unit_id = $1', [actualId])
         unit.staff = staff.map((s: any) => ({ ...s, photo: s.photo_url })) // Map photo_url to photo
 
         // Get Partners
-        const [partners]: any = await pool.query('SELECT * FROM unit_partners WHERE unit_id = ?', [actualId])
+        const { rows: partners } = await pool.query('SELECT * FROM unit_partners WHERE unit_id = $1', [actualId])
         unit.partners = partners.map((p: any) => ({ ...p, logo: p.logo_url })) // Map logo_url to logo
 
         return unit

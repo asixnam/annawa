@@ -24,14 +24,14 @@ export default defineEventHandler(async (event) => {
         const fields = ['name', 'slug', 'description', 'image_url', 'vision', 'mission']
         for (const field of fields) {
             if (body[field] !== undefined) {
-                updates.push(`${field} = ?`)
+                updates.push(`${field} = $${values.length + 1}`)
                 values.push(body[field])
             }
         }
 
         if (updates.length > 0) {
             values.push(id, id)
-            await pool.query(`UPDATE units SET ${updates.join(', ')} WHERE id = ? OR slug = ?`, values)
+            await pool.query(`UPDATE units SET ${updates.join(', ')} WHERE id = \${values.length} OR slug = \${values.length + 1}`, values)
         }
 
         return { message: 'Unit updated successfully' }

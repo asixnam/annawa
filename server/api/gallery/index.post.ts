@@ -20,8 +20,8 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [result] = await pool.query(
-            'INSERT INTO gallery (title, image_url, category, author, author_id, description, is_approved) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        const { rows: result } = await pool.query(
+            'INSERT INTO gallery (title, image_url, category, author, author_id, description, is_approved) VALUES ($1, $2, $3, $4, $5, $6, $7)',
             [title, image_url, category, author, author_id || null, description, is_approved]
         )
 

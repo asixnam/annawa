@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
 
         sql += ' ORDER BY created_at DESC'
 
-        const [rows] = await pool.query(sql, params)
+        const { rows: rows } = await pool.query(sql, params)
         return rows
     } catch (error: any) {
         throw createError({

@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Resolve actual unit ID (could be slug)
-    const [units]: any = await pool.query('SELECT id FROM units WHERE id = ? OR slug = ?', [unitId, unitId])
+    const { rows: units } = await pool.query('SELECT id FROM units WHERE id = $1 OR slug = $2', [unitId, unitId])
     if (units.length === 0) {
         throw createError({ statusCode: 404, statusMessage: 'Unit not found' })
     }
@@ -48,10 +48,10 @@ export default defineEventHandler(async (event) => {
             throw createError({ statusCode: 400, statusMessage: 'Invalid entity type' })
     }
 
-    placeholders = values.map(() => '?')
+    placeholders = values.map((_, i) => `$${i + 1}`)
 
     try {
-        const [result] = await pool.query(
+        const { rows: result } = await pool.query(
             `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders.join(', ')})`,
             values
         )

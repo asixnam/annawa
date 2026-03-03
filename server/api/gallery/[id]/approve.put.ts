@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         await pool.query(
-            'UPDATE gallery SET is_approved = ? WHERE id = ?',
+            'UPDATE gallery SET is_approved = $1 WHERE id = $2',
             [is_approved, id]
         )
 

@@ -33,14 +33,14 @@ export default defineEventHandler(async (event) => {
 
         for (const [uiKey, dbCol] of Object.entries(fieldMap)) {
             if (body[uiKey] !== undefined) {
-                updates.push(`${dbCol} = ?`)
+                updates.push(`${dbCol} = $${values.length + 1}`)
                 values.push(body[uiKey])
             }
         }
 
         if (updates.length > 0) {
             values.push(id)
-            await pool.query(`UPDATE ${table} SET ${updates.join(', ')} WHERE id = ?`, values)
+            await pool.query(`UPDATE ${table} SET ${updates.join(', ')} WHERE id = \${values.length}`, values)
         }
 
         return { message: 'Item updated successfully' }

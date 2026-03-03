@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
         const { email, sub: googleId, name, picture } = payload
 
         // Check if user exists
-        const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email])
+        const { rows: rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email])
         let user: any = null;
 
         if (Array.isArray(rows) && rows.length > 0) {
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
             // Update google_id and picture if not set
             if (!user.google_id) {
                 // Ignore missing picture column for now by trying to update it or conditionally checking
-                await pool.query('UPDATE users SET google_id = ? WHERE id = ?', [googleId, user.id])
+                await pool.query('UPDATE users SET google_id = $1 WHERE id = $2', [googleId, user.id])
             }
         } else {
             // Register as author by default if coming from register.vue, or else just user
@@ -44,13 +44,13 @@ export default defineEventHandler(async (event) => {
             // For author, status might be 'pending', for user 'active'
             const status = role === 'author' ? 'pending' : 'active'
 
-            const [result]: any = await pool.query(
+            const { rows: result } = await pool.query(
                 `INSERT INTO users (name, email, role, status, google_id) 
-                VALUES (?, ?, ?, ?, ?)`,
+                VALUES ($1, $2, $3, $4, $5)`,
                 [name || email.split('@')[0], email, role, status, googleId]
             )
 
-            const [newRows] = await pool.query('SELECT * FROM users WHERE id = ?', [result.insertId])
+            const { rows: newRows } = await pool.query('SELECT * FROM users WHERE id = $1', [result.insertId])
             if (Array.isArray(newRows) && newRows.length > 0) {
                 user = newRows[0]
             }

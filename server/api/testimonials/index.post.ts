@@ -13,8 +13,8 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const [result] = await pool.query(
-            'INSERT INTO testimonials (name, batch, role, content, avatar_url) VALUES (?, ?, ?, ?, ?)',
+        const { rows: result } = await pool.query(
+            'INSERT INTO testimonials (name, batch, role, content, avatar_url) VALUES ($1, $2, $3, $4, $5)',
             [name, batch, role, content, avatar_url]
         )
 
