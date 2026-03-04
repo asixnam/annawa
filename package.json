@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vercel/blob": "^2.3.0",
     "@vercel/edge-config": "^1.4.3",
     "@vercel/postgres": "^0.10.0",
     "google-auth-library": "^10.6.1",

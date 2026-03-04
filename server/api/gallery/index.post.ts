@@ -21,11 +21,11 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { rows: result } = await pool.query(
-            'INSERT INTO gallery (title, image_url, category, author, author_id, description, is_approved) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            'INSERT INTO gallery (title, image_url, category, author, author_id, description, is_approved) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
             [title, image_url, category, author, author_id || null, description, is_approved]
         )
 
-        return { id: (result as any).insertId, title, image_url, is_approved }
+        return { id: result[0]?.id, title, image_url, is_approved }
     } catch (error: any) {
         throw createError({
             statusCode: 500,

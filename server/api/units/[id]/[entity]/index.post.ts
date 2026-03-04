@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
             `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders.join(', ')})`,
             values
         )
-        return { id: (result as any).insertId, ...body }
+        return { id: result[0]?.id, ...body }
     } catch (error: any) {
         throw createError({
             statusCode: 500,

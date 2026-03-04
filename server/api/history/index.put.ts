@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         // Upsert history text
         await pool.query(
             `INSERT INTO content_text (key_name, content) VALUES ($1, $2) 
-             ON DUPLICATE KEY UPDATE content = VALUES(content)`,
+             ON CONFLICT (key_name) DO UPDATE SET content = EXCLUDED.content RETURNING id`,
             ['history', text]
         )
         return { message: 'History updated successfully' }

@@ -46,11 +46,11 @@ export default defineEventHandler(async (event) => {
 
             const { rows: result } = await pool.query(
                 `INSERT INTO users (name, email, role, status, google_id) 
-                VALUES ($1, $2, $3, $4, $5)`,
+                VALUES ($1, $2, $3, $4, $5) RETURNING id`,
                 [name || email.split('@')[0], email, role, status, googleId]
             )
 
-            const { rows: newRows } = await pool.query('SELECT * FROM users WHERE id = $1', [result.insertId])
+            const { rows: newRows } = await pool.query('SELECT * FROM users WHERE id = $1', [result[0]?.id])
             if (Array.isArray(newRows) && newRows.length > 0) {
                 user = newRows[0]
             }

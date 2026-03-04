@@ -14,11 +14,11 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { rows: result } = await pool.query(
-            'INSERT INTO testimonials (name, batch, role, content, avatar_url) VALUES ($1, $2, $3, $4, $5)',
+            'INSERT INTO testimonials (name, batch, role, content, avatar_url) VALUES ($1, $2, $3, $4, $5) RETURNING id',
             [name, batch, role, content, avatar_url]
         )
 
-        return { id: (result as any).insertId, name, batch, role, content, avatar_url }
+        return { id: result[0]?.id, name, batch, role, content, avatar_url }
     } catch (error: any) {
         throw createError({
             statusCode: 500,

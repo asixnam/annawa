@@ -1,21 +1,23 @@
-import { writeFile } from 'fs/promises'
-import { join } from 'path'
+import { put } from '@vercel/blob'
 import { randomUUID } from 'crypto'
 import type { MultiPartData } from 'h3'
 
 export const saveFile = async (file: MultiPartData, uploadDir: string = 'uploads'): Promise<string> => {
-    const filename = `${randomUUID()}-${file.filename}`
-    const publicDir = join(process.cwd(), 'public', uploadDir)
-    const filePath = join(publicDir, filename)
+    // Original local logic is not compatible with Vercel Serverless (Read-Only filesystem)
+    // We now use Vercel Blob storage, which requires BLOB_READ_WRITE_TOKEN in env vars
 
-    // Ensure directory exists (optional if we know it exists, but safer)
-    const { mkdir } = await import('fs/promises')
+    const filename = `${uploadDir}/${randomUUID()}-${file.filename}`
+
     try {
-        await mkdir(publicDir, { recursive: true })
-    } catch (e) {
-        // Ignore if exists
-    }
+        const blob = await put(filename, file.data, {
+            access: 'public',
+            addRandomSuffix: false // We already added UUID
+        });
 
-    await writeFile(filePath, file.data)
-    return `/${uploadDir}/${filename}`
+        // Return the Vercel Blob URL (matches previous string-returning signature)
+        return blob.url;
+    } catch (error) {
+        console.error('Blob upload error:', error)
+        throw new Error('Gagal mengunggah file. Pastikan Vercel Blob Storage sudah di-setup.')
+    }
 }

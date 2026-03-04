@@ -26,11 +26,11 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { rows: result } = await pool.query(
-            'INSERT INTO news (title, slug, content, image_url, author_id, is_published, type) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            'INSERT INTO news (title, slug, content, image_url, author_id, is_published, type) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
             [title, slug, content, image_url, author_id, is_published ?? true, type || 'Berita']
         )
 
-        return { id: (result as any).insertId, title, slug }
+        return { id: result[0]?.id, title, slug }
     } catch (error: any) {
         if (error.code === 'ER_DUP_ENTRY') {
             throw createError({

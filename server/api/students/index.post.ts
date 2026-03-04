@@ -1,8 +1,6 @@
 import { readMultipartFormData, readBody, createError } from 'h3'
 import pool from '../../utils/db'
 import { saveFile } from '../../utils/file-upload'
-import { randomUUID } from 'crypto'
-
 export default defineEventHandler(async (event) => {
     const body: Record<string, any> = {}
     const files: Record<string, string> = {}
@@ -60,7 +58,6 @@ export default defineEventHandler(async (event) => {
             }
         }
 
-        const id = randomUUID()
         const fields = []
         const placeholders = []
         const values = []
@@ -73,10 +70,10 @@ export default defineEventHandler(async (event) => {
             'phone', 'school_origin', 'registration_year', 'child_order'
         ]
 
-        // Add ID
-        fields.push('id')
-        placeholders.push(`$${values.length + 1}`)
-        values.push(id)
+        // Do not add ID, let Postgres auto-increment the SERIAL column
+        // fields.push('id')
+        // placeholders.push(`$${values.length + 1}`)
+        // values.push(id)
 
         // Add standard fields
         for (const field of validFields) {
@@ -96,14 +93,14 @@ export default defineEventHandler(async (event) => {
 
         // Add creation timestamp if needed (assuming created_at performs default)
 
-        await pool.query(
-            `INSERT INTO students (${fields.join(', ')}) VALUES (${placeholders.join(', ')})`,
+        const { rows: result } = await pool.query(
+            `INSERT INTO students (${fields.join(', ')}) VALUES (${placeholders.join(', ')}) RETURNING id`,
             values
         )
 
         return {
             message: 'Student registered successfully',
-            id,
+            id: result[0]?.id,
             files
         }
     } catch (error: any) {
