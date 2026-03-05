@@ -38,6 +38,12 @@ export default defineEventHandler(async (event) => {
             )
         `);
 
+        try {
+            await pool.query(`ALTER TABLE unit_facilities ADD COLUMN icon VARCHAR(255)`);
+        } catch (e) {
+            // Column might already exist
+        }
+
         // Create unit_activities table
         await pool.query(`
             CREATE TABLE IF NOT EXISTS unit_activities (
@@ -47,6 +53,12 @@ export default defineEventHandler(async (event) => {
                 image_url VARCHAR(255)
             )
         `);
+
+        try {
+            await pool.query(`ALTER TABLE unit_activities ADD COLUMN image_url VARCHAR(255)`);
+        } catch (e) {
+            // Column might already exist
+        }
 
         // Create unit_staff table
         await pool.query(`
@@ -59,6 +71,12 @@ export default defineEventHandler(async (event) => {
             )
         `);
 
+        try {
+            await pool.query(`ALTER TABLE unit_staff ADD COLUMN photo_url VARCHAR(255)`);
+        } catch (e) {
+            // Column might already exist
+        }
+
         // Create unit_partners table
         await pool.query(`
             CREATE TABLE IF NOT EXISTS unit_partners (
@@ -68,6 +86,12 @@ export default defineEventHandler(async (event) => {
                 logo_url VARCHAR(255)
             )
         `);
+
+        try {
+            await pool.query(`ALTER TABLE unit_partners ADD COLUMN logo_url VARCHAR(255)`);
+        } catch (e) {
+            // Column might already exist
+        }
 
         return { success: true, message: 'Units schema migrated successfully' }
     } catch (error: any) {
