@@ -8,18 +8,25 @@ const __dirname = dirname(__filename)
 dotenv.config({ path: resolve(__dirname, '.env') })
 
 const pool = createPool({
-    connectionString: process.env.POSTGRES_URL // Vercel injects this environment variable automatically
+    connectionString: process.env.POSTGRES_URL
 })
 
 async function check() {
     try {
-        const { rows } = await pool.query(`
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = 'public' 
-      ORDER BY table_name;
-    `)
-        console.log("Tables in DB:", rows.map(r => r.table_name))
+        const { rows: units } = await pool.query('SELECT * FROM units ORDER BY id ASC')
+        console.log("Units:", units.length)
+
+        const { rows: facilities } = await pool.query('SELECT * FROM unit_facilities')
+        console.log("Facilities:", facilities.length)
+
+        const { rows: activities } = await pool.query('SELECT * FROM unit_activities')
+        console.log("Activities:", activities.length)
+
+        const { rows: staff } = await pool.query('SELECT * FROM unit_staff')
+        console.log("Staff:", staff.length)
+
+        const { rows: partners } = await pool.query('SELECT * FROM unit_partners')
+        console.log("Partners:", partners.length)
     } catch (e) {
         console.error(e)
     }

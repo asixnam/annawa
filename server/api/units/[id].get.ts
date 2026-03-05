@@ -12,8 +12,13 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        // Get Unit
-        const { rows: units } = await pool.query('SELECT * FROM units WHERE id = $1 OR slug = $2', [id, id])
+        // Build correct query to prevent integer parsing error for string slugs
+        const isNumeric = /^\d+$/.test(id as string)
+        const query = isNumeric
+            ? 'SELECT * FROM units WHERE id = $1'
+            : 'SELECT * FROM units WHERE slug = $1'
+
+        const { rows: units } = await pool.query(query, [id])
         if (units.length === 0) {
             throw createError({
                 statusCode: 404,

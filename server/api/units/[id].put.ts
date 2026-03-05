@@ -30,8 +30,10 @@ export default defineEventHandler(async (event) => {
         }
 
         if (updates.length > 0) {
-            values.push(id, id)
-            await pool.query(`UPDATE units SET ${updates.join(', ')} WHERE id = $${values.length} OR slug = $${values.length + 1}`, values)
+            values.push(id)
+            const isNumeric = /^\d+$/.test(id as string)
+            const whereClause = isNumeric ? `id = $${values.length}` : `slug = $${values.length}`
+            await pool.query(`UPDATE units SET ${updates.join(', ')} WHERE ${whereClause}`, values)
         }
 
         return { message: 'Unit updated successfully' }

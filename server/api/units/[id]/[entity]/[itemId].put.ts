@@ -37,7 +37,12 @@ export default defineEventHandler(async (event) => {
 
     try {
         // Resolve actual unit ID (could be slug)
-        const { rows: units } = await pool.query('SELECT id FROM units WHERE id = $1 OR slug = $2', [unitId, unitId])
+        const isNumeric = /^\d+$/.test(unitId as string)
+        const unitQuery = isNumeric
+            ? 'SELECT id FROM units WHERE id = $1'
+            : 'SELECT id FROM units WHERE slug = $1'
+
+        const { rows: units } = await pool.query(unitQuery, [unitId])
         if (units.length === 0) {
             throw createError({ statusCode: 404, statusMessage: 'Unit not found' })
         }

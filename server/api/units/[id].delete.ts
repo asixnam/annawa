@@ -12,7 +12,11 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        await pool.query('DELETE FROM units WHERE id = $1', [id])
+        const isNumeric = /^\d+$/.test(id as string)
+        const query = isNumeric
+            ? 'DELETE FROM units WHERE id = $1'
+            : 'DELETE FROM units WHERE slug = $1'
+        await pool.query(query, [id])
         return { message: 'Unit deleted successfully' }
     } catch (error: any) {
         throw createError({
