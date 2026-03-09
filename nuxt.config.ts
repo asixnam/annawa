@@ -27,6 +27,11 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
       googleClientId: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID'
     }
+  },
+  nitro: {
+    externals: {
+      inline: ['pg', 'pg-pool', 'pg-types', 'pgpass', 'pg-protocol', 'pg-connection-string']
+    }
   }
 })
 

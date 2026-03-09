@@ -17,10 +17,7 @@ export default defineEventHandler(async (event) => {
 
         if (Array.isArray(rows) && rows.length > 0) {
             const user = rows[0]
-            // In a real app, verify password hash. For now, simple comparison as per setup.
-            // Assuming 'pass' is stored as plain text for now based on the setup script.
             if (user.password === password) {
-                // Return user info without password
                 const { password: _, ...userWithoutPassword } = user
                 return {
                     user: userWithoutPassword
@@ -34,9 +31,11 @@ export default defineEventHandler(async (event) => {
         })
     } catch (error: any) {
         if (error.statusCode) throw error
+        // Expose real error for debugging
         throw createError({
             statusCode: 500,
-            statusMessage: 'Internal Server Error',
+            statusMessage: error.message || 'Internal Server Error',
         })
     }
 })
+
