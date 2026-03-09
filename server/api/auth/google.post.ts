@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
                 [name || email.split('@')[0], email, role, status, googleId]
             )
 
-            const { rows: newRows } = await pool.query('SELECT * FROM users WHERE id = $1', [result[0]$1.id])
+            const { rows: newRows } = await pool.query('SELECT * FROM users WHERE id = $1', [result[0].id])
             if (Array.isArray(newRows) && newRows.length > 0) {
                 user = newRows[0]
             }
