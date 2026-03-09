@@ -1,4 +1,5 @@
-import { createPool } from '@vercel/postgres'
+import pkg from 'pg';
+const { Pool } = pkg;
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
@@ -7,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 dotenv.config({ path: resolve(__dirname, '.env') })
 
-const pool = createPool({
+const pool = new Pool({
     connectionString: process.env.POSTGRES_URL
 })
 
