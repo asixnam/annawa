@@ -17,6 +17,9 @@ async function check() {
         const { rows: units } = await pool.query('SELECT * FROM units ORDER BY id ASC')
         console.log("Units:", units.length)
 
+        const { rows: users } = await pool.query('SELECT * FROM users')
+        console.log("Users:", users)
+
         const { rows: facilities } = await pool.query('SELECT * FROM unit_facilities')
         console.log("Facilities:", facilities.length)
 
