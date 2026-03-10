@@ -3,7 +3,7 @@ import pool from '../../utils/db'
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-    const { name, email, password, role, status, bio, phone, image_url } = body
+    const { name, email, password, role, bio, phone, image_url } = body
 
     if (!name || !email || !password || !role) {
         throw createError({
@@ -22,13 +22,12 @@ export default defineEventHandler(async (event) => {
             })
         }
 
-        const defaultStatus = role === 'author' ? 'pending' : 'verified'
         const { rows: result } = await pool.query(
-            'INSERT INTO users (name, email, password, role, status, bio, phone, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
-            [name, email, password, role, status || defaultStatus, bio || null, phone || null, image_url || null]
+            'INSERT INTO users (name, email, password, role, bio, phone, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
+            [name, email, password, role, bio || null, phone || null, image_url || null]
         )
 
-        return { id: result[0]?.id, name, email, role, status: status || defaultStatus }
+        return { id: result[0]?.id, name, email, role }
     } catch (error: any) {
         if (error.statusCode) throw error
         throw createError({

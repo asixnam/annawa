@@ -4,7 +4,7 @@ import pool from '../../utils/db'
 export default defineEventHandler(async (event) => {
     const id = event.context.params?.id
     const body = await readBody(event)
-    const { name, email, role, password, status, bio, phone, image_url } = body
+    const { name, email, role, password, bio, phone, image_url } = body
 
     if (!id) {
         throw createError({
@@ -32,10 +32,6 @@ export default defineEventHandler(async (event) => {
         if (password) {
             updates.push(`password = $${values.length + 1}`)
             values.push(password)
-        }
-        if (status) {
-            updates.push(`status = $${values.length + 1}`)
-            values.push(status)
         }
         if (bio !== undefined) {
             updates.push(`bio = $${values.length + 1}`)
