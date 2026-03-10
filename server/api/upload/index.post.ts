@@ -2,6 +2,7 @@ import { readMultipartFormData, createError } from 'h3'
 import fs from 'node:fs'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
+import { put } from '@vercel/blob'
 
 export default defineEventHandler(async (event) => {
     const files = await readMultipartFormData(event)
@@ -36,17 +37,34 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    // Ensure uploads directory exists
+    const uniqueFilename = `${randomUUID()}${ext}`
+
+    // If we're on Vercel or have a Blob token, use Vercel Blob
+    if (process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN) {
+        try {
+            const blob = await put(`uploads/${uniqueFilename}`, uploadedFile.data, {
+                access: 'public',
+            });
+            return {
+                url: blob.url,
+                filename: uniqueFilename
+            }
+        } catch (e: any) {
+            console.error('Vercel Blob upload error:', e)
+            throw createError({
+                statusCode: 500,
+                statusMessage: 'Failed to upload image to Vercel Blob: ' + e.message,
+            })
+        }
+    }
+
+    // Local development fallback
     const uploadDir = path.join(process.cwd(), 'public', 'uploads')
     if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true })
     }
 
-    // Generate unique filename
-    const uniqueFilename = `${randomUUID()}${ext}`
     const filePath = path.join(uploadDir, uniqueFilename)
-
-    // Write file
     fs.writeFileSync(filePath, uploadedFile.data)
 
     return {

@@ -142,17 +142,41 @@ function triggerFileInput() {
   fileInput.value?.click()
 }
 
-function onFileChange(e: Event) {
+async function onFileChange(e: Event) {
   const target = e.target as HTMLInputElement
   if (target.files && target.files[0]) {
     const file = target.files[0]
-    form.value.image = file
     
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      previewImage.value = e.target?.result as string
+    if (!file.type.startsWith('image/')) {
+      alert('Mohon upload file gambar valid.')
+      return
     }
-    reader.readAsDataURL(file)
+    
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Ukuran gambar maksimal 2MB')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('file', file)
+
+    isLoading.value = true // use isLoading for the button state
+    try {
+      const response: any = await $fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+      
+      if (response && response.url) {
+        form.value.image_url = response.url
+        previewImage.value = response.url
+      }
+    } catch (error) {
+      console.error('Upload failed:', error)
+      alert('Gagal mengupload gambar profil.')
+    } finally {
+      isLoading.value = false
+    }
   }
 }
 
