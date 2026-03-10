@@ -50,11 +50,13 @@ export default defineEventHandler(async (event) => {
             values.push(id)
             await pool.query(`UPDATE users SET ${updates.join(', ')} WHERE id = $${values.length}`, values)
 
-            // If name is updated, sync it with the gallery table
+            // Try to sync name with gallery table (fail silently if column doesn't exist)
             if (name) {
-                await pool.query('UPDATE gallery SET author = $1 WHERE author_id = $2', [name, id])
-                // Also update news/articles if they exist, but requirement specifically mentioned gallery
-                // Optional: await pool.query('UPDATE news ...')
+                try {
+                    await pool.query('UPDATE gallery SET author = $1 WHERE author_id = $2', [name, id])
+                } catch (_) {
+                    // gallery.author_id may not exist yet — ignore
+                }
             }
         }
 
