@@ -41,9 +41,16 @@ export default defineEventHandler(async (event) => {
 
     // If we're on Vercel or have a Blob token, use Vercel Blob
     if (process.env.VERCEL || process.env.BLOB_READ_WRITE_TOKEN) {
+        if (!process.env.BLOB_READ_WRITE_TOKEN) {
+            throw createError({
+                statusCode: 500,
+                statusMessage: 'Vercel Blob token is missing. Please add BLOB_READ_WRITE_TOKEN to your Vercel Environment Variables.',
+            })
+        }
         try {
             const blob = await put(`uploads/${uniqueFilename}`, uploadedFile.data, {
                 access: 'public',
+                token: process.env.BLOB_READ_WRITE_TOKEN
             });
             return {
                 url: blob.url,

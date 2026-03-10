@@ -171,9 +171,9 @@ async function onFileChange(e: Event) {
         form.value.image_url = response.url
         previewImage.value = response.url
       }
-    } catch (error) {
-      console.error('Upload failed:', error)
-      alert('Gagal mengupload gambar profil.')
+    } catch (e: any) {
+      console.error('Upload failed:', e)
+      alert('Gagal mengupload: ' + (e.data?.statusMessage || e.message || 'Unknown error'))
     } finally {
       isLoading.value = false
     }
