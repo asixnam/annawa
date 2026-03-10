@@ -21,24 +21,26 @@
     </section>
 
     <!-- Tentang PAUD -->
-    <section class="mx-auto px-4 md:px-10 lg:px-20 py-16 w-full transition-colors duration-300">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-black text-main tracking-tight font-heading">
-          Aboute
-          
-        </h2>
-      </div>
-      <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
-        <div class="flex justify-center lg:justify-start">
-          <div class="w-64 h-64 lg:w-80 lg:h-80 flex-shrink-0">
-            <img 
-              :src="paudUnit?.image_url || '/annawa.png'" 
-              :alt="paudUnit?.name || 'PAUD An-Nawa'" 
-              class="w-full h-full object-cover shadow-xl border-0 border-card hover:scale-105 transition-all duration-500"
-            />
-          </div>
+    <section class="container mx-auto px-6 py-16 bg-card border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-black text-main uppercase tracking-tight font-heading">
+            Tentang <span class="text-brand-500">PAUD</span>
+          </h2>
         </div>
-        <div class="space-y-6 text-gray-600 dark:text-gray-400 leading-relaxed text-lg text-justify pt-6 lg:max-w-2xl">
+
+        <!-- Hero Image Horizontal -->
+        <div class="mb-12 relative overflow-hidden shadow-2xl group">
+          <img 
+            :src="paudUnit?.image_url || '/annawa.png'" 
+            :alt="paudUnit?.name || 'PAUD An-Nawa'" 
+            class="w-full h-[400px] md:h-[500px] object-cover group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+        </div>
+
+        <!-- Text Content -->
+        <div class="space-y-8 text-gray-700 leading-relaxed text-lg text-justify max-w-4xl mx-auto whitespace-pre-line">
           <p v-if="paudUnit?.description">
             {{ paudUnit.description }}
           </p>
@@ -56,9 +58,10 @@
 
     <!-- Visi & Misi -->
     <section class="bg-card py-16 transition-colors duration-300">
-      <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div class="bg-brand-50 dark:bg-brand-900/10 p-8 rounded-3xl border border-brand-100/50 dark:border-brand-500/20 shadow-sm">
+      <div class="container mx-auto px-6 max-w-5xl">
+        <div class="space-y-8">
+          <!-- Visi -->
+          <div class="bg-brand-50 dark:bg-brand-900/10 p-8 rounded-0 border border-brand-100/50 dark:border-brand-500/20 shadow-sm">
             <h3 class="text-xl font-black text-main mb-6 uppercase tracking-tight font-heading">
               Visi <span class="text-brand-500 ml-1">PAUD</span>
             </h3>
@@ -67,7 +70,8 @@
             </p>
           </div>
 
-          <div class="bg-light p-8 rounded-3xl border border-gray-100 dark:border-gray-800/40 shadow-sm">
+          <!-- Misi -->
+          <div class="bg-light p-8 rounded-0 border border-gray-100 dark:border-gray-800/40 shadow-sm">
             <h3 class="text-xl font-black text-main mb-6 uppercase tracking-tight font-heading">
               Misi <span class="text-brand-500 ml-1">Kami</span>
             </h3>
