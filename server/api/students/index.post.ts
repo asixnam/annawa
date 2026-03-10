@@ -1,28 +1,56 @@
-import { readMultipartFormData, readBody, createError } from 'h3'
+import { readBody, createError } from 'h3'
 import pool from '../../utils/db'
 import { saveFile } from '../../utils/file-upload'
+import Busboy from '@fastify/busboy'
+
 export default defineEventHandler(async (event) => {
     const body: Record<string, any> = {}
     const files: Record<string, string> = {}
 
-    const parts = await readMultipartFormData(event)
+    // Check if it's multipart form data
+    const contentType = event.node.req.headers['content-type']
+    if (contentType?.includes('multipart/form-data')) {
+        await new Promise((resolve, reject) => {
+            const headers = event.node.req.headers as any
+            const busboy = new Busboy({ headers })
 
-    if (parts) {
-        // Handle Multipart
-        for (const part of parts) {
-            if (part.filename) {
-                const filename = await saveFile(part, 'uploads/students')
-                // Map frontend file keys to database columns
-                if (part.name === 'ktpAyah') files.file_ktp_ayah = filename
-                else if (part.name === 'ktpIbu') files.file_ktp_ibu = filename
-                else if (part.name === 'kk') files.file_kk = filename
-                else if (part.name === 'akta') files.file_akta = filename
-                else if (part.name === 'ijazah') files.file_ijazah = filename
-                else if (part.name === 'pasFoto') files.file_foto = filename
-            } else {
-                body[part.name!] = part.data.toString()
-            }
-        }
+            busboy.on('file', (name, file, filename, encoding, mimetype) => {
+                const chunks: Buffer[] = []
+                file.on('data', (data) => chunks.push(data))
+                file.on('end', async () => {
+                    const fileData = Buffer.concat(chunks)
+                    if (fileData.length > 0) {
+                        try {
+                            const savedFilename = await saveFile({
+                                name,
+                                filename: filename as string,
+                                type: mimetype as string,
+                                data: fileData,
+                            }, 'uploads/students')
+
+                            // Map frontend file keys to database columns
+                            if (name === 'ktpAyah') files.file_ktp_ayah = savedFilename
+                            else if (name === 'ktpIbu') files.file_ktp_ibu = savedFilename
+                            else if (name === 'kk') files.file_kk = savedFilename
+                            else if (name === 'akta') files.file_akta = savedFilename
+                            else if (name === 'ijazah') files.file_ijazah = savedFilename
+                            else if (name === 'pasFoto') files.file_foto = savedFilename
+                        } catch (err) {
+                            console.error('Failed to save file during streaming', err)
+                        }
+                    }
+                })
+            })
+
+            busboy.on('field', (name, val) => {
+                body[name] = val
+            })
+
+            busboy.on('finish', () => resolve(true))
+            busboy.on('error', (err) => reject(err))
+
+            event.node.req.pipe(busboy)
+        })
     } else {
         // Handle JSON fallback
         try {
@@ -77,11 +105,9 @@ export default defineEventHandler(async (event) => {
 
         // Add standard fields
         for (const field of validFields) {
-            if (body[field] !== undefined) {
-                fields.push(field)
-                placeholders.push(`$${values.length + 1}`)
-                values.push(body[field])
-            }
+            fields.push(field)
+            placeholders.push(`$${values.length + 1}`)
+            values.push(body[field] || null)
         }
 
         // Add file fields
