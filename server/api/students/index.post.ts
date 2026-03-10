@@ -13,40 +13,51 @@ export default defineEventHandler(async (event) => {
         await new Promise((resolve, reject) => {
             const headers = event.node.req.headers as any
             const busboy = new Busboy({ headers })
+            const filePromises: Promise<void>[] = [] // Collect all async save operations
 
             busboy.on('file', (name, file, filename, encoding, mimetype) => {
                 const chunks: Buffer[] = []
                 file.on('data', (data) => chunks.push(data))
-                file.on('end', async () => {
-                    const fileData = Buffer.concat(chunks)
-                    if (fileData.length > 0) {
-                        try {
-                            const savedFilename = await saveFile({
-                                name,
-                                filename: filename as string,
-                                type: mimetype as string,
-                                data: fileData,
-                            }, 'uploads/students')
 
-                            // Map frontend file keys to database columns
-                            if (name === 'ktpAyah') files.file_ktp_ayah = savedFilename
-                            else if (name === 'ktpIbu') files.file_ktp_ibu = savedFilename
-                            else if (name === 'kk') files.file_kk = savedFilename
-                            else if (name === 'akta') files.file_akta = savedFilename
-                            else if (name === 'ijazah') files.file_ijazah = savedFilename
-                            else if (name === 'pasFoto') files.file_foto = savedFilename
-                        } catch (err) {
-                            console.error('Failed to save file during streaming', err)
+                const fileProcessingPromise = new Promise<void>((fileResolve) => {
+                    file.on('end', async () => {
+                        const fileData = Buffer.concat(chunks)
+                        if (fileData.length > 0) {
+                            try {
+                                const savedFilename = await saveFile({
+                                    name,
+                                    filename: filename as string,
+                                    type: mimetype as string,
+                                    data: fileData,
+                                }, 'uploads/students')
+
+                                // Map frontend file keys to database columns
+                                if (name === 'ktpAyah') files.file_ktp_ayah = savedFilename
+                                else if (name === 'ktpIbu') files.file_ktp_ibu = savedFilename
+                                else if (name === 'kk') files.file_kk = savedFilename
+                                else if (name === 'akta') files.file_akta = savedFilename
+                                else if (name === 'ijazah') files.file_ijazah = savedFilename
+                                else if (name === 'pasFoto') files.file_foto = savedFilename
+                            } catch (err) {
+                                console.error('Failed to save file during streaming', err)
+                            }
                         }
-                    }
+                        fileResolve() // Mark this specific file operation as done
+                    })
                 })
+
+                filePromises.push(fileProcessingPromise)
             })
 
             busboy.on('field', (name, val) => {
                 body[name] = val
             })
 
-            busboy.on('finish', () => resolve(true))
+            busboy.on('finish', async () => {
+                // Wait for ALL files to finish being saved and mapped to `files` object
+                await Promise.all(filePromises)
+                resolve(true)
+            })
             busboy.on('error', (err) => reject(err))
 
             event.node.req.pipe(busboy)
