@@ -295,6 +295,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from 'vue'
+import { compressImage } from '~/utils/image-compression'
 
 const props = defineProps({
   submitLabel: {
@@ -370,10 +371,11 @@ watch(() => props.initialData, (newData) => {
   }
 }, { deep: true })
 
-const handleFileUpload = (event: Event, type: keyof typeof form.files) => {
+const handleFileUpload = async (event: Event, type: keyof typeof form.files) => {
   const target = event.target as HTMLInputElement
   if (target.files && target.files[0]) {
-    form.files[type] = target.files[0]
+    const originalFile = target.files[0]
+    form.files[type] = await compressImage(originalFile)
   }
 }
 
