@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { rows: rows } = await pool.query(
-            'SELECT id, name, email, role, image_url, status, bio, phone, created_at FROM users WHERE id = $1',
+            'SELECT id, name, email, role, image_url, phone, bio, created_at FROM users WHERE id = $1',
             [id]
         )
 

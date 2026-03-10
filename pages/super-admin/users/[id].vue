@@ -273,7 +273,6 @@ async function updateUser() {
         email: form.value.email,
         role: form.value.role,
         password: form.value.password || undefined,
-        status: form.value.status,
         bio: form.value.bio,
         phone: form.value.phone,
         image_url: form.value.image_url
