@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     try {
         const { rows: result } = await pool.query(
             'INSERT INTO kajian (title, slug, description, video_url, thumbnail_url, ustadz_name, category, schedule, location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
-            [title, slug, description, video_url, thumbnail_url, ustadz_name, category, schedule, location]
+            [title, slug, description || null, video_url || null, thumbnail_url || null, ustadz_name || null, category || null, schedule || null, location || null]
         )
 
         return { id: result[0]?.id, title, slug }
