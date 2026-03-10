@@ -356,11 +356,21 @@ const handleSubmit = async () => {
     formData.append('status', 'active')
     formData.append('child_order', form.anakKe)
 
+    let totalSize = 0;
     if (form.files.akta) {
       formData.append('akta', form.files.akta)
+      totalSize += form.files.akta.size;
     }
     if (form.files.kk) {
       formData.append('kk', form.files.kk)
+      totalSize += form.files.kk.size;
+    }
+
+    // Vercel strict limit is 4.5MB. We cap at 4MB to be safe.
+    if (totalSize > 4 * 1024 * 1024) {
+      alert(`Gagal: Total ukuran berkas/foto yang Anda kirim (${(totalSize/1024/1024).toFixed(2)} MB) terlalu besar. Maksimal 4 MB. Mohon perkecil foto atau berkas PDF Anda terlebih dahulu.`);
+      isLoading.value = false;
+      return;
     }
     
     let response;

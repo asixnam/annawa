@@ -401,9 +401,17 @@ const handleSubmit = async () => {
     formData.append('status', 'active')
 
     // Append files (SdForm specific files)
-    if (form.files.ijazahTk) formData.append('ijazah', form.files.ijazahTk) // Map ijazahTk to ijazah
-    if (form.files.kk) formData.append('kk', form.files.kk)
-    if (form.files.akta) formData.append('akta', form.files.akta)
+    let totalSize = 0;
+    if (form.files.ijazahTk) { formData.append('ijazah', form.files.ijazahTk); totalSize += form.files.ijazahTk.size; } // Map ijazahTk to ijazah
+    if (form.files.kk) { formData.append('kk', form.files.kk); totalSize += form.files.kk.size; }
+    if (form.files.akta) { formData.append('akta', form.files.akta); totalSize += form.files.akta.size; }
+
+    // Vercel strict limit is 4.5MB. We cap at 4MB to be safe.
+    if (totalSize > 4 * 1024 * 1024) {
+      alert(`Gagal: Total ukuran berkas/foto yang Anda kirim (${(totalSize/1024/1024).toFixed(2)} MB) terlalu besar. Maksimal 4 MB. Mohon perkecil foto atau berkas PDF Anda terlebih dahulu.`);
+      isLoading.value = false;
+      return;
+    }
     
     let response;
      if (props.isEdit && props.initialData?.id) {
