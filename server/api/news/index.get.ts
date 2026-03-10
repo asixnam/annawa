@@ -2,7 +2,12 @@ import pool from '../../utils/db'
 
 export default defineEventHandler(async (event) => {
     try {
-        const { rows: rows } = await pool.query('SELECT * FROM news ORDER BY created_at DESC')
+        const query = getQuery(event)
+        const limit = query.limit ? parseInt(query.limit as string) : 50
+        const { rows } = await pool.query(
+            'SELECT id, title, slug, content, image_url, author_id, is_published, type, created_at FROM news ORDER BY created_at DESC LIMIT $1',
+            [limit]
+        )
         return rows
     } catch (error) {
         throw createError({
@@ -11,3 +16,4 @@ export default defineEventHandler(async (event) => {
         })
     }
 })
+

@@ -2,21 +2,24 @@ import pool from '../../utils/db'
 
 export default defineEventHandler(async (event) => {
     const query = getQuery(event)
-    const unit_id = query.unit_id
-    console.log('API /api/students getQuery:', query, 'unit_id:', unit_id)
+    const unit = query.unit as string | undefined
+    const limit = query.limit ? parseInt(query.limit as string) : 200
 
     try {
-        let sql = 'SELECT * FROM students'
+        let sql = `SELECT id, name, nis, nik, unit, status, gender, birth_place, birth_date,
+            address, parent_name, father_name, father_job, mother_name, mother_job,
+            phone, school_origin, registration_year, child_order, created_at FROM students`
         const params: any[] = []
 
-        if (unit_id) {
-            sql += ' WHERE unit = ?'
-            params.push(unit_id)
+        if (unit) {
+            sql += ' WHERE unit = $1'
+            params.push(unit)
         }
 
-        sql += ' ORDER BY created_at DESC'
+        sql += ` ORDER BY created_at DESC LIMIT $${params.length + 1}`
+        params.push(limit)
 
-        const { rows: rows } = await pool.query(sql, params)
+        const { rows } = await pool.query(sql, params)
         return rows
     } catch (error: any) {
         throw createError({
@@ -25,3 +28,4 @@ export default defineEventHandler(async (event) => {
         })
     }
 })
+

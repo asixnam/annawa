@@ -331,45 +331,34 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useFetch } from '#app'
 import { useContentStore } from '~/stores/content'
 
 const store = useContentStore()
 const hero = computed(() => store.hero)
 
-// Fetch Data
-const { data: kajianData } = await useFetch('/api/kajian')
-const { data: newsData } = await useFetch('/api/news')
-const { data: testimonialsData } = await useFetch('/api/testimonials')
-const { data: studentsData } = await useFetch('/api/students')
-const { data: usersData } = await useFetch('/api/users')
+// Run all fetches in parallel — no await chaining
+const [
+  { data: statsData },
+  { data: kajianData },
+  { data: newsData },
+  { data: testimonialsData }
+] = await Promise.all([
+  useFetch('/api/stats'),
+  useFetch('/api/kajian', { query: { limit: 3 } }),
+  useFetch('/api/news', { query: { limit: 6 } }),
+  useFetch('/api/testimonials', { query: { limit: 20 } })
+])
 
-const santriTotal = computed(() => {
-  if (!studentsData.value) return 500
-  // Filter only students with unit 'SANTRI'
-  const filterSantri = (studentsData.value as any[]).filter(s => s.unit === 'SANTRI')
-  return filterSantri.length + 50
-})
+// Stats from lightweight COUNT endpoint
+const santriTotal = computed(() => (statsData.value as any)?.santriTotal ?? 500)
+const authorTotal = computed(() => (statsData.value as any)?.authorTotal ?? 50)
+const kajianTotal = computed(() => (statsData.value as any)?.kajianTotal ?? 0)
+const tahunBerdiri = computed(() => (statsData.value as any)?.tahunBerdiri ?? 10)
 
-const tahunBerdiri = computed(() => {
-  return new Date().getFullYear() - 2012
-})
-
-const authorTotal = computed(() => {
-  if (!usersData.value) return 50
-  const filterAuthor = (usersData.value as any[]).filter(u => u.role && u.role.toLowerCase() === 'author')
-  return filterAuthor.length > 0 ? filterAuthor.length : 50
-})
-
-const kajianTotal = computed(() => {
-  if (!kajianData.value) return 0
-  return (kajianData.value as any[]).length
-})
-
-// Featured Kajian (3 items)
+// Featured Kajian — API already returns only 3
 const featuredKajian = computed(() => {
   if (!kajianData.value) return []
-  return (kajianData.value as any[]).slice(0, 3).map(k => ({
+  return (kajianData.value as any[]).map(k => ({
     id: k.id,
     title: k.title,
     ustadz: k.ustadz_name,
@@ -381,7 +370,7 @@ const featuredKajian = computed(() => {
   }))
 })
 
-// Featured Berita (3 items)
+// Featured Berita — API returns 6, show first 3
 const featuredBerita = computed(() => {
   if (!newsData.value) return []
   return (newsData.value as any[]).filter(n => n.type === 'Berita' || !n.type).slice(0, 3).map(n => ({
@@ -394,7 +383,7 @@ const featuredBerita = computed(() => {
   }))
 })
 
-// Testimonials Data
+// Testimonials
 const testimonials = computed(() => {
   if (!testimonialsData.value) return []
   return (testimonialsData.value as any[]).map(t => ({
@@ -407,6 +396,7 @@ const testimonials = computed(() => {
   }))
 })
 </script>
+
 
 <style scoped>
 @keyframes scroll {
