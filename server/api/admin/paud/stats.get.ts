@@ -21,11 +21,11 @@ export default defineEventHandler(async (event) => {
 
         // 2. Get Recent Activities (PAUD related)
         const { rows: recentStudents } = await pool.query(
-            'SELECT id, name as title, created_at as date, "student" as type FROM students WHERE unit = "PAUD" ORDER BY created_at DESC LIMIT 3'
+            'SELECT id, name as title, created_at as date, \'student\' as type FROM students WHERE unit = \'PAUD\' ORDER BY created_at DESC LIMIT 3'
         )
 
         const { rows: recentGallery } = await pool.query(
-            'SELECT id, title, created_at as date, "gallery" as type FROM gallery ORDER BY created_at DESC LIMIT 2'
+            'SELECT id, title, created_at as date, \'gallery\' as type FROM gallery ORDER BY created_at DESC LIMIT 2'
         )
 
         // Combine activities

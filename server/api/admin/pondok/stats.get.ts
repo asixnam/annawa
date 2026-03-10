@@ -18,22 +18,22 @@ export default defineEventHandler(async (event) => {
         // 2. Get Recent Activities
         // Latest students in SANTRI unit
         const { rows: recentStudents } = await pool.query(
-            'SELECT id, name as title, created_at as date, "student" as type FROM students WHERE unit = "SANTRI" ORDER BY created_at DESC LIMIT 2'
+            'SELECT id, name as title, created_at as date, \'student\' as type FROM students WHERE unit = \'SANTRI\' ORDER BY created_at DESC LIMIT 2'
         )
 
         // Latest News
         const { rows: recentNews } = await pool.query(
-            'SELECT id, title, created_at as date, "news" as type FROM news ORDER BY created_at DESC LIMIT 1'
+            'SELECT id, title, created_at as date, \'news\' as type FROM news ORDER BY created_at DESC LIMIT 1'
         )
 
         // Latest Gallery
         const { rows: recentGallery } = await pool.query(
-            'SELECT id, title, created_at as date, "gallery" as type FROM gallery ORDER BY created_at DESC LIMIT 1'
+            'SELECT id, title, created_at as date, \'gallery\' as type FROM gallery ORDER BY created_at DESC LIMIT 1'
         )
 
         // Latest Kajian
         const { rows: recentKajian } = await pool.query(
-            'SELECT id, title, created_at as date, "kajian" as type FROM kajian ORDER BY created_at DESC LIMIT 1'
+            'SELECT id, title, created_at as date, \'kajian\' as type FROM kajian ORDER BY created_at DESC LIMIT 1'
         )
 
         // Combine activities
