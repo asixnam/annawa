@@ -4,7 +4,8 @@ import { useCookie } from '#imports'
 export const useAuthStore = defineStore('auth', () => {
   const user = useCookie<null | { id: string; name: string; role: string; image_url?: string }>('auth_user', {
     default: () => null,
-    watch: true
+    watch: true,
+    maxAge: 86400 // 1 day session duration
   })
 
   function setUser(u: any) { user.value = u }
