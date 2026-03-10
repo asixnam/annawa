@@ -32,7 +32,7 @@
             <img 
               :src="pondokUnit?.image_url || '/images/pengasuh.jpeg'" 
               :alt="pondokUnit?.name || 'Pengasuh Pondok'" 
-              class="w-full h-full object-cover rounded-2xl shadow-xl border-4 border-card hover:scale-105 transition-all duration-500 dark:border-gray-800"
+              class="w-full h-full object-cover shadow-xl border-0 border-card hover:scale-105 transition-all duration-500"
             />
           </div>
         </div>
