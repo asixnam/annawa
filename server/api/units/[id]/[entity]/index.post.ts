@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
     switch (entity) {
         case 'facilities':
             table = 'unit_facilities'
-            columns = ['unit_id', 'name', 'icon_url']
+            columns = ['unit_id', 'name', 'icon']
             values = [actualId, body.name, body.icon]
             break
         case 'activities':
@@ -57,7 +57,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { rows: result } = await pool.query(
-            `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders.join(', ')})`,
+            `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders.join(', ')}) RETURNING id`,
             values
         )
         return { id: result[0]?.id, ...body }

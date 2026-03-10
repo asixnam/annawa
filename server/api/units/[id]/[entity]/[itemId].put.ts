@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     switch (entity) {
         case 'facilities':
             table = 'unit_facilities'
-            fieldMap = { name: 'name', icon: 'icon_url' }
+            fieldMap = { name: 'name', icon: 'icon' }
             break
         case 'activities':
             table = 'unit_activities'
