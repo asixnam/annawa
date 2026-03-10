@@ -154,7 +154,7 @@ const isSidebarOpen = ref(false)
 const auth = useAuthStore()
 const router = useRouter()
 
-useInactivityTimeout(30000)
+useInactivityTimeout()
 
 const adminInitials = computed(() => {
   if (!auth.user?.name) return 'SA'

@@ -2,7 +2,7 @@ import { onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 
-export function useInactivityTimeout(timeoutMs: number = 30000) {
+export function useInactivityTimeout(timeoutMs: number = 86400000) {
     const auth = useAuthStore()
     const router = useRouter()
     let timeoutId: ReturnType<typeof setTimeout> | null = null
