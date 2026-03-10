@@ -96,24 +96,29 @@
           </p>
         </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          <div v-for="facility in facilities" :key="facility.id" class="bg-card p-8 rounded-3xl border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group text-center">
-            <div class="w-16 h-16 rounded-xl bg-brand-50 flex items-center justify-center mx-auto mb-4 overflow-hidden group-hover:bg-brand-500/10 transition-colors duration-300">
-               <img v-if="facility.icon && (facility.icon.startsWith('http') || facility.icon.startsWith('data:') || facility.icon.startsWith('/'))" :src="facility.icon" class="w-full h-full object-cover">
-               <span v-else class="text-3xl group-hover:scale-110 transition-transform duration-300">{{ facility.icon }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div v-for="facility in facilities" :key="facility.id" class="group relative overflow-hidden aspect-video shadow-lg">
+            <div v-if="facility.icon && (facility.icon.startsWith('http') || facility.icon.startsWith('data:') || facility.icon.startsWith('/'))" class="w-full h-full">
+              <img :src="facility.icon" :alt="facility.name" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500" />
             </div>
-            <h4 class="text-main font-black uppercase tracking-widest text-[10px]">{{ facility.name }}</h4>
-          </div>
-          <!-- Empty State if no facilities -->
-          <div v-if="facilities.length === 0" class="col-span-full py-16 text-center">
-            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
+            <div v-else class="w-full h-full bg-brand-50 dark:bg-brand-900/20 flex items-center justify-center group-hover:bg-brand-100 dark:group-hover:bg-brand-900/30 transition-colors duration-500">
+               <span class="text-5xl group-hover:scale-110 transition-transform duration-300">{{ facility.icon || '🏫' }}</span>
             </div>
-            <h3 class="text-xl font-bold text-main mb-2">Belum Ada Fasilitas</h3>
-            <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi fasilitas akan segera hadir di sini. Data fasilitas akan segera diperbarui.</p>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+              <h4 class="text-white font-bold text-lg leading-tight">{{ facility.name }}</h4>
+            </div>
           </div>
+        </div>
+
+        <!-- Empty State if no facilities -->
+        <div v-if="facilities.length === 0" class="py-16 text-center">
+          <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-main mb-2">Belum Ada Fasilitas</h3>
+          <p class="text-gray-500 text-sm max-w-sm mx-auto">Informasi fasilitas akan segera hadir di sini. Data fasilitas akan segera diperbarui.</p>
         </div>
       </div>
     </section>

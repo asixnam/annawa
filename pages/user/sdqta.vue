@@ -89,13 +89,17 @@
             Fasilitas <span class="text-brand-500">Unggulan</span>
           </h2>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div v-for="item in facilities" :key="item.name" class="bg-card p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800/40 text-center group hover:border-brand-500 transition-all">
-            <div class="w-16 h-16 rounded-xl bg-brand-50 flex items-center justify-center mx-auto mb-4 overflow-hidden group-hover:bg-brand-500/10 transition-colors duration-300">
-               <img v-if="item.icon && (item.icon.startsWith('http') || item.icon.startsWith('data:') || item.icon.startsWith('/'))" :src="item.icon" class="w-full h-full object-cover">
-               <span v-else class="text-3xl group-hover:scale-110 transition-transform duration-300">{{ item.icon }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div v-for="item in facilities" :key="item.name" class="group relative overflow-hidden aspect-video shadow-lg">
+            <div v-if="item.icon && (item.icon.startsWith('http') || item.icon.startsWith('data:') || item.icon.startsWith('/'))" class="w-full h-full">
+              <img :src="item.icon" :alt="item.name" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500" />
             </div>
-            <h4 class="text-sm font-bold text-main">{{ item.name }}</h4>
+            <div v-else class="w-full h-full bg-brand-50 dark:bg-brand-900/20 flex items-center justify-center group-hover:bg-brand-100 dark:group-hover:bg-brand-900/30 transition-colors duration-500">
+               <span class="text-5xl group-hover:scale-110 transition-transform duration-300">{{ item.icon || '🏫' }}</span>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+              <h4 class="text-white font-bold text-lg leading-tight">{{ item.name }}</h4>
+            </div>
           </div>
         </div>
         <!-- Empty State -->
