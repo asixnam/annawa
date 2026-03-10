@@ -2,7 +2,7 @@ import pool from '../../utils/db'
 
 export default defineEventHandler(async (event) => {
     const query = getQuery(event)
-    const unit = query.unit as string | undefined
+    const unit = (query.unit || query.unit_id) as string | undefined
     const limit = query.limit ? parseInt(query.limit as string) : 200
 
     try {
