@@ -31,7 +31,16 @@ export default defineNuxtConfig({
   nitro: {
     externals: {
       inline: ['pg', 'pg-pool', 'pg-types', 'pgpass', 'pg-protocol', 'pg-connection-string']
+    },
+    routeRules: {
+      '/api/upload': { headers: {} },
+      '/api/students': { headers: {} },
+      '/api/students/**': { headers: {} }
     }
+  },
+  experimental: {
+    // Allow larger body sizes for file uploads (10MB)
+    payloadExtraction: false
   }
 })
 

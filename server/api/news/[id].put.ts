@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 
         if (updates.length > 0) {
             values.push(id)
-            await pool.query(`UPDATE news SET ${updates.join(', ')} WHERE id = \${values.length}`, values)
+            await pool.query(`UPDATE news SET ${updates.join(', ')} WHERE id = $${values.length}`, values)
         }
 
         return { message: 'News updated successfully' }
