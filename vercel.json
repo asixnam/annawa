@@ -1,0 +1,11 @@
+{
+    "functions": {
+        "server/api/students/index.post.ts": {
+            "maxDuration": 60,
+            "memory": 1024
+        },
+        "api/**": {
+            "maxDuration": 60
+        }
+    }
+}
