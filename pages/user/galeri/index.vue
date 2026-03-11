@@ -95,7 +95,7 @@
                  v-else 
                  :src="item.image" 
                  :alt="item.title" 
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 group-hover"
                />
                <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
             </div>
