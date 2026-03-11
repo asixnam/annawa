@@ -6,6 +6,9 @@ async function setupDb() {
         // Comprehensive fix for all expected columns
         await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT \'active\'')
         await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR(255) UNIQUE')
+        // Make password nullable for Google users
+        await pool.query('ALTER TABLE users ALTER COLUMN password DROP NOT NULL')
+
         await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS bio TEXT')
         await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(20)')
         await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS image_url TEXT')
