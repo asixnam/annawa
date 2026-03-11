@@ -4,10 +4,16 @@ import pool from '../../utils/db'
 
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig(event)
-    const googleClientId = config.public.googleClientId
+    // Ambil dari private config atau public config
+    const googleClientId = config.googleClientId || config.public.googleClientId
 
     if (!googleClientId || googleClientId === 'YOUR_GOOGLE_CLIENT_ID') {
-        console.error('Server Configuration Error: GOOGLE_CLIENT_ID is not set.')
+        const errorMsg = 'Konfigurasi Server Error: GOOGLE_CLIENT_ID tidak ditemukan di environment variables.'
+        console.error(errorMsg)
+        throw createError({
+            statusCode: 500,
+            statusMessage: errorMsg
+        })
     }
 
     const client = new OAuth2Client(googleClientId)
@@ -70,11 +76,11 @@ export default defineEventHandler(async (event) => {
             throw createError({ statusCode: 500, statusMessage: 'Failed to process user' })
         }
     } catch (error: any) {
-        console.error(error)
+        console.error('Google Verify Error:', error)
         if (error.statusCode) throw error
         throw createError({
             statusCode: 401,
-            statusMessage: 'Failed to verify Google Token',
+            statusMessage: `Gagal verifikasi token Google: ${error.message || 'Error tidak diketahui'}`,
         })
     }
 })

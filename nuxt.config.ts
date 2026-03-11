@@ -25,6 +25,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     smtpUser: process.env.SMTP_USER || 'no-reply@example.com',
     smtpPass: process.env.SMTP_PASS || 'password',
+    googleClientId: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID',
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
       googleClientId: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID'
