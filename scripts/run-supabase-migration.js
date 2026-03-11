@@ -70,6 +70,37 @@ async function migrate() {
             )
         `);
 
+        // Create content_text table
+        console.log('Creating content_text table...');
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS content_text (
+                key_name VARCHAR(50) PRIMARY KEY,
+                content TEXT
+            )
+        `);
+
+        // Create history_milestones table
+        console.log('Creating history_milestones table...');
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS history_milestones (
+                id SERIAL PRIMARY KEY,
+                year INT NOT NULL,
+                title VARCHAR(255) NOT NULL,
+                description TEXT
+            )
+        `);
+
+        // Create history_figures table
+        console.log('Creating history_figures table...');
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS history_figures (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                role VARCHAR(255),
+                photo_url VARCHAR(255)
+            )
+        `);
+
         console.log('Migration completed successfully!');
     } catch (error) {
         console.error('Migration failed:', error);
