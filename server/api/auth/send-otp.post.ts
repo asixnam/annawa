@@ -50,6 +50,9 @@ export default defineEventHandler(async (event) => {
     } catch (error: any) {
         console.error('Send OTP Error:', error)
         if (error.statusCode) throw error
-        throw createError({ statusCode: 500, statusMessage: 'Gagal mengirim OTP' })
+        throw createError({
+            statusCode: 500,
+            statusMessage: `Gagal mengirim OTP: ${error.message || 'Error tidak diketahui'}`
+        })
     }
 })
