@@ -21,25 +21,29 @@ export default defineEventHandler(async (event) => {
         await pool.query('UPDATE users SET reset_otp = $1, reset_otp_expires = $2 WHERE email = $3', [otp, expires, email])
 
         // Send email
+        const config = useRuntimeConfig(event)
+        const smtpUser = config.smtpUser
+        const smtpPass = config.smtpPass
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.SMTP_USER || 'no-reply@example.com',
-                pass: process.env.SMTP_PASS || 'password'
+                user: smtpUser,
+                pass: smtpPass
             }
         })
 
         const mailOptions = {
-            from: process.env.SMTP_USER || 'no-reply@example.com',
+            from: smtpUser,
             to: email,
             subject: 'Reset Password OTP - Pondok Pesantren Annawa',
             html: `<p>Halo,</p><p>Kode OTP Anda untuk reset password adalah: <b>${otp}</b></p><p>Kode ini berlaku selama 15 menit.</p>`
         }
 
-        if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+        if (smtpUser && smtpPass && smtpUser !== 'no-reply@example.com') {
             await transporter.sendMail(mailOptions)
         } else {
-            console.warn('SMTP not configured! The generated OTP is:', otp);
+            console.warn('SMTP not configured or using default! The generated OTP is:', otp);
         }
 
         return { message: 'OTP sent successfully' }

@@ -4,8 +4,12 @@ import pool from '../../utils/db'
 
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig(event)
-    // In this app, we hardcode fallback or get from process.env if available.
-    const googleClientId = process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID'
+    const googleClientId = config.public.googleClientId
+
+    if (!googleClientId || googleClientId === 'YOUR_GOOGLE_CLIENT_ID') {
+        console.error('Server Configuration Error: GOOGLE_CLIENT_ID is not set.')
+    }
+
     const client = new OAuth2Client(googleClientId)
 
     const body = await readBody(event)
