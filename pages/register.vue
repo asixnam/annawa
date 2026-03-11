@@ -150,14 +150,19 @@ async function handleGoogleLogin(response: any) {
   isLoading.value = true
   successMsg.value = ''
   try {
-    const { message } = await $fetch<{ message: string }>('/api/auth/google', {
+    const res = await $fetch<{ message: string, user: any }>('/api/auth/google', {
       method: 'POST',
       body: { credential: response.credential, register_as: 'author' }
     })
-    successMsg.value = message || 'Berhasil mendaftar/masuk dengan Google. Silakan masuk.'
-    setTimeout(() => {
-        navigateTo('/login')
-    }, 1500)
+    
+    if (res.user?.status === 'pending') {
+      successMsg.value = 'Pendaftaran berhasil! Akun Anda sedang menunggu persetujuan Super Admin.'
+    } else {
+      successMsg.value = 'Berhasil mendaftar/masuk dengan Google.'
+      setTimeout(() => {
+          navigateTo('/login')
+      }, 1500)
+    }
   } catch (error: any) {
     alert('Google Auth gagal: ' + (error.data?.statusMessage || error.message))
   } finally {
