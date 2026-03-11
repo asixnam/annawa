@@ -243,6 +243,51 @@
         </div>
       </div>
     </section>
+    
+    <!-- YouTube Section -->
+    <section v-if="youtubeVideos && youtubeVideos.length > 0" class="bg-card py-20 transition-colors duration-300">
+      <div class="container mx-auto px-6 max-w-6xl">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div class="space-y-2">
+            <h3 class="text-3xl font-black text-main uppercase tracking-tight font-heading">
+              An-Nawa <span class="text-brand-500">TV</span>
+            </h3>
+            <p class="text-gray-500 max-w-xl">
+              Ikuti dokumentasi kegiatan, kajian, dan update terbaru dari Pondok Pesantren An-Nawa melalui channel YouTube resmi kami.
+            </p>
+          </div>
+          <a href="https://www.youtube.com/@an-nawatv3179" target="_blank" class="px-8 py-3 bg-brand-600 text-white font-bold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/20 flex items-center gap-2 group uppercase tracking-widest text-xs">
+          Kunjungi Chanel
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div v-for="video in youtubeVideos" :key="video.id" class="group cursor-pointer bg-white rounded-0 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col h-full">
+            <a :href="video.link" target="_blank" class="relative aspect-video overflow-hidden">
+              <img :src="video.thumbnail" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="YouTube Thumbnail">
+              <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                <div class="w-12 h-12 bg-brand-600 rounded-full flex items-center justify-center text-white shadow-xl scale-90 group-hover:scale-100 transition-transform shadow-brand-500/40">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-black text-brand-600 uppercase tracking-widest mb-3 block">{{ video.category }}</span>
+                <h4 class="font-bold text-gray-900 line-clamp-2 leading-snug group-hover:text-brand-600 transition-colors text-sm">
+                  {{ video.title }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Testimoni Alumni -->
     <section class="py-16 overflow-hidden bg-card/30">
@@ -318,7 +363,7 @@
                 Daftar Sekarang
               </NuxtLink>
 
-              <NuxtLink to="/user/profil" class="px-12 py-5 border-2 border-brand-500 text-brand-700 rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-50 transition-all text-center"">
+              <NuxtLink to="/user/profil" class="px-12 py-5 border-2 border-brand-500 text-brand-700 rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-50 transition-all text-center">
                 Profil Pondok
               </NuxtLink>
             </div>
@@ -341,13 +386,19 @@ const [
   { data: statsData },
   { data: kajianData },
   { data: newsData },
-  { data: testimonialsData }
+  { data: testimonialsData },
+  { data: historyData },
+  { data: youtubeVideos }
 ] = await Promise.all([
   useFetch('/api/stats'),
   useFetch('/api/kajian', { query: { limit: 3 } }),
   useFetch('/api/news', { query: { limit: 6 } }),
-  useFetch('/api/testimonials', { query: { limit: 20 } })
+  useFetch('/api/testimonials', { query: { limit: 20 } }),
+  useFetch('/api/history'),
+  useFetch('/api/youtube/latest')
 ])
+
+const historyText = computed(() => (historyData.value as any)?.text || '')
 
 // Stats from lightweight COUNT endpoint
 const santriTotal = computed(() => (statsData.value as any)?.santriTotal ?? 500)
