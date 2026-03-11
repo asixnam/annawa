@@ -3,7 +3,7 @@
     <div v-if="berita" class="container mx-auto px-6 py-24">
       <div class="max-w-4xl mx-auto">
         <!-- Breadcrumb -->
-        <nav class="flex mb-8 text-sm font-bold uppercase tracking-widest" aria-label="Breadcrumb">
+        <nav class="flex mb-8 text-sm font-bold uppercase tracking-widest animate-fade-in-down" aria-label="Breadcrumb">
           <NuxtLink to="/user" class="text-gray-400 hover:text-brand-600 transition-colors">Home</NuxtLink>
           <span class="mx-3 text-gray-300">/</span>
           <NuxtLink to="/user/berita" class="text-gray-400 hover:text-brand-600 transition-colors">Berita</NuxtLink>
@@ -12,11 +12,17 @@
         </nav>
 
         <!-- Header -->
-        <header class="mb-12">
-          <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight font-heading">
-            {{ berita.title }}
+        <header ref="sectionHeader" class="mb-12">
+          <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-gray-100 mb-6 leading-tight font-heading flex flex-wrap gap-x-[0.25em]">
+            <span v-for="(wordChars, wIndex) in animatedTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+              <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                    class="reveal-char" 
+                    :style="{ animationDelay: `${0.3 + charObj.delay}s` }">
+                {{ charObj.char }}
+              </span>
+            </span>
           </h1>
-          <div class="flex items-center gap-6 text-sm text-gray-500 font-bold uppercase tracking-wider">
+          <div class="flex items-center gap-6 text-sm text-gray-500 font-bold uppercase tracking-wider animate-fade-in-up" style="animation-delay: 0.8s">
             <div class="flex items-center gap-2">
               <div class="w-2 h-2 rounded-full bg-brand-500"></div>
               <span>{{ formattedDate }}</span>
@@ -25,12 +31,14 @@
         </header>
 
         <!-- Image -->
-        <div class="relative h-[400px] md:h-[500px] rounded overflow-hidden mb-12 shadow-2xl transition-colors duration-300">
+        <div ref="sectionImage" class="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden mb-12 shadow-2xl transition-all duration-1000"
+             :class="[isVisible.image ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0']">
           <img 
             v-if="berita.image" 
             :src="berita.image" 
             :alt="berita.title" 
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover transition-transform duration-1000"
+            :class="[isVisible.image ? 'scale-100' : 'scale-110']"
           />
           <div v-else class="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-100 to-brand-50">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-brand-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,18 +48,21 @@
         </div>
 
         <!-- Content -->
-        <div class="prose prose-lg max-w-none text-gray-600 leading-relaxed font-serif bg-white p-10 md:p-16 rounded border border-gray-100 shadow-sm">
+        <div ref="sectionContent" class="prose prose-lg max-w-none text-gray-600 dark:text-gray-400 leading-relaxed font-serif bg-white dark:bg-gray-900 p-10 md:p-16 rounded-3xl border border-gray-100 dark:border-gray-800/40 shadow-sm transition-all duration-1000"
+             :class="[isVisible.content ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0']">
           <p class="mb-6 whitespace-pre-wrap">{{ berita.content }}</p>
-        </div>
+          <p class="text-gray-600 dark:text-gray-400">Penulis: Tim Redaksi An-Nawa</p>
+      </div>
       </div>
     </div>
     
     <!-- Berita Terkait / Lainnya -->
-    <div v-if="berita && otherNews.length > 0" class="container mx-auto px-6 pb-24 border-t border-gray-100 pt-16 mt-8">
+    <div v-if="berita && otherNews.length > 0" ref="sectionRelated" class="container mx-auto px-6 pb-24 border-t border-gray-100 dark:border-gray-800/40 pt-16 mt-8 transition-all duration-1000"
+         :class="[isVisible.related ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0']">
       <div class="max-w-4xl mx-auto">
         <div class="flex items-center justify-between mb-8">
           <h2 class="text-2xl md:text-3xl font-black text-main font-heading">Berita Terbaru Lainnya</h2>
-          <NuxtLink to="/user/berita" class="text-brand-600 font-bold uppercase tracking-wider text-xs hover:text-black transition-colors flex items-center">
+          <NuxtLink to="/user/berita" class="text-brand-600 font-bold uppercase tracking-wider text-xs hover:text-black dark:hover:text-white transition-colors flex items-center">
             Lihat Semua
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -59,15 +70,18 @@
           </NuxtLink>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <BeritaCard
-            v-for="item in otherNews"
-            :key="item.id"
-            :title="item.title"
-            :excerpt="item.excerpt"
-            :image="item.image"
-            :date="item.date"
-            :slug="item.slug"
-          />
+          <div v-for="(item, index) in otherNews" :key="item.id"
+               class="transition-all duration-700"
+               :style="{ transitionDelay: `${index * 100}ms` }"
+               :class="[isVisible.related ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
+            <BeritaCard
+              :title="item.title"
+              :excerpt="item.excerpt"
+              :image="item.image"
+              :date="item.date"
+              :slug="item.slug"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -79,13 +93,43 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, reactive, ref, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useFetch } from '#app'
 import BeritaCard from '~/components/BeritaCard.vue'
 
 const route = useRoute()
 const slug = route.params.slug
+
+// Animation States
+const isVisible = reactive({
+  header: false,
+  image: false,
+  content: false,
+  related: false
+})
+
+const sectionHeader = ref(null)
+const sectionImage = ref(null)
+const sectionContent = ref(null)
+const sectionRelated = ref(null)
+
+let observer: IntersectionObserver | null = null
+
+// Helper for split text
+const splitText = (text: string) => {
+  if (!text) return []
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+}
 
 const { data: berita } = await useFetch(`/api/news/slug/${slug}`, {
   transform: (data: any) => ({
@@ -95,7 +139,29 @@ const { data: berita } = await useFetch(`/api/news/slug/${slug}`, {
   })
 })
 
+const animatedTitle = computed(() => splitText(berita.value?.title || ''))
+
 const { data: newsData } = await useFetch('/api/news')
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === sectionImage.value) isVisible.image = true
+        if (entry.target === sectionContent.value) isVisible.content = true
+        if (entry.target === sectionRelated.value) isVisible.related = true
+      }
+    })
+  }, { threshold: 0.1 })
+
+  if (sectionImage.value) observer.observe(sectionImage.value)
+  if (sectionContent.value) observer.observe(sectionContent.value)
+  if (sectionRelated.value) observer.observe(sectionRelated.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 
 const otherNews = computed(() => {
   if (!newsData.value) return []
@@ -129,5 +195,38 @@ const formattedDate = computed(() => {
 }
 .font-serif {
   font-family: 'Source Serif 4', serif;
+}
+
+/* Animations */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

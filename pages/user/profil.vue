@@ -7,21 +7,33 @@
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-30"></div>
 
       <div class="container mx-auto px-6 relative z-10 text-center">
-        <div class="inline-block px-4 py-1 bg-brand-100 text-brand-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-brand-200">
+        <div class="inline-block px-4 py-1 bg-brand-100 text-brand-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-brand-200 animate-fade-in-down">
           Official Profil
         </div>
-        <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-          Profil <span class="text-brand-500">Pondok Pesantren</span>
+        <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading flex flex-wrap justify-center gap-x-[0.25em]">
+          <span v-for="(wordChars, wIndex) in animatedHeroTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+            <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                  class="reveal-char" 
+                  :style="{ animationDelay: `${0.2 + charObj.delay}s` }">
+              {{ charObj.char }}
+            </span>
+          </span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          Mengenal lebih dekat Pondok Pesantren Khozinatul Ulum An-Nawa melalui visi, misi, dan tim pengembang kami.
+        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed flex flex-wrap justify-center gap-x-[0.2em]">
+          <span v-for="(wordChars, wIndex) in animatedHeroSubtitle" :key="wIndex" class="inline-block whitespace-nowrap">
+            <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                  class="reveal-char-subtitle" 
+                  :style="{ animationDelay: `${0.8 + charObj.delay}s` }">
+              {{ charObj.char }}
+            </span>
+          </span>
         </p>
       </div>
     </section>
 
     <!-- Tentang Pondok -->
-    <section class="container mx-auto px-6 py-16 bg-card border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
-      <div class="max-w-5xl mx-auto">
+    <section ref="sectionTentang" class="container mx-auto px-6 py-16 bg-card border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
+      <div class="max-w-5xl mx-auto" :class="[isVisible.tentang ? 'animate-fade-in-up' : 'opacity-0']">
         <div class="text-center mb-12">
           <h2 class="text-3xl md:text-4xl font-black text-main uppercase tracking-tight font-heading">
             Tentang <span class="text-brand-500">Kami</span>
@@ -29,11 +41,12 @@
         </div>
 
         <!-- Hero Image Horizontal -->
-        <div class="mb-12 relative overflow-hidden shadow-2xl group">
+        <div class="mb-12 relative overflow-hidden shadow-2xl group rounded-xl">
           <img 
             :src="pondokUnit?.image_url || '/images/pengasuh.jpeg'" 
             :alt="pondokUnit?.name || 'Pengasuh Pondok'" 
             class="w-full h-[400px] md:h-[500px] object-cover group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-105"
+            :class="[isVisible.tentang ? 'animate-image-reveal' : 'scale-110 opacity-0']"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
@@ -56,11 +69,12 @@
     </section>
 
     <!-- Visi & Misi -->
-    <section class="bg-card py-16 transition-colors duration-300">
+    <section ref="sectionVisiMisi" class="bg-card py-16 transition-colors duration-300">
       <div class="container mx-auto px-6 max-w-5xl">
         <div class="space-y-8">
           <!-- Visi -->
-          <div class="bg-brand-50 p-8 rounded-0 border border-brand-100/50 shadow-sm">
+          <div class="bg-brand-50 p-8 rounded-xl border border-brand-100/50 shadow-sm transition-all duration-700"
+               :class="[isVisible.visiMisi ? 'animate-fade-in-left' : 'opacity-0 translate-x-10']">
             <h3 class="text-xl font-black text-main mb-6 uppercase tracking-tight font-heading">
               Visi <span class="text-brand-500 ml-1">Pondok</span>
             </h3>
@@ -70,12 +84,15 @@
           </div>
 
           <!-- Misi -->
-          <div class="bg-light p-8 rounded-0 border border-gray-100 dark:border-gray-800/40 shadow-sm">
+          <div class="bg-light p-8 rounded-xl border border-gray-100 dark:border-gray-800/40 shadow-sm transition-all duration-700"
+               :class="[isVisible.visiMisi ? 'animate-fade-in-right' : 'opacity-0 -translate-x-10']">
             <h3 class="text-xl font-black text-main mb-6 uppercase tracking-tight font-heading">
               Misi <span class="text-brand-500 ml-1">Kami</span>
             </h3>
             <ul class="space-y-4">
-              <li v-for="(misi, index) in misis" :key="index" class="flex items-start gap-3">
+              <li v-for="(misi, index) in misis" :key="index" class="flex items-start gap-3 transition-all duration-500"
+                  :style="{ transitionDelay: `${index * 100}ms` }"
+                  :class="[isVisible.visiMisi ? 'translate-x-0 opacity-100' : '-translate-x-5 opacity-0']">
                 <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500 text-black flex items-center justify-center font-bold text-xs">
                   {{ Number(index) + 1 }}
                 </span>
@@ -88,9 +105,9 @@
     </section>
 
     <!-- Fasilitas -->
-    <section class="bg-light py-16 transition-colors duration-300">
+    <section ref="sectionFasilitas" class="bg-light py-16 transition-colors duration-300">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-12">
+        <div class="text-center mb-12" :class="[isVisible.fasilitas ? 'animate-fade-in-up' : 'opacity-0']">
           <h2 class="text-3xl md:text-5xl font-black text-main mb-4 uppercase font-heading">
             Fasilitas <span class="text-brand-500">Unggulan</span>
           </h2>
@@ -100,7 +117,10 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div v-for="facility in facilities" :key="facility.id" class="group relative overflow-hidden aspect-video shadow-lg">
+          <div v-for="(facility, index) in facilities" :key="facility.id" 
+               class="group relative overflow-hidden aspect-video shadow-lg rounded-xl transition-all duration-700"
+               :style="{ transitionDelay: `${index * 150}ms` }"
+               :class="[isVisible.fasilitas ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0']">
             <div v-if="facility.icon && (facility.icon.startsWith('http') || facility.icon.startsWith('data:') || facility.icon.startsWith('/'))" class="w-full h-full">
               <img :src="facility.icon" :alt="facility.name" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500" />
             </div>
@@ -127,8 +147,8 @@
     </section>
 
     <!-- Tim Kami -->
-    <section class="container mx-auto px-6 py-16">
-      <div class="text-center mb-12">
+    <section ref="sectionTim" class="container mx-auto px-6 py-16">
+      <div class="text-center mb-12" :class="[isVisible.tim ? 'animate-fade-in-up' : 'opacity-0']">
         <h2 class="text-3xl md:text-5xl font-black text-main mb-4 uppercase font-heading">
           Tim <span class="text-brand-500">Kami</span>
         </h2>
@@ -138,12 +158,15 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-        <div v-for="member in team" :key="member.name" class="group text-center">
-          <div class="relative overflow-hidden mb-4 shadow-lg aspect-[3/4]">
+        <div v-for="(member, index) in team" :key="member.name" 
+             class="group text-center transition-all duration-700"
+             :style="{ transitionDelay: `${index * 100}ms` }"
+             :class="[isVisible.tim ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0']">
+          <div class="relative overflow-hidden mb-4 shadow-lg aspect-[3/4] rounded-xl">
             <img 
               :src="member.photo" 
               :alt="member.name" 
-              class="w-full h-full object-cover transition-all duration-500 " 
+              class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" 
             />
           </div>
           <h4 class="text-lg font-bold text-main mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ member.name }}</h4>
@@ -170,16 +193,19 @@
     </section>
 
     <!-- Mitra Lembaga -->
-    <section class="bg-card py-16 transition-colors duration-300">
+    <section ref="sectionMitra" class="bg-card py-16 transition-colors duration-300">
       <div class="container mx-auto px-6 max-w-5xl">
-        <div class="text-center mb-12">
+        <div class="text-center mb-12" :class="[isVisible.mitra ? 'animate-fade-in-up' : 'opacity-0']">
           <h2 class="text-3xl md:text-4xl font-black text-main mb-4 font-heading">
             Mitra <span class="text-brand-500">Lembaga</span>
           </h2>
           <p class="text-gray-500 text-sm max-w-xl mx-auto">Jalinan kerjasama dengan berbagai institusi untuk meningkatkan kualitas pendidikan dan pengabdian.</p>
         </div>
         <div class="flex flex-wrap justify-center gap-8 md:gap-16 lg:gap-20">
-          <div v-for="mitra in partners" :key="mitra.id" class="flex flex-col items-center group">
+          <div v-for="(mitra, index) in partners" :key="mitra.id" 
+               class="flex flex-col items-center group transition-all duration-700"
+               :style="{ transitionDelay: `${index * 100}ms` }"
+               :class="[isVisible.mitra ? 'scale-100 opacity-100' : 'scale-50 opacity-0']">
             <div class="w-24 h-24 md:w-32 md:h-32 mb-4 flex items-center justify-center transition-all duration-300 transform group-hover:scale-110">
               <img :src="mitra.logo" :alt="mitra.name" class="max-w-full max-h-full object-contain dark:brightness-0 dark:invert" />
             </div>
@@ -239,16 +265,75 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, reactive, onUnmounted } from 'vue'
 import { useContentStore } from '~/stores/content'
 
 const store = useContentStore()
 
-// Fetch Data
+// Animation States
+const isVisible = reactive({
+  tentang: false,
+  visiMisi: false,
+  fasilitas: false,
+  tim: false,
+  mitra: false
+})
+
+const sectionTentang = ref(null)
+const sectionVisiMisi = ref(null)
+const sectionFasilitas = ref(null)
+const sectionTim = ref(null)
+const sectionMitra = ref(null)
+
+let observer: IntersectionObserver | null = null
+
+// Helper for split text
+const splitText = (text: string) => {
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+}
+
+const heroTitle = "Profil Pondok Pesantren"
+const heroSubtitle = "Mengenal lebih dekat Pondok Pesantren Khozinatul Ulum An-Nawa melalui visi, misi, dan tim pengembang kami."
+
+const animatedHeroTitle = computed(() => splitText(heroTitle))
+const animatedHeroSubtitle = computed(() => splitText(heroSubtitle))
+
+// Fetch Data & Setup Observer
 onMounted(() => {
   if (store.units.length === 0) {
     store.fetchUnits()
   }
+
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === sectionTentang.value) isVisible.tentang = true
+        if (entry.target === sectionVisiMisi.value) isVisible.visiMisi = true
+        if (entry.target === sectionFasilitas.value) isVisible.fasilitas = true
+        if (entry.target === sectionTim.value) isVisible.tim = true
+        if (entry.target === sectionMitra.value) isVisible.mitra = true
+      }
+    })
+  }, { threshold: 0.15 })
+
+  if (sectionTentang.value) observer.observe(sectionTentang.value)
+  if (sectionVisiMisi.value) observer.observe(sectionVisiMisi.value)
+  if (sectionFasilitas.value) observer.observe(sectionFasilitas.value)
+  if (sectionTim.value) observer.observe(sectionTim.value)
+  if (sectionMitra.value) observer.observe(sectionMitra.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
 })
 
 // Find Pondok Unit (assuming name contains 'Pondok')
@@ -273,5 +358,72 @@ const partners = computed(() => pondokUnit.value?.partners || [])
 <style scoped>
 .font-heading {
   font-family: 'Montserrat', sans-serif;
+}
+
+/* Animations */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.reveal-char-subtitle {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealChar 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-image-reveal {
+  animation: imageReveal 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes imageReveal {
+  from { opacity: 0; transform: scale(1.1); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>

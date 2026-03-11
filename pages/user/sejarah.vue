@@ -7,42 +7,55 @@
       <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-30"></div>
 
       <div class="container mx-auto px-6 relative z-10 text-center">
-        <div class="inline-block px-4 py-1 bg-brand-100 text-brand-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-brand-200">
+        <div class="inline-block px-4 py-1 bg-brand-100 text-brand-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-brand-200 animate-fade-in-down">
           Tentang Kami
         </div>
-        <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-          Sejarah <span class="text-brand-500">Perjalanan</span>
+        <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading flex flex-wrap justify-center gap-x-[0.25em]">
+          <span v-for="(wordChars, wIndex) in animatedHeroTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+            <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                  class="reveal-char" 
+                  :style="{ animationDelay: `${0.2 + charObj.delay}s` }">
+              {{ charObj.char }}
+            </span>
+          </span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          Menapak tilas awal berdirinya Pondok Pesantren Khozinatul Ulum An-Nawa dan perjuangan dalam mencetak generasi Qur'ani.
+        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed flex flex-wrap justify-center gap-x-[0.2em]">
+          <span v-for="(wordChars, wIndex) in animatedHeroSubtitle" :key="wIndex" class="inline-block whitespace-nowrap">
+            <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                  class="reveal-char-subtitle" 
+                  :style="{ animationDelay: `${0.8 + charObj.delay}s` }">
+              {{ charObj.char }}
+            </span>
+          </span>
         </p>
       </div>
     </section>
 
     <!-- Narasi Sejarah -->
-    <section class="container mx-auto px-6 py-16 bg-card border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
-      <div class="max-w-5xl mx-auto">
+    <section ref="sectionNarasi" class="container mx-auto px-6 py-16 bg-card border-b border-gray-100 dark:border-gray-800/40 transition-colors duration-300">
+      <div class="max-w-5xl mx-auto" :class="[isVisible.narasi ? 'animate-fade-in-up' : 'opacity-0']">
         <!-- Hero Image Horizontal -->
-        <div class="mb-12 relative overflow-hidden shadow-2xl group">
+        <div class="mb-12 relative overflow-hidden shadow-2xl group rounded-xl">
           <img 
             src="/images/hero-santri.png" 
             alt="Gedung Utama Pesantren" 
             class="w-full h-[400px] md:h-[500px] object-cover group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-105"
+            :class="[isVisible.narasi ? 'animate-image-reveal' : 'scale-110 opacity-0']"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
 
         <!-- Text Content -->
-        <div class="space-y-8 text-gray-700 leading-relaxed text-lg text-justify max-w-4xl mx-auto whitespace-pre-line">
+        <div class="space-y-8 text-gray-700 dark:text-gray-300 leading-relaxed text-lg text-justify max-w-4xl mx-auto whitespace-pre-line">
           {{ historyText }}
         </div>
       </div>
     </section>
 
     <!-- Timeline / Milestones -->
-    <section class="py-20 bg-light transition-colors duration-300">
+    <section ref="sectionTimeline" class="py-20 bg-light transition-colors duration-300">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" :class="[isVisible.timeline ? 'animate-fade-in-up' : 'opacity-0']">
           <h2 class="text-3xl md:text-4xl font-black text-main uppercase font-heading">
             Kilas <span class="text-brand-500 ml-1">Peristiwa</span>
           </h2>
@@ -50,12 +63,15 @@
         </div>
 
         <div class="max-w-4xl mx-auto">
-          <div v-for="(item, index) in milestones" :key="index" class="relative pl-10 pb-12 last:pb-0 border-l-2 border-brand-200 ml-4 md:ml-6">
+          <div v-for="(item, index) in milestones" :key="index" 
+               class="relative pl-10 pb-12 last:pb-0 border-l-2 border-brand-200 ml-4 md:ml-6 transition-all duration-700"
+               :style="{ transitionDelay: `${index * 150}ms` }"
+               :class="[isVisible.timeline ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0']">
             <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-brand-500 border-4 border-white dark:border-gray-800 shadow-sm"></div>
             <div class="bg-card p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800/40 hover:shadow-md transition-shadow">
               <span class="inline-block px-3 py-1 bg-brand-100 text-brand-700 rounded-full text-xs font-bold mb-4">{{ item.year }}</span>
               <h3 class="text-xl font-bold text-main mb-3">{{ item.title }}</h3>
-              <p class="text-gray-600 leading-relaxed">{{ item.description }}</p>
+              <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{{ item.description }}</p>
             </div>
           </div>
         </div>
@@ -63,24 +79,27 @@
     </section>
 
     <!-- Tokoh Pendiri / Key Figures -->
-    <section class="bg-card py-16 transition-colors duration-300">
+    <section ref="sectionTokoh" class="bg-card py-16 transition-colors duration-300">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" :class="[isVisible.tokoh ? 'animate-fade-in-up' : 'opacity-0']">
           <h2 class="text-3xl md:text-5xl font-black text-main mb-4 uppercase font-heading">
             Tokoh <span class="text-brand-500">Inspiratif</span>
           </h2>
-          <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">
+          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
             Beliau-beliau yang meletakkan fondasi dan dedikasi luar biasa dalam perjalanan dakwah kami.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-          <div v-for="figure in founders" :key="figure.name" class="group text-center">
-            <div class="relative overflow-hidden mb-6 shadow-xl aspect-[3/4]">
+          <div v-for="(figure, index) in founders" :key="figure.name" 
+               class="group text-center transition-all duration-700"
+               :style="{ transitionDelay: `${index * 200}ms` }"
+               :class="[isVisible.tokoh ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0']">
+            <div class="relative overflow-hidden mb-6 shadow-xl aspect-[3/4] rounded-xl">
               <img 
                 :src="figure.photo" 
                 :alt="figure.name" 
-                class="w-full h-full object-cover transition-all duration-500" 
+                class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" 
               />
             </div>
             <h4 class="text-xl font-bold text-main mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ figure.name }}</h4>
@@ -108,13 +127,65 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, reactive, onUnmounted } from 'vue'
 import { useContentStore } from '~/stores/content'
 
 const store = useContentStore()
 
+// Animation States
+const isVisible = reactive({
+  narasi: false,
+  timeline: false,
+  tokoh: false
+})
+
+const sectionNarasi = ref(null)
+const sectionTimeline = ref(null)
+const sectionTokoh = ref(null)
+
+let observer: IntersectionObserver | null = null
+
+// Helper for split text
+const splitText = (text: string) => {
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+}
+
+const heroTitle = "Sejarah Perjalanan"
+const heroSubtitle = "Menapak tilas awal berdirinya Pondok Pesantren Khozinatul Ulum An-Nawa dan perjuangan dalam mencetak generasi Qur'ani."
+
+const animatedHeroTitle = computed(() => splitText(heroTitle))
+const animatedHeroSubtitle = computed(() => splitText(heroSubtitle))
+
+// Fetch Data & Setup Observer
 onMounted(() => {
   store.fetchHistory()
+
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === sectionNarasi.value) isVisible.narasi = true
+        if (entry.target === sectionTimeline.value) isVisible.timeline = true
+        if (entry.target === sectionTokoh.value) isVisible.tokoh = true
+      }
+    })
+  }, { threshold: 0.15 })
+
+  if (sectionNarasi.value) observer.observe(sectionNarasi.value)
+  if (sectionTimeline.value) observer.observe(sectionTimeline.value)
+  if (sectionTokoh.value) observer.observe(sectionTokoh.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
 })
 
 const milestones = computed(() => store.history.milestones)
@@ -125,5 +196,72 @@ const historyText = computed(() => store.history.text)
 <style scoped>
 .font-heading {
   font-family: 'Montserrat', sans-serif;
+}
+
+/* Animations */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.reveal-char-subtitle {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealChar 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-image-reveal {
+  animation: imageReveal 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes imageReveal {
+  from { opacity: 0; transform: scale(1.1); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>

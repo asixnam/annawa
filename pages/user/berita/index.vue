@@ -8,31 +8,46 @@
       
       <div class="container mx-auto px-6 relative z-10 text-center">
         <div class="max-w-3xl mx-auto">
-          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in-down">
             Kabar & Pemutakhiran
           </div>
-          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-            Berita & <span class="text-brand-500">Kegiatan</span>
+          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading flex flex-wrap justify-center gap-x-[0.25em]">
+            <span v-for="(wordChars, wIndex) in animatedHeroTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+              <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                    class="reveal-char" 
+                    :style="{ animationDelay: `${0.2 + charObj.delay}s` }">
+                {{ charObj.char }}
+              </span>
+            </span>
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Informasi terkini seputar dinamika kegiatan, prestasi, dan perkembangan di lingkungan Pondok Pesantren Annawa.
+          <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed flex flex-wrap justify-center gap-x-[0.2em]">
+            <span v-for="(wordChars, wIndex) in animatedHeroSubtitle" :key="wIndex" class="inline-block whitespace-nowrap">
+              <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                    class="reveal-char-subtitle" 
+                    :style="{ animationDelay: `${0.8 + charObj.delay}s` }">
+                {{ charObj.char }}
+              </span>
+            </span>
           </p>
         </div>
       </div>
     </section>
 
     <!-- Berita List -->
-    <section class="container mx-auto px-6 py-16">
+    <section ref="sectionList" class="container mx-auto px-6 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <BeritaCard
-          v-for="berita in paginatedBerita"
-          :key="berita.id"
-          :title="berita.title"
-          :excerpt="berita.excerpt"
-          :image="berita.image"
-          :date="berita.date"
-          :slug="berita.slug"
-        />
+        <div v-for="(berita, index) in paginatedBerita" :key="berita.id"
+             class="transition-all duration-700"
+             :style="{ transitionDelay: `${index * 100}ms` }"
+             :class="[isVisible.list ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0']">
+          <BeritaCard
+            :title="berita.title"
+            :excerpt="berita.excerpt"
+            :image="berita.image"
+            :date="berita.date"
+            :slug="berita.slug"
+          />
+        </div>
       </div>
 
       <!-- Empty State -->
@@ -67,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, reactive, onMounted, onUnmounted } from 'vue'
 import { useFetch } from '#app'
 import BeritaCard from '~/components/BeritaCard.vue'
 
@@ -75,7 +90,51 @@ const filter = ref('all')
 const currentPage = ref(1)
 const itemsPerPage = 6
 
+// Animation States
+const isVisible = reactive({
+  list: false
+})
+
+const sectionList = ref(null)
+let observer: IntersectionObserver | null = null
+
+// Helper for split text
+const splitText = (text: string) => {
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+}
+
+const heroTitle = "Berita & Kegiatan"
+const heroSubtitle = "Informasi terkini seputar dinamika kegiatan, prestasi, dan perkembangan di lingkungan Pondok Pesantren Annawa."
+
+const animatedHeroTitle = computed(() => splitText(heroTitle))
+const animatedHeroSubtitle = computed(() => splitText(heroSubtitle))
+
 const { data: news } = await useFetch('/api/news')
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === sectionList.value) isVisible.list = true
+      }
+    })
+  }, { threshold: 0.1 })
+
+  if (sectionList.value) observer.observe(sectionList.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 
 const filteredBerita = computed(() => {
   if (!news.value) return []
@@ -114,5 +173,45 @@ watch(filter, () => {
 <style scoped>
 .font-heading {
   font-family: 'Montserrat', sans-serif;
+}
+
+/* Animations */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.reveal-char-subtitle {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealChar 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

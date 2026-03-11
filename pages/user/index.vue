@@ -11,33 +11,63 @@
             <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
               Official Website
             </div>
-            <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-               {{ hero.title }}
+            <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading flex flex-wrap gap-x-[0.25em]">
+               <span v-for="(wordChars, wIndex) in animatedTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+                 <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                       class="reveal-char" 
+                       :style="{ animationDelay: `${charObj.delay}s` }">
+                   {{ charObj.char }}
+                 </span>
+               </span>
             </h1>
-            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl leading-relaxed">
-              {{ hero.subtitle }}
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl leading-relaxed flex flex-wrap gap-x-[0.25em]">
+              <span v-for="(wordChars, wIndex) in animatedSubtitle" :key="wIndex" class="inline-block whitespace-nowrap">
+                <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                      class="reveal-char-subtitle" 
+                      :style="{ animationDelay: `${charObj.delay}s` }">
+                  {{ charObj.char }}
+                </span>
+              </span>
             </p>
             <div class="flex flex-wrap gap-4">
-              <NuxtLink to="#layanan-pendaftaran" class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1">
+              <a href="#layanan-pendaftaran" 
+                 @click.prevent="scrollToSection('layanan-pendaftaran')"
+                 class="px-8 py-4 bg-brand-500 text-black rounded font-black uppercase text-sm tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-brand-500/20 transform hover:-translate-y-1 cursor-pointer">
                 Daftar Sekarang
-              </NuxtLink>
+              </a>
               <NuxtLink to="/user/profil" class="px-8 py-4 border-2 border-gray-200 text-gray-800 rounded font-black uppercase text-sm tracking-widest hover:border-brand-500 hover:text-brand-500 transition-all transform hover:-translate-y-1">
                 Profil Pondok
               </NuxtLink>
             </div>
           </div>
           <div class="flex-1 relative">
-            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl animate-hero-image">
               <img :src="hero.image" alt="Santri Pesantren" class="w-full h-auto object-cover" />
             </div>
             <!-- Floating badge -->
-            <div class="absolute -bottom-6 -left-6 z-20 bg-card p-6 rounded-xl shadow-xl flex items-center gap-4 border border-gray-100 dark:border-brand-400/20">
+            <div class="absolute -bottom-6 -left-6 z-20 bg-card p-6 rounded-xl shadow-xl flex items-center gap-4 border border-gray-100 dark:border-brand-400/20 animate-float">
               <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-black font-bold">
-                {{ santriTotal }}+
+                {{ heroSantriQty }}+
               </div>
               <div class="text-sm">
-                <span class="block font-bold text-main leading-none">Santri Aktif</span>
-                <span class="text-gray-500 dark:text-gray-400 text-xs">Tahun Ajaran 2024/2025</span>
+                <span class="block font-bold text-main leading-none flex flex-wrap gap-x-[0.1em]">
+                  <span v-for="(wordChars, wIndex) in animatedHeroLabelTop" :key="wIndex" class="inline-block whitespace-nowrap">
+                    <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                          class="reveal-char" 
+                          :style="{ animationDelay: `${1.5 + charObj.delay}s` }">
+                      {{ charObj.char }}
+                    </span>
+                  </span>
+                </span>
+                <span class="text-gray-500 dark:text-gray-400 text-xs flex flex-wrap gap-x-[0.1em] mt-1">
+                  <span v-for="(wordChars, wIndex) in animatedHeroLabelBottom" :key="wIndex" class="inline-block whitespace-nowrap">
+                    <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                          class="reveal-char-subtitle" 
+                          :style="{ animationDelay: `${2 + charObj.delay}s` }">
+                      {{ charObj.char }}
+                    </span>
+                  </span>
+                </span>
               </div>
             </div>
           </div>
@@ -46,27 +76,47 @@
     </section>
 
     <!-- Tentang Pondok -->
-    <section class="container mx-auto px-6 py-16">
+    <section ref="tentangPondokSection" class="container mx-auto px-6 py-16">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-main mb-6">Yayasan Khozinatul Ulum An-Nawa</h2>
-        <p class="text-gray-600 text-lg leading-relaxed mb-8">
+        <h2 v-if="isTentangVisible" class="text-3xl md:text-4xl font-bold text-main mb-6 flex flex-wrap justify-center gap-x-[0.25em]">
+          <span v-for="(wordChars, wIndex) in animatedAboutTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+            <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                  class="reveal-char" 
+                  :style="{ animationDelay: `${charObj.delay}s` }">
+              {{ charObj.char }}
+            </span>
+          </span>
+        </h2>
+        <h2 v-else class="text-3xl md:text-4xl font-bold text-main mb-6 opacity-0">Yayasan Khozinatul Ulum An-Nawa</h2>
+
+        <p v-if="isTentangVisible" class="text-gray-600 text-lg leading-relaxed mb-8 flex flex-wrap justify-center gap-x-[0.25em]">
+          <span v-for="(wordChars, wIndex) in animatedAboutDescription" :key="wIndex" class="inline-block whitespace-nowrap">
+            <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                  class="reveal-char-subtitle" 
+                  :style="{ animationDelay: `${0.5 + charObj.delay}s` }">
+              {{ charObj.char }}
+            </span>
+          </span>
+        </p>
+        <p v-else class="text-gray-600 text-lg leading-relaxed mb-8 opacity-0">
           Yayasan Khozinatul Ulum An-Nawa adalah lembaga pendidikan Islam yang berfokus pada pembentukan karakter Islami dan penguasaan ilmu agama. Kami menyediakan berbagai program pendidikan mulai dari PAUD, SD/QTA, hingga pendidikan pesantren untuk putra dan putri.
         </p>
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">{{ santriTotal }}+</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ displayedStats.santri }}+</div>
             <div class="text-gray-600">Santri Aktif</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">{{ authorTotal }}+</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ displayedStats.author }}+</div>
             <div class="text-gray-600">Author</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">{{ tahunBerdiri }}+</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ displayedStats.tahun }}+</div>
             <div class="text-gray-600">Tahun Berdiri</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-bold text-brand-600 mb-2">{{ kajianTotal }}</div>
+            <div class="text-4xl font-bold text-brand-600 mb-2">{{ displayedStats.kajian }}</div>
             <div class="text-gray-600">Program Kajian</div>
           </div>
         </div>
@@ -243,7 +293,7 @@
         </div>
       </div>
     </section>
-    
+
     <!-- YouTube Section -->
     <section v-if="youtubeVideos && youtubeVideos.length > 0" class="bg-card py-20 transition-colors duration-300">
       <div class="container mx-auto px-6 max-w-6xl">
@@ -446,6 +496,164 @@ const testimonials = computed(() => {
     image: t.avatar_url
   }))
 })
+
+// Group text into words and chars for animation
+const animatedTitle = computed(() => {
+  if (!hero.value?.title) return []
+  let charCount = 0
+  return hero.value.title.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+})
+
+const animatedSubtitle = computed(() => {
+  if (!hero.value?.subtitle) return []
+  let charCount = 0
+  return hero.value.subtitle.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = 0.5 + charCount * 0.015
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+})
+
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id)
+  if (!element) return
+
+  const targetPosition = element.getBoundingClientRect().top + window.pageYOffset
+  const startPosition = window.pageYOffset
+  const distance = targetPosition - startPosition
+  const duration = 1500 // Slower duration in ms
+  let start: number | null = null
+
+  const animation = (currentTime: number) => {
+    if (start === null) start = currentTime
+    const timeElapsed = currentTime - start
+    const run = ease(timeElapsed, startPosition, distance, duration)
+    window.scrollTo(0, run)
+    if (timeElapsed < duration) requestAnimationFrame(animation)
+  }
+
+  const ease = (t: number, b: number, c: number, d: number) => {
+    t /= d / 2
+    if (t < 1) return (c / 2) * t * t + b
+    t--
+    return (-c / 2) * (t * (t - 2) - 1) + b
+  }
+
+  requestAnimationFrame(animation)
+}
+
+// Scroll animation for "Tentang Pondok"
+import { onMounted, onUnmounted } from 'vue'
+
+const tentangPondokSection = ref<HTMLElement | null>(null)
+const isTentangVisible = ref(false)
+const displayedStats = ref({
+  santri: 0,
+  author: 0,
+  tahun: 0,
+  kajian: 0
+})
+
+const animateCounter = (key: keyof typeof displayedStats.value, target: number) => {
+  const duration = 2000
+  const startTime = performance.now()
+  const startValue = 0
+
+  const update = (currentTime: number) => {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    
+    // Ease out expo for a "premium" feel
+    const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
+    
+    displayedStats.value[key] = Math.floor(startValue + (target - startValue) * easeProgress)
+
+    if (progress < 1) {
+      requestAnimationFrame(update)
+    }
+  }
+  requestAnimationFrame(update)
+}
+
+const aboutTitle = "Yayasan Khozinatul Ulum An-Nawa"
+const aboutDescription = "Yayasan Khozinatul Ulum An-Nawa adalah lembaga pendidikan Islam yang berfokus pada pembentukan karakter Islami dan penguasaan ilmu agama. Kami menyediakan berbagai program pendidikan mulai dari PAUD, SD/QTA, hingga pendidikan pesantren untuk putra dan putri."
+
+const splitText = (text: string) => {
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.02
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+}
+
+const animatedAboutTitle = computed(() => splitText(aboutTitle))
+const animatedAboutDescription = computed(() => splitText(aboutDescription))
+
+const heroSantriQty = ref(0)
+const heroLabelTop = "Santri Aktif"
+const heroLabelBottom = "Tahun Ajaran 2024/2025"
+
+const animatedHeroLabelTop = computed(() => splitText(heroLabelTop))
+const animatedHeroLabelBottom = computed(() => splitText(heroLabelBottom))
+
+let observer: IntersectionObserver | null = null
+
+onMounted(() => {
+  // Animate hero badge number
+  setTimeout(() => {
+    const duration = 2500
+    const startTime = performance.now()
+    const target = santriTotal.value
+
+    const updateHeroCounter = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
+      heroSantriQty.value = Math.floor(target * easeProgress)
+      if (progress < 1) requestAnimationFrame(updateHeroCounter)
+    }
+    requestAnimationFrame(updateHeroCounter)
+  }, 1000)
+
+  observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !isTentangVisible.value) {
+      isTentangVisible.value = true
+      
+      // Start counters
+      animateCounter('santri', santriTotal.value)
+      animateCounter('author', authorTotal.value)
+      animateCounter('tahun', tahunBerdiri.value)
+      animateCounter('kajian', kajianTotal.value)
+      
+      observer?.disconnect()
+    }
+  }, { threshold: 0.2 })
+
+  if (tentangPondokSection.value) {
+    observer.observe(tentangPondokSection.value)
+  }
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 </script>
 
 
@@ -461,5 +669,54 @@ const testimonials = computed(() => {
 
 .pause-scroll:hover {
   animation-play-state: paused;
+}
+
+/* Smooth Scroll */
+:root {
+  scroll-behavior: smooth;
+}
+
+/* Reveal Character Animation */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.reveal-char-subtitle {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealChar 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-image {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: heroImageReveal 1.2s cubic-bezier(0.2, 0, 0.2, 1) 0.2s forwards;
+}
+
+@keyframes heroImageReveal {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 </style>

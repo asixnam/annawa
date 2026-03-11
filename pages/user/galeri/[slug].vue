@@ -19,7 +19,7 @@
               v-if="item.image" 
               :src="item.image" 
               :alt="item.title" 
-              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 animate-reveal-image"
             />
             <div v-else class="w-full h-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 text-brand-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -28,25 +28,43 @@
             </div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
             <div class="absolute bottom-8 left-8 right-8 text-white">
-              <span class="inline-block px-3 py-1 bg-brand-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full mb-4">
+              <span class="inline-block px-3 py-1 bg-brand-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full mb-4 animate-fade-in-down">
                 {{ item.category }}
               </span>
-              <h1 class="text-3xl md:text-5xl font-black leading-tight font-heading">{{ item.title }}</h1>
+              <h1 class="text-3xl md:text-5xl font-black leading-tight font-heading flex flex-wrap gap-x-[0.3em]">
+                <span v-for="(wordChars, wIndex) in animatedTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+                  <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                        class="reveal-char" 
+                        :style="{ animationDelay: `${0.3 + charObj.delay}s` }">
+                    {{ charObj.char }}
+                  </span>
+                </span>
+              </h1>
             </div>
           </div>
 
           <!-- Text Header -->
           <div v-else class="p-12 md:p-16 border-b border-gray-50 dark:border-gray-800/20 bg-gradient-to-br from-card to-gray-50 dark:to-gray-900 transition-colors duration-300">
-            <span class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">
+            <span class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 animate-fade-in-down">
               {{ item.category }}
             </span>
-            <h1 class="text-3xl md:text-5xl font-black text-main leading-tight font-heading">{{ item.title }}</h1>
+            <h1 class="text-3xl md:text-5xl font-black text-main leading-tight font-heading flex flex-wrap gap-x-[0.3em]">
+              <span v-for="(wordChars, wIndex) in animatedTitle" :key="wordChars" class="inline-block whitespace-nowrap">
+                <span v-for="(charObj, cIndex) in wordChars" :key="charObj" 
+                      class="reveal-char" 
+                      :style="{ animationDelay: `${0.3 + charObj.delay}s` }">
+                  {{ charObj.char }}
+                </span>
+              </span>
+            </h1>
           </div>
 
           <!-- Content Body -->
           <div class="p-12 md:p-16">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              <div class="lg:col-span-2">
+            <div class="space-y-16">
+              <!-- Text Content -->
+              <div ref="sectionContent" class="transition-all duration-1000"
+                   :class="[isVisible.content ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
                 <div v-if="item.excerpt" class="prose prose-xl max-w-none">
                   <p class="text-gray-700 dark:text-gray-300 italic leading-relaxed text-lg lg:text-xl font-serif">
                     "{{ item.excerpt }}"
@@ -70,51 +88,60 @@
                 </div>
               </div>
 
-              <!-- Sidebar Info -->
-              <div class="space-y-8">
-                <div class="bg-light p-8 rounded-2xl border border-gray-100 dark:border-gray-800/20 transition-colors duration-300">
-                  <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-6">Informasi Karya</h4>
+              <!-- Horizontal Info -->
+              <div ref="sectionSidebar" class="space-y-12 transition-all duration-1000 delay-300"
+                   :class="[isVisible.sidebar ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
+                <div class="bg-light p-10 rounded-3xl border border-gray-100 dark:border-gray-800/20 transition-colors duration-300">
+                  <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-8 text-center">Informasi Karya</h4>
                   
-                  <div class="space-y-6">
-                    <div class="flex items-center gap-4">
-                      <div class="w-10 h-10 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20 font-bold text-xs">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Author -->
+                    <div class="flex items-center gap-5 transition-all duration-500 delay-500"
+                         :class="[isVisible.sidebar ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0']">
+                      <div class="w-12 h-12 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20 font-bold text-sm">
                         {{ item.author?.charAt(0) }}
                       </div>
                       <div>
                         <p class="text-[10px] font-black uppercase tracking-tighter text-gray-400">Arsitek Karya</p>
-                        <p class="text-xs font-bold text-main">{{ item.author }}</p>
+                        <p class="text-sm font-bold text-main">{{ item.author }}</p>
                       </div>
                     </div>
 
-                    <div class="flex items-center gap-4">
-                      <div class="w-10 h-10 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Date -->
+                    <div class="flex items-center gap-5 transition-all duration-500 delay-[600ms]"
+                         :class="[isVisible.sidebar ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0']">
+                      <div class="w-12 h-12 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
                       <div>
                         <p class="text-[10px] font-black uppercase tracking-tighter text-gray-400">Tanggal Rilis</p>
-                        <p class="text-xs font-bold text-main">{{ item.date }}</p>
+                        <p class="text-sm font-bold text-main">{{ item.date }}</p>
                       </div>
                     </div>
 
-                    <div class="flex items-center gap-4">
-                      <div class="w-10 h-10 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Category -->
+                    <div class="flex items-center gap-5 transition-all duration-500 delay-[700ms]"
+                         :class="[isVisible.sidebar ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0']">
+                      <div class="w-12 h-12 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 11h.01M7 15h.01M11 7h.01M11 11h.01M11 15h.01M15 7h.01M15 11h.01M15 15h.01" />
                         </svg>
                       </div>
                       <div>
                         <p class="text-[10px] font-black uppercase tracking-tighter text-gray-400">Kategori</p>
-                        <p class="text-xs font-bold text-main">{{ item.category }}</p>
+                        <p class="text-sm font-bold text-main">{{ item.category }}</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <NuxtLink to="/user/galeri" class="flex items-center justify-center w-full py-4 bg-gray-900 dark:bg-brand-600 text-white dark:text-black rounded-xl text-xs font-black uppercase tracking-widest hover:bg-brand-500 hover:text-black transition-all">
-                  Kembali ke Galeri
-                </NuxtLink>
+                <div class="flex justify-center">
+                  <NuxtLink to="/user/galeri" class="inline-flex items-center justify-center px-12 py-5 bg-gray-900 dark:bg-brand-600 text-white dark:text-black rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-brand-500 hover:text-black transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-gray-200/50 dark:shadow-brand-600/20">
+                    Kembali ke Galeri
+                  </NuxtLink>
+                </div>
               </div>
             </div>
           </div>
@@ -130,7 +157,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, reactive, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useContentStore } from '~/stores/content'
 
@@ -139,6 +166,49 @@ const slug = route.params.slug
 const store = useContentStore()
 
 const item = computed(() => store.gallery.find(g => g.slug === slug))
+
+// Animation Logic
+const isVisible = reactive({
+  content: false,
+  sidebar: false
+})
+
+const sectionContent = ref(null)
+const sectionSidebar = ref(null)
+let observer: IntersectionObserver | null = null
+
+const splitText = (text: string) => {
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++
+    return chars
+  })
+}
+
+const animatedTitle = computed(() => item.value ? splitText(item.value.title) : [])
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === sectionContent.value) isVisible.content = true
+        if (entry.target === sectionSidebar.value) isVisible.sidebar = true
+      }
+    })
+  }, { threshold: 0.1 })
+
+  if (sectionContent.value) observer.observe(sectionContent.value)
+  if (sectionSidebar.value) observer.observe(sectionSidebar.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 </script>
 
 <style scoped>
@@ -147,5 +217,44 @@ const item = computed(() => store.gallery.find(g => g.slug === slug))
 }
 .font-serif {
   font-family: 'Source Serif 4', serif;
+}
+
+/* Animations */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal-image {
+  animation: revealImage 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealImage {
+  from {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

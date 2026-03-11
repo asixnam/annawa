@@ -8,21 +8,34 @@
       
       <div class="container mx-auto px-6 relative z-10 text-center">
         <div class="max-w-3xl mx-auto">
-          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in-down">
             Kreativitas & Inspirasi
           </div>
-          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-            Goresan Pena <span class="text-brand-500">Santri</span>
+          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading flex flex-wrap justify-center gap-x-[0.25em]">
+            <span v-for="(wordChars, wIndex) in animatedHeroTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+              <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                    class="reveal-char" 
+                    :style="{ animationDelay: `${0.2 + charObj.delay}s` }">
+                {{ charObj.char }}
+              </span>
+            </span>
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Wadah kreativitas santri Pondok Pesantren Khozinatul Ulum An-Nawa dalam berbagai karya sastra, seni visual, dan pemikiran islami.
+          <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed flex flex-wrap justify-center gap-x-[0.2em]">
+            <span v-for="(wordChars, wIndex) in animatedHeroSubtitle" :key="wIndex" class="inline-block whitespace-nowrap">
+              <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                    class="reveal-char-subtitle" 
+                    :style="{ animationDelay: `${0.8 + charObj.delay}s` }">
+                {{ charObj.char }}
+              </span>
+            </span>
           </p>
         </div>
       </div>
     </section>
 
     <!-- Filter Categories -->
-    <section class="container mx-auto px-6 -mt-8 relative z-20">
+    <section ref="sectionFilter" class="container mx-auto px-6 -mt-8 relative z-20 transition-all duration-700"
+             :class="[isVisible.filter ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
       <div class="bg-card rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
         <!-- Mobile View: Dropdown -->
         <div class="block md:hidden relative">
@@ -42,14 +55,16 @@
         <!-- Desktop View: Buttons -->
         <div class="hidden md:flex flex-wrap justify-center gap-2">
           <button 
-            v-for="cat in categories" 
+            v-for="(cat, index) in categories" 
             :key="cat"
             @click="selectedCategory = cat"
+            class="px-5 py-2.5 rounded-xl font-bold transition-all text-sm uppercase tracking-wider transform"
+            :style="{ transitionDelay: `${index * 50}ms` }"
             :class="[
-              'px-5 py-2.5 rounded-xl font-bold transition-all text-sm uppercase tracking-wider',
               selectedCategory === cat 
-                ? 'bg-brand-500 text-black shadow-lg shadow-brand-500/20' 
-                : 'bg-light text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800'
+                ? 'bg-brand-500 text-black shadow-lg shadow-brand-500/20 scale-105' 
+                : 'bg-light text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800',
+              isVisible.filter ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             ]"
           >
             {{ cat }}
@@ -59,66 +74,69 @@
     </section>
 
     <!-- Gallery Grid -->
-    <section class="container mx-auto px-6 py-16">
+    <section ref="sectionGrid" class="container mx-auto px-6 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <NuxtLink 
-          v-for="item in filteredGallery" 
-          :key="item.id"
-          :to="`/user/galeri/${item.id}`"
-          class="group bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
-        >
-          <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
-          <div v-if="item.category === 'Kesenian' || item.category === 'Juara'" class="relative h-64 overflow-hidden">
-             <div v-if="!item.image" class="w-full h-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center">
-               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-               </svg>
-             </div>
-             <img 
-               v-else 
-               :src="item.image" 
-               :alt="item.title" 
-               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0"
-             />
-             <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
-          </div>
-          
-          <div v-else class="h-12 bg-brand-50/50 border-b border-gray-50 dark:border-gray-800/20 flex items-center px-6">
-            <div class="w-2 h-2 rounded-full bg-brand-500 mr-2"></div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-brand-600">{{ item.category }}</span>
-          </div>
-
-          <!-- Content -->
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-main mb-3 group-hover:text-brand-600 transition-colors leading-tight">
-              {{ item.title }}
-            </h3>
-            
-            <p v-if="item.excerpt" class="text-gray-600 text-sm leading-relaxed mb-6 flex-1 italic">
-              "{{ item.excerpt }}"
-            </p>
-            <p v-else class="text-gray-500 text-sm mb-6 flex-1">
-              Karya seni visual oleh santri berprestasi Annawa.
-            </p>
-
-            <div class="flex items-center justify-between pt-6 border-t border-gray-50 dark:border-gray-800/20">
-              <div class="flex items-center">
-                <div class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-[10px] font-bold text-gray-500 border border-gray-200 dark:border-gray-800/40">
-                  {{ item.author?.charAt(0) }}
-                </div>
-                <div class="ml-3">
-                  <p class="text-[11px] font-bold text-main uppercase tracking-tighter">{{ item.author }}</p>
-                  <p class="text-[10px] text-gray-400">{{ item.date }}</p>
-                </div>
-              </div>
-              <button class="text-brand-600 hover:text-main transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
+        <div v-for="(item, index) in filteredGallery" :key="item.id"
+             class="transition-all duration-700"
+             :style="{ transitionDelay: `${(index % 6) * 100}ms` }"
+             :class="[isVisible.grid ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0']">
+          <NuxtLink 
+            :to="`/user/galeri/${item.id}`"
+            class="group bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800/40 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2"
+          >
+            <!-- Visual Context (Image for Karikatur, Pattern/Icon for Text) -->
+            <div v-if="item.category === 'Kesenian' || item.category === 'Juara'" class="relative h-64 overflow-hidden">
+               <div v-if="!item.image" class="w-full h-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                 </svg>
+               </div>
+               <img 
+                 v-else 
+                 :src="item.image" 
+                 :alt="item.title" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0"
+               />
+               <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
             </div>
-          </div>
-        </NuxtLink>
+            
+            <div v-else class="h-12 bg-brand-50/50 border-b border-gray-50 dark:border-gray-800/20 flex items-center px-6">
+              <div class="w-2 h-2 rounded-full bg-brand-500 mr-2"></div>
+              <span class="text-[10px] font-black uppercase tracking-widest text-brand-600">{{ item.category }}</span>
+            </div>
+
+            <!-- Content -->
+            <div class="p-8 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold text-main mb-3 group-hover:text-brand-600 transition-colors leading-tight">
+                {{ item.title }}
+              </h3>
+              
+              <p v-if="item.excerpt" class="text-gray-600 text-sm leading-relaxed mb-6 flex-1 italic">
+                "{{ item.excerpt }}"
+              </p>
+              <p v-else class="text-gray-500 text-sm mb-6 flex-1">
+                Karya seni visual oleh santri berprestasi Annawa.
+              </p>
+
+              <div class="flex items-center justify-between pt-6 border-t border-gray-50 dark:border-gray-800/20">
+                <div class="flex items-center">
+                  <div class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-[10px] font-bold text-gray-500 border border-gray-200 dark:border-gray-800/40">
+                    {{ item.author?.charAt(0) }}
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-[11px] font-bold text-main uppercase tracking-tighter">{{ item.author }}</p>
+                    <p class="text-[10px] text-gray-400">{{ item.date }}</p>
+                  </div>
+                </div>
+                <button class="text-brand-600 hover:text-main transition-colors transform translate-x-0 group-hover:translate-x-1 transition-transform">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </NuxtLink>
+        </div>
       </div>
 
       <!-- Empty State -->
@@ -134,9 +152,10 @@
     </section>
 
     <!-- Author Registration CTA -->
-    <section class="bg-light py-16 px-6 transition-colors duration-300">
+    <section ref="sectionCTA" class="bg-light py-16 px-6 transition-colors duration-300">
       <div class="max-w-6xl mx-auto">
-        <div class="bg-card rounded-[2rem] border border-gray-100 dark:border-gray-800/40 shadow-2xl overflow-hidden relative p-8 md:p-14">
+        <div class="bg-card rounded-[2rem] border border-gray-100 dark:border-gray-800/40 shadow-2xl overflow-hidden relative p-8 md:p-14 transition-all duration-1000"
+             :class="[isVisible.cta ? 'scale-100 opacity-100' : 'scale-95 opacity-0']">
           <!-- Decoration for CTA -->
           <div class="absolute top-0 right-0 w-80 h-full opacity-10 pointer-events-none">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
@@ -145,14 +164,17 @@
           </div>
 
           <div class="relative z-10 text-center">
-            <h2 class="text-3xl md:text-5xl font-black text-main mb-6 font-heading leading-tight">
+            <h2 class="text-3xl md:text-5xl font-black text-main mb-6 font-heading leading-tight transition-all duration-700 delay-300"
+                :class="[isVisible.cta ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0']">
               Punya Bakat <span class="text-brand-600">Menulis</span> atau <span class="text-brand-600">Seni?</span>
             </h2>
-            <p class="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+            <p class="text-gray-600 dark:text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed transition-all duration-700 delay-500"
+               :class="[isVisible.cta ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0']">
               Mari bergabung menjadi kontributor galeri Annawa. Bagikan karyamu, inspirasi temanmu, dan jadilah bagian dari sejarah kreatif pesantren.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-5 justify-center">
+            <div class="flex flex-col sm:flex-row gap-5 justify-center transition-all duration-700 delay-700"
+                 :class="[isVisible.cta ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0']">
               <NuxtLink 
                 to="/login" 
                 class="px-12 py-5 bg-brand-500 text-black rounded-full font-black uppercase tracking-widest text-xs hover:bg-brand-600 transition-all text-center shadow-xl shadow-brand-500/20 transform hover:-translate-y-1"
@@ -168,13 +190,66 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, reactive, onMounted, onUnmounted } from 'vue'
 import { useFetch } from '#app'
+
+// Animation States
+const isVisible = reactive({
+  filter: false,
+  grid: false,
+  cta: false
+})
+
+const sectionFilter = ref(null)
+const sectionGrid = ref(null)
+const sectionCTA = ref(null)
+
+let observer: IntersectionObserver | null = null
+
+// Helper for split text
+const splitText = (text: string) => {
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+}
+
+const heroTitle = "Goresan Pena Santri"
+const heroSubtitle = "Wadah kreativitas santri Pondok Pesantren Khozinatul Ulum An-Nawa dalam berbagai karya sastra, seni visual, dan pemikiran islami."
+
+const animatedHeroTitle = computed(() => splitText(heroTitle))
+const animatedHeroSubtitle = computed(() => splitText(heroSubtitle))
 
 const categories = ref(['Semua', 'Juara', 'Literasi', 'Kesenian', 'Khitobah'])
 const selectedCategory = ref('Semua')
 
 const { data: gallery } = await useFetch('/api/gallery?public=true')
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === sectionFilter.value) isVisible.filter = true
+        if (entry.target === sectionGrid.value) isVisible.grid = true
+        if (entry.target === sectionCTA.value) isVisible.cta = true
+      }
+    })
+  }, { threshold: 0.1 })
+
+  if (sectionFilter.value) observer.observe(sectionFilter.value)
+  if (sectionGrid.value) observer.observe(sectionGrid.value)
+  if (sectionCTA.value) observer.observe(sectionCTA.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 
 const filteredGallery = computed(() => {
   if (!gallery.value) return []
@@ -205,5 +280,36 @@ const filteredGallery = computed(() => {
 <style scoped>
 .font-heading {
   font-family: 'Montserrat', sans-serif;
+}
+
+/* Animations */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.reveal-char-subtitle {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealChar 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

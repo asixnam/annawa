@@ -8,22 +8,35 @@
       
       <div class="container mx-auto px-6 relative z-10">
         <div class="max-w-3xl mx-auto">
-          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+          <div class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in-down">
             Jadwal & Materi
           </div>
-          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading">
-            Kajian Rutin & <span class="text-brand-500">Ilmiah</span>
+          <h1 class="text-4xl md:text-6xl font-black text-main mb-6 leading-tight font-heading flex flex-wrap justify-center gap-x-[0.25em]">
+            <span v-for="(wordChars, wIndex) in animatedHeroTitle" :key="wIndex" class="inline-block whitespace-nowrap">
+              <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                    class="reveal-char" 
+                    :style="{ animationDelay: `${0.2 + charObj.delay}s` }">
+                {{ charObj.char }}
+              </span>
+            </span>
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Bergabunglah dengan rangkaian kajian keislaman untuk memperdalam pemahaman agama dan membentuk akhlak mulia.
+          <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed flex flex-wrap justify-center gap-x-[0.2em]">
+            <span v-for="(wordChars, wIndex) in animatedHeroSubtitle" :key="wIndex" class="inline-block whitespace-nowrap">
+              <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
+                    class="reveal-char-subtitle" 
+                    :style="{ animationDelay: `${0.8 + charObj.delay}s` }">
+                {{ charObj.char }}
+              </span>
+            </span>
           </p>
         </div>
       </div>
     </section>
 
     <!-- Filter Section -->
-    <section class="container mx-auto px-6 -mt-8 relative z-20">
-      <div class="bg-card rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-colors duration-300">
+    <section ref="sectionFilter" class="container mx-auto px-6 -mt-8 relative z-20">
+      <div class="bg-card rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800/40 p-4 max-w-4xl mx-auto transition-all duration-700"
+           :class="[isVisible.filter ? 'animate-fade-in-up' : 'opacity-0 translate-y-4']">
         <!-- Mobile View: Dropdown -->
         <div class="block md:hidden relative">
           <select 
@@ -59,19 +72,22 @@
     </section>
 
     <!-- Kajian List -->
-    <section class="container mx-auto px-6 py-16">
+    <section ref="sectionList" class="container mx-auto px-6 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <KajianCard
-          v-for="kajian in filteredKajian"
-          :key="kajian.id"
-          :title="kajian.title"
-          :ustadz="kajian.ustadz"
-          :time="kajian.time"
-          :location="kajian.location"
-          :description="kajian.description"
-          :category="kajian.category"
-          :slug="kajian.slug"
-        />
+        <div v-for="(kajian, index) in filteredKajian" :key="kajian.id"
+             class="transition-all duration-700"
+             :style="{ transitionDelay: `${index * 100}ms` }"
+             :class="[isVisible.list ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0']">
+          <KajianCard
+            :title="kajian.title"
+            :ustadz="kajian.ustadz"
+            :time="kajian.time"
+            :location="kajian.location"
+            :description="kajian.description"
+            :category="kajian.category"
+            :slug="kajian.slug"
+          />
+        </div>
       </div>
 
       <!-- Empty State -->
@@ -89,14 +105,63 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, reactive, onMounted, onUnmounted } from 'vue'
 import { useFetch } from '#app'
 import KajianCard from '~/components/KajianCard.vue'
 
 const categories = ref(['Semua', 'Sorogan', 'Tahfidzul Quran', 'Bahtsul Masail', 'Bandongan'])
 const selectedCategory = ref('Semua')
 
+// Animation States
+const isVisible = reactive({
+  filter: false,
+  list: false
+})
+
+const sectionFilter = ref(null)
+const sectionList = ref(null)
+
+let observer: IntersectionObserver | null = null
+
+// Helper for split text
+const splitText = (text: string) => {
+  let charCount = 0
+  return text.split(' ').map(word => {
+    const chars = word.split('').map(char => {
+      const delay = charCount * 0.03
+      charCount++
+      return { char, delay }
+    })
+    charCount++ // count space
+    return chars
+  })
+}
+
+const heroTitle = "Kajian Rutin & Ilmiah"
+const heroSubtitle = "Bergabunglah dengan rangkaian kajian keislaman untuk memperdalam pemahaman agama dan membentuk akhlak mulia."
+
+const animatedHeroTitle = computed(() => splitText(heroTitle))
+const animatedHeroSubtitle = computed(() => splitText(heroSubtitle))
+
 const { data: kajian } = await useFetch('/api/kajian')
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === sectionFilter.value) isVisible.filter = true
+        if (entry.target === sectionList.value) isVisible.list = true
+      }
+    })
+  }, { threshold: 0.1 })
+
+  if (sectionFilter.value) observer.observe(sectionFilter.value)
+  if (sectionList.value) observer.observe(sectionList.value)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 
 const filteredKajian = computed(() => {
   if (!kajian.value) return []
@@ -122,5 +187,45 @@ const filteredKajian = computed(() => {
 <style scoped>
 .font-heading {
   font-family: 'Montserrat', sans-serif;
+}
+
+/* Animations */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealChar 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.reveal-char-subtitle {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: revealChar 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes revealChar {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
