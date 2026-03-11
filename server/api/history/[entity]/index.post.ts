@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { rows: result } = await pool.query(
-            `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders.join(', ')})`,
+            `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders.join(', ')}) RETURNING id`,
             values
         )
         return { id: result[0]?.id, ...body }
