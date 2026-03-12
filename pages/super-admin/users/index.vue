@@ -145,6 +145,51 @@
         </div>
       </div>
     </section>
+
+    <!-- Section: Pengguna Umum (User) -->
+    <section>
+      <div class="flex items-center gap-2 mb-4 mt-8">
+        <div class="h-8 w-1.5 bg-green-600 rounded-full"></div>
+        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 tracking-tight">Calon Anggota</h2>
+        <span class="px-2 py-0.5 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold rounded-md border border-green-100 dark:border-green-800/50">
+          {{ groupedUsers.user.length }}
+        </span>
+      </div>
+      <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+            <thead class="bg-gray-50/50 dark:bg-gray-800/50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Email</th>
+                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-100 dark:divide-gray-800">
+              <tr v-for="u in groupedUsers.user" :key="u.id" class="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="h-10 w-10 rounded-xl bg-green-100 dark:bg-green-900/40 overflow-hidden flex items-center justify-center text-green-600 dark:text-green-400 font-bold mr-3 uppercase text-xs ring-2 ring-gray-50 dark:ring-gray-800">
+                      <img v-if="u.image_url" :src="u.image_url" class="h-full w-full object-cover">
+                      <span v-else>{{ u.name.charAt(0) }}</span>
+                    </div>
+                    <div class="text-sm font-bold text-gray-900 dark:text-gray-100">{{ u.name }}</div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ u.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <NuxtLink :to="`/super-admin/users/${u.id}`" class="text-brand-600 hover:text-brand-900 dark:text-brand-400 dark:hover:text-brand-300 font-bold mr-4">Edit</NuxtLink>
+                  <button @click="deleteUser(u.id)" class="text-red-500 hover:text-red-700 font-bold">Hapus</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div v-if="groupedUsers.user.length === 0" class="p-8 text-center">
+            <p class="text-gray-400 text-sm italic">Belum ada data pengguna umum.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -163,7 +208,8 @@ const groupedUsers = computed(() => {
       'PAUD': [] as any[],
       'SDQTA': [] as any[]
     },
-    author: [] as any[]
+    author: [] as any[],
+    user: [] as any[]
   }
 
   if (!users.value) return groups
@@ -173,6 +219,8 @@ const groupedUsers = computed(() => {
       groups.super.push(user)
     } else if (user.role === 'author') {
       groups.author.push(user)
+    } else if (user.role === 'user') {
+      groups.user.push(user)
     } else if (user.role.startsWith('admin:')) {
       const parts = user.role.split(':')
       if (parts.length > 1) {
