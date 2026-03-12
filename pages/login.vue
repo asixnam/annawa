@@ -10,7 +10,7 @@
           <div class="text-center">
             <!-- Logo / Branding Section -->
             <div class="mb-4 flex flex-row justify-center items-center gap-3">
-               <img src="/login.png" alt="Annawa Logo" class="h-8 sm:h-10 w-auto drop-shadow-2xl shrink-0">
+               <img src="/Login.png" alt="Annawa Logo" class="h-8 sm:h-10 w-auto drop-shadow-2xl shrink-0">
             </div>
             
             <h2 class="text-2xl font-black text-white tracking-tight mb-1 drop-shadow-lg">
