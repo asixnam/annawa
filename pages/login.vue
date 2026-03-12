@@ -1,39 +1,38 @@
   <template>
-    <div class="min-h-screen relative flex bg-cover bg-center font-sans overflow-hidden" style="background-image: url('/images/hero-santri.png');">
+    <div class="min-h-screen relative flex bg-cover bg-center font-sans overflow-y-auto overflow-x-hidden" style="background-image: url('/images/hero-santri.png');">
     <!-- Full Page Overlay -->
     <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
 
     <div class="relative z-10 flex w-full">
       <!-- Left Side: Login Form -->
-      <div class="flex-1 flex items-center justify-center p-4 sm:p-8 lg:p-12 max-w-xl mx-auto w-full">
-        <div class="w-full space-y-8 bg-white/10 backdrop-blur-xl border border-white/20 p-8 sm:p-10 rounded-3xl shadow-2xl">
+      <div class="flex-1 flex items-start justify-center p-4 sm:p-8 lg:p-12 lg:pt-24 max-w-xl mx-auto w-full pb-12">
+        <div class="w-full h-fit space-y-6 bg-white/10 backdrop-blur-xl border border-white/20 p-6 sm:p-8 rounded-3xl shadow-2xl">
           <div class="text-center">
             <!-- Logo / Branding Section -->
-            <div class="mb-8 flex flex-col items-center">
-               <img src="/annawa.png" alt="Annawa Logo" class="h-20 w-auto mb-6 drop-shadow-2xl">
-               <h1 class="text-lg font-black text-brand-400 tracking-widest uppercase drop-shadow-md">Pondok Pesantren Khozinatul Ulum An-Nawa</h1>
+            <div class="mb-4 flex flex-row justify-center items-center gap-3">
+               <img src="/login.png" alt="Annawa Logo" class="h-8 sm:h-10 w-auto drop-shadow-2xl shrink-0">
             </div>
             
-            <h2 class="text-3xl font-black text-white tracking-tight mb-2 drop-shadow-lg">
+            <h2 class="text-2xl font-black text-white tracking-tight mb-1 drop-shadow-lg">
               Selamat Datang
             </h2>
-            <p class="text-base text-gray-200 font-medium">
-              Silahkan masukan email dan password anda untuk mulai menggunakan aplikasi
+            <p class="text-sm text-gray-200 font-medium">
+              Silahkan masukan email dan password anda
             </p>
           </div>
           
-          <form class="mt-8 space-y-6" @submit.prevent="submit">
-            <div class="space-y-5">
+          <form class="mt-6 space-y-4" @submit.prevent="submit">
+            <div class="space-y-3">
               <!-- Error Alert -->
-              <div v-if="errorMsg" class="bg-red-500/20 backdrop-blur-md border border-red-500/30 text-red-100 px-4 py-3 rounded-xl text-sm flex items-center gap-2 animate-pulse">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <div v-if="errorMsg" class="bg-red-500/20 backdrop-blur-md border border-red-500/30 text-red-100 px-3 py-2 rounded-xl text-xs flex items-center gap-2 animate-pulse">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                 </svg>
                 <span class="font-medium">{{ errorMsg }}</span>
               </div>
 
               <div>
-                <label for="email-address" class="block text-xs font-bold text-white mb-2 ml-1 uppercase tracking-widest">Email</label>
+                <label for="email-address" class="block text-[10px] font-bold text-white mb-1.5 ml-1 uppercase tracking-widest">Email</label>
                 <input 
                   id="email-address" 
                   name="email" 
@@ -41,13 +40,13 @@
                   autocomplete="email" 
                   required 
                   v-model="email"
-                  class="appearance-none block w-full px-4 py-3.5 bg-white/5 border border-white/20 placeholder-gray-400 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white/10 transition-all text-sm" 
+                  class="appearance-none block w-full px-3 py-2.5 bg-white/5 border border-white/20 placeholder-gray-400 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white/10 transition-all text-sm" 
                   placeholder="user@gmail.com" 
                 />
               </div>
               
               <div>
-                <label for="password" class="block text-xs font-bold text-white mb-2 ml-1 uppercase tracking-widest">Password</label>
+                <label for="password" class="block text-[10px] font-bold text-white mb-1.5 ml-1 uppercase tracking-widest">Password</label>
                 <div class="relative">
                   <input 
                     id="password" 
@@ -56,7 +55,7 @@
                     autocomplete="current-password" 
                     required 
                     v-model="password"
-                    class="appearance-none block w-full px-4 py-3.5 bg-white/5 border border-white/20 placeholder-gray-400 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white/10 transition-all pr-12 text-sm" 
+                    class="appearance-none block w-full px-3 py-2.5 bg-white/5 border border-white/20 placeholder-gray-400 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white/10 transition-all pr-10 text-sm" 
                     placeholder="Masukan password anda" 
                   />
                   <button 
@@ -64,11 +63,11 @@
                     @click="showPassword = !showPassword"
                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-300 hover:text-white focus:outline-none cursor-pointer transition-colors"
                   >
-                    <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                       <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                     </svg>
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" />
                       <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.742L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.064 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
                     </svg>
@@ -77,37 +76,37 @@
               </div>
             </div>
 
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between mt-2">
               <div class="flex items-center">
                 <input 
                   id="remember-me" 
                   name="remember-me" 
                   type="checkbox" 
-                  class="h-4 w-4 text-brand-500 focus:ring-brand-400 border-white/20 bg-white/10 rounded cursor-pointer" 
+                  class="h-3.5 w-3.5 text-brand-500 focus:ring-brand-400 border-white/20 bg-white/10 rounded cursor-pointer" 
                   v-model="rememberMe"
                 />
-                <label for="remember-me" class="ml-2 block text-sm text-gray-200 cursor-pointer select-none font-medium">
+                <label for="remember-me" class="ml-2 block text-xs text-gray-200 cursor-pointer select-none font-medium">
                   Ingat Saya
                 </label>
               </div>
 
-              <div class="text-sm">
+              <div class="text-xs">
                 <NuxtLink to="/forgot-password" class="font-bold text-brand-400 hover:text-brand-300 transition-colors">
                   Lupa Password?
                 </NuxtLink>
               </div>
             </div>
 
-            <div>
+            <div class="pt-2">
               <button 
                 type="submit" 
                 :disabled="isLoading"
-                class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black rounded-xl text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all shadow-2xl disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-widest transform hover:scale-[1.02] active:scale-[0.98]"
+                class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-black rounded-xl text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all shadow-2xl disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-widest transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                   <svg 
                     v-if="!isLoading"
-                    class="h-5 w-5 text-brand-300 group-hover:text-white transition-colors" 
+                    class="h-4 w-4 text-brand-300 group-hover:text-white transition-colors" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 20 20" 
                     fill="currentColor" 
@@ -117,7 +116,7 @@
                   </svg>
                   <svg 
                     v-else
-                    class="animate-spin h-5 w-5 text-white" 
+                    class="animate-spin h-4 w-4 text-white" 
                     xmlns="http://www.w3.org/2000/svg" 
                     fill="none" 
                     viewBox="0 0 24 24"
@@ -126,7 +125,7 @@
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                 </span>
-                {{ isLoading ? 'Memproses...' : 'Masuk Sekarang' }}
+                {{ isLoading ? 'Memproses...' : 'Masuk' }}
               </button>
             </div>
           </form> 
@@ -147,7 +146,7 @@
           </div>
 
           <!-- Register Link -->
-          <p class="text-center text-sm text-gray-300 font-medium">
+          <p class="text-center text-xs text-gray-300 font-medium mt-4">
             Belum punya akun? 
             <a href="/register" class="font-black text-brand-400 hover:text-brand-300 transition-colors">
               Daftar Sekarang
@@ -157,8 +156,8 @@
       </div>
 
       <!-- Right Side: Hero Content -->
-      <div class="hidden lg:flex relative w-0 flex-1 flex-col justify-end p-16 text-white max-w-2xl mx-auto">
-        <div class="relative z-20">
+      <div class="hidden lg:block relative w-0 flex-1 p-16 lg:pt-24 text-white max-w-2xl mx-auto h-full pb-12">
+        <div class="relative z-20 sticky top-24">
           <div class="mb-6">
              <div class="inline-block px-4 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-black text-brand-50 mb-4 uppercase tracking-widest shadow-xl">
                 Sistem Informasi Akademik
