@@ -12,7 +12,14 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const { rows: rows } = await pool.query('SELECT * FROM news WHERE slug = $1', [slug])
+        const { rows } = await pool.query(`
+            SELECT 
+                n.*, 
+                u.name as author_name
+            FROM news n 
+            LEFT JOIN users u ON n.author_id = u.id 
+            WHERE n.slug = $1
+        `, [slug])
         if (rows.length === 0) {
             throw createError({
                 statusCode: 404,

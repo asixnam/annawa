@@ -66,14 +66,14 @@
               <div ref="sectionContent" class="transition-all duration-1000"
                    :class="[isVisible.content ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
                 <div v-if="item.excerpt" class="prose prose-xl max-w-none">
-                  <p class="text-gray-700 dark:text-gray-300 italic leading-relaxed text-lg lg:text-xl font-serif">
-                    "{{ item.excerpt }}"
+                  <p class="text-gray-700 dark:text-gray-300 italic leading-relaxed text-lg lg:text-xl font-serif whitespace-pre-line text-justify">
+                    {{ item.excerpt }}
                   </p>
                   <div class="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800/20">
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed font-serif">
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed font-serif text-justify">
                       Karya ini merupakan salah satu bentuk ekspresi santri dalam menuangkan inspirasi dan pemikiran islami. Setiap bait atau guratan memiliki makna yang dalam tentang perjuangan menuntut ilmu di jalan Allah SWT.
                     </p>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400 leading-relaxed font-serif">
+                    <p class="mt-4 text-gray-600 dark:text-gray-400 leading-relaxed font-serif text-justify">
                       Melalui media ini, diharapkan nilai-nilai luhur kepesantrenan dapat tersampaikan dengan cara yang lebih kreatif dan menyentuh hati para pembaca maupun penikmat seni.
                     </p>
                   </div>

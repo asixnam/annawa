@@ -50,9 +50,16 @@
         <!-- Content -->
         <div ref="sectionContent" class="prose prose-lg max-w-none text-gray-600 dark:text-gray-400 leading-relaxed font-serif bg-white dark:bg-gray-900 p-10 md:p-16 rounded-3xl border border-gray-100 dark:border-gray-800/40 shadow-sm transition-all duration-1000"
              :class="[isVisible.content ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0']">
-          <p class="mb-6 whitespace-pre-wrap">{{ berita.content }}</p>
-          <p class="text-gray-600 dark:text-gray-400">Penulis: Tim Redaksi An-Nawa</p>
-      </div>
+          <p class="mb-12 whitespace-pre-wrap text-justify">{{ berita.content }}</p>
+          
+          <!-- Author Section -->
+          <div class="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800/20 flex items-center gap-4">
+            <div>
+              <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-0.5">Penulis Berita</p>
+              <p class="text-sm font-black text-main uppercase">{{ berita.author_name }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -134,6 +141,7 @@ const splitText = (text: string) => {
 const { data: berita } = await useFetch(`/api/news/slug/${slug}`, {
   transform: (data: any) => ({
     ...data,
+    author_name: data.author_name || 'Administrator',
     image: data.image_url,
     date: data.created_at
   })

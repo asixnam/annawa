@@ -50,8 +50,8 @@
               <div ref="sectionContent" class="transition-all duration-1000"
                    :class="[isVisible.content ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
                 <div v-if="item.excerpt" class="prose prose-xl max-w-none">
-                  <p class="text-gray-700 dark:text-gray-300 italic leading-relaxed text-lg lg:text-xl font-serif">
-                    "{{ item.excerpt }}"
+                  <p class="text-gray-700 dark:text-gray-300 italic leading-relaxed text-lg lg:text-xl font-serif whitespace-pre-line text-justify">
+                    {{ item.excerpt }}
                   </p>
                 </div>
                 <div v-else class="text-gray-600 dark:text-gray-400 space-y-6">

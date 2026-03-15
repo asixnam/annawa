@@ -80,6 +80,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '~/stores/auth'
 
 const props = defineProps<{
   id?: string
@@ -150,12 +151,14 @@ onMounted(async () => {
 
 async function saveContent() {
   isLoading.value = true
+  const auth = useAuthStore()
   try {
     const payload = {
       title: form.value.title,
       content: form.value.content,
       image_url: form.value.image,
       type: form.value.type,
+      author_id: auth.user?.id, // Get currently logged in user ID
       created_at: form.value.date ? new Date(form.value.date).toISOString().slice(0, 19).replace('T', ' ') : undefined,
       is_published: true
     }
