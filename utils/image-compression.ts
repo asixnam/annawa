@@ -35,13 +35,14 @@ export const compressImage = async (file: File, options = { maxWidth: 1024, maxH
 
                 ctx.drawImage(img, 0, 0, width, height)
 
-                // The output format is WebP if supported or JPEG otherwise
-                const mimeType = 'image/jpeg'
+                // Maintain transparency for PNGs, otherwise use WebP for better compression
+                const mimeType = file.type === 'image/png' ? 'image/png' : 'image/webp'
+                const quality = mimeType === 'image/png' ? undefined : options.quality
 
                 canvas.toBlob(
                     (blob) => {
                         if (blob) {
-                            const newFile = new File([blob], file.name, {
+                            const newFile = new File([blob], file.name.replace(/\.[^/.]+$/, "") + (mimeType === 'image/png' ? '.png' : '.webp'), {
                                 type: mimeType,
                                 lastModified: Date.now(),
                             })
@@ -56,7 +57,7 @@ export const compressImage = async (file: File, options = { maxWidth: 1024, maxH
                         }
                     },
                     mimeType,
-                    options.quality
+                    quality
                 )
             }
             img.onerror = (err) => reject(err)

@@ -201,18 +201,22 @@
           </h2>
           <p class="text-gray-500 text-sm max-w-xl mx-auto">Jalinan kerjasama dengan berbagai institusi untuk meningkatkan kualitas pendidikan dan pengabdian.</p>
         </div>
-        <div class="flex flex-wrap justify-center gap-8 md:gap-16 lg:gap-20">
-          <div v-for="(mitra, index) in partners" :key="mitra.id" 
-               class="flex flex-col items-center group transition-all duration-700"
-               :style="{ transitionDelay: `${index * 100}ms` }"
-               :class="[isVisible.mitra ? 'scale-100 opacity-100' : 'scale-50 opacity-0']">
-            <div class="w-24 h-24 md:w-32 md:h-32 mb-4 flex items-center justify-center transition-all duration-300 transform group-hover:scale-110">
-              <img :src="mitra.logo" :alt="mitra.name" class="max-w-full max-h-full object-contain dark:brightness-0 dark:invert" />
+        <!-- Scrolling Container -->
+        <div class="relative flex overflow-hidden group py-4">
+          <!-- Gradient Overlays for smooth edges -->
+          <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-bg-card to-transparent z-10 pointer-events-none"></div>
+          <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-bg-card to-transparent z-10 pointer-events-none"></div>
+
+          <div class="flex animate-scroll hover:pause-scroll gap-12 md:gap-20 items-center whitespace-nowrap">
+            <!-- Double items to ensure seamless loop -->
+            <div v-for="(mitra, index) in [...partners, ...partners]" :key="mitra.id + '-' + index" 
+                 class="flex flex-col items-center group shrink-0">
+              <div class="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center transition-all duration-300 transform group-hover:scale-110">
+                <img :src="mitra.logo" :alt="mitra.name" class="max-w-full max-h-full object-contain" />
+              </div>
             </div>
-            <h3 class="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-brand-600 transition-colors text-center">
-              {{ mitra.name }}
-            </h3>
           </div>
+
           <!-- Empty state -->
           <div v-if="partners.length === 0" class="w-full text-center py-16">
             <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-light border border-gray-100 dark:border-gray-800/40 mb-6 shadow-sm">
@@ -400,6 +404,19 @@ const partners = computed(() => pondokUnit.value?.partners || [])
 
 .animate-image-reveal {
   animation: imageReveal 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 2.5rem)); } /* 2.5rem accounts for half of gap-20 */
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+.pause-scroll:hover {
+  animation-play-state: paused;
 }
 
 @keyframes fadeInUp {

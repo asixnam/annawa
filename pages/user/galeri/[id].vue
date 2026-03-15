@@ -13,8 +13,8 @@
 
         <!-- Gallery Details Card -->
         <div class="bg-card rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-800/40 shadow-xl transition-colors duration-300">
-          <!-- Visual Header -->
-          <div v-if="item.category === 'Kesenian' || item.category === 'Juara'" class="relative h-[400px] md:h-[600px] overflow-hidden group">
+          <!-- Visual Header (Always displayed for all categories) -->
+          <div class="relative h-[400px] md:h-[600px] overflow-hidden group border-b border-gray-100 dark:border-gray-800/40">
             <img 
               v-if="item.image" 
               :src="item.image" 
@@ -23,11 +23,11 @@
             />
             <div v-else class="w-full h-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 text-brand-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-            <div class="absolute bottom-8 left-8 right-8 text-white">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-12 left-8 right-8 md:left-16 md:right-16 text-white">
               <span class="inline-block px-3 py-1 bg-brand-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full mb-4 animate-fade-in-down">
                 {{ item.category }}
               </span>
@@ -41,22 +41,6 @@
                 </span>
               </h1>
             </div>
-          </div>
-
-          <!-- Text Header -->
-          <div v-else class="p-12 md:p-16 border-b border-gray-50 dark:border-gray-800/20 bg-gradient-to-br from-card to-gray-50 dark:to-gray-900 transition-colors duration-300">
-            <span class="inline-block px-4 py-1.5 bg-brand-100 text-brand-700 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 animate-fade-in-down">
-              {{ item.category }}
-            </span>
-            <h1 class="text-3xl md:text-5xl font-black text-main leading-tight font-heading flex flex-wrap gap-x-[0.3em]">
-              <span v-for="(wordChars, wIndex) in animatedTitle" :key="wIndex" class="inline-block whitespace-nowrap">
-                <span v-for="(charObj, cIndex) in wordChars" :key="cIndex" 
-                      class="reveal-char" 
-                      :style="{ animationDelay: `${0.3 + charObj.delay}s` }">
-                  {{ charObj.char }}
-                </span>
-              </span>
-            </h1>
           </div>
 
           <!-- Content Body -->
@@ -80,57 +64,29 @@
                 </div>
               </div>
 
-              <!-- Horizontal Info -->
-              <div ref="sectionSidebar" class="space-y-12 transition-all duration-1000 delay-300"
+              <!-- Minimalist Metadata Footer -->
+              <div ref="sectionSidebar" class="pt-12 border-t border-gray-100 dark:border-gray-800/20 transition-all duration-1000 delay-300"
                    :class="[isVisible.sidebar ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
-                <div class="bg-light p-10 rounded-3xl border border-gray-100 dark:border-gray-800/20 transition-colors duration-300">
-                  <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-8 text-center">Informasi Karya</h4>
-                  
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Author -->
-                    <div class="flex items-center gap-5 transition-all duration-500 delay-500"
-                         :class="[isVisible.sidebar ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0']">
-                      <div class="w-12 h-12 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20 font-bold text-sm">
-                        {{ item.author?.charAt(0) }}
-                      </div>
-                      <div>
-                        <p class="text-[10px] font-black uppercase tracking-tighter text-gray-400">Arsitek Karya</p>
-                        <p class="text-sm font-bold text-main">{{ item.author }}</p>
-                      </div>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                  <div class="flex flex-wrap items-center gap-x-12 gap-y-4">
+                    <div class="flex flex-col">
+                      <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Penulis</span>
+                      <span class="text-sm font-bold text-main">{{ item.author }}</span>
                     </div>
-
-                    <!-- Date -->
-                    <div class="flex items-center gap-5 transition-all duration-500 delay-[600ms]"
-                         :class="[isVisible.sidebar ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0']">
-                      <div class="w-12 h-12 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p class="text-[10px] font-black uppercase tracking-tighter text-gray-400">Tanggal Rilis</p>
-                        <p class="text-sm font-bold text-main">{{ item.date }}</p>
-                      </div>
+                    <div class="flex flex-col">
+                      <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Tanggal</span>
+                      <span class="text-sm font-bold text-main">{{ item.date }}</span>
                     </div>
-
-                    <!-- Category -->
-                    <div class="flex items-center gap-5 transition-all duration-500 delay-[700ms]"
-                         :class="[isVisible.sidebar ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0']">
-                      <div class="w-12 h-12 rounded-full bg-card flex items-center justify-center text-brand-600 shadow-sm border border-gray-100 dark:border-gray-800/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 11h.01M7 15h.01M11 7h.01M11 11h.01M11 15h.01M15 7h.01M15 11h.01M15 15h.01" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p class="text-[10px] font-black uppercase tracking-tighter text-gray-400">Kategori</p>
-                        <p class="text-sm font-bold text-main">{{ item.category }}</p>
-                      </div>
+                    <div class="flex flex-col">
+                      <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Kategori</span>
+                      <span class="text-sm font-bold text-main">{{ item.category }}</span>
                     </div>
                   </div>
-                </div>
-
-                <div class="flex justify-center">
-                  <NuxtLink to="/user/galeri" class="inline-flex items-center justify-center px-12 py-5 bg-gray-900 dark:bg-brand-600 text-white dark:text-black rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-brand-500 hover:text-black transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-gray-200/50 dark:shadow-brand-600/20">
+                  
+                  <NuxtLink to="/user/galeri" class="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-brand-600 transition-colors group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                    </svg>
                     Kembali ke Galeri
                   </NuxtLink>
                 </div>

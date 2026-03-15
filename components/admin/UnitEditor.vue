@@ -203,8 +203,8 @@
           </button>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          <div v-for="p in unit.partners" :key="p.id" class="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex flex-col items-center group relative aspect-square justify-center">
-            <img :src="p.logo" class="max-w-[80%] max-h-[60%] object-contain mb-3 grayscale group-hover:grayscale-0 transition-all">
+          <div v-for="p in unit.partners" :key="p.id" class="bg-transparent p-6 rounded-2xl border border-gray-100 flex flex-col items-center group relative aspect-square justify-center transition-all hover:border-brand-300 hover:shadow-sm">
+            <img :src="p.logo" class="max-w-[80%] max-h-[60%] object-contain mb-3 transition-all">
             <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest text-center">{{ p.name }}</span>
             <div class="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <button @click="openEditPartner(p)" class="p-1.5 bg-white shadow-sm rounded-lg text-brand-600">
@@ -384,7 +384,7 @@
              <div>
                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Logo Mitra</label>
                <div class="mt-2 flex flex-col items-center gap-4">
-                 <div class="w-full h-32 rounded-xl bg-gray-50 border-2 border-dashed border-gray-200 relative group flex items-center justify-center">
+                 <div class="w-full h-32 rounded-xl bg-transparent border-2 border-dashed border-gray-200 relative group flex items-center justify-center">
                     <img v-if="forms.partner.logo" :src="forms.partner.logo" class="max-h-[80%] max-w-[80%] object-contain">
                      <div v-if="isUploading && uploadType === 'partner'" class="absolute inset-0 bg-white/80 z-10 flex items-center justify-center backdrop-blur-[2px]">
                         <div class="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
@@ -523,13 +523,16 @@ async function compressImage(file: File): Promise<Blob> {
         const ctx = canvas.getContext('2d')
         ctx?.drawImage(img, 0, 0, width, height)
 
+        // Detect if original file had transparency (PNG) or use WebP as a better default
+        const outputType = file.type === 'image/png' ? 'image/png' : 'image/webp'
+        
         canvas.toBlob(
           (blob) => {
             if (blob) resolve(blob)
             else reject(new Error('Canvas to Blob conversion failed'))
           },
-          'image/jpeg',
-          0.8 // Quality
+          outputType,
+          outputType === 'image/png' ? undefined : 0.8
         )
       }
       img.onerror = reject
@@ -558,8 +561,11 @@ async function handleImageUpload(event: Event, type: 'activity' | 'staff' | 'fac
     try {
       // Compress image before upload
       const compressedBlob = await compressImage(originalFile)
-      const file = new File([compressedBlob], originalFile.name.replace(/\.[^/.]+$/, "") + ".jpg", {
-        type: 'image/jpeg'
+      const outputMime = originalFile.type === 'image/png' ? 'image/png' : 'image/webp'
+      const extension = originalFile.type === 'image/png' ? '.png' : '.webp'
+      
+      const file = new File([compressedBlob], originalFile.name.replace(/\.[^/.]+$/, "") + extension, {
+        type: outputMime
       })
 
       const formData = new FormData()
