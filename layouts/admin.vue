@@ -17,7 +17,7 @@
           <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-black font-bold">
             {{ adminInitials }}
           </div>
-          <span class="font-bold text-main tracking-tight">{{ auth.user?.name || 'Admin Unit' }}</span>
+          <span class="font-bold text-main tracking-tight truncate">{{ auth.user?.name?.split(' ')[0] || 'Admin Unit' }}</span>
         </NuxtLink>
         <div class="flex items-center gap-2">
           <ThemeToggle />

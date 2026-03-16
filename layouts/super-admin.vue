@@ -18,7 +18,7 @@
             <img v-if="auth.user?.image_url" :src="auth.user.image_url" class="w-full h-full object-cover">
             <span v-else>{{ adminInitials }}</span>
           </div>
-          <span class="font-bold text-main tracking-tight truncate">{{ auth.user?.name || 'Super Admin' }}</span>
+          <span class="font-bold text-main tracking-tight truncate">{{ auth.user?.name?.split(' ')[0] || 'Super Admin' }}</span>
         </NuxtLink>
         <div class="flex items-center gap-2">
           <ThemeToggle />
@@ -56,12 +56,12 @@
           </NuxtLink>
           
           <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-2">Web Content</p>
-          <NuxtLink to="/super-admin/landing" @click="isSidebarOpen = false" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-main hover:bg-black/5 dark:hover:bg-white/5 group transition-all" active-class="bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400">
+          <!-- <NuxtLink to="/super-admin/landing" @click="isSidebarOpen = false" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-main hover:bg-black/5 dark:hover:bg-white/5 group transition-all" active-class="bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400">
              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400 dark:text-gray-500 group-hover:text-brand-500 dark:group-hover:text-brand-400 group-[.router-link-active]:text-brand-500 dark:group-[.router-link-active]:text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             Landing Page
-          </NuxtLink>
+          </NuxtLink> -->
           <NuxtLink to="/super-admin/units" @click="isSidebarOpen = false" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-main hover:bg-black/5 dark:hover:bg-white/5 group transition-all" active-class="bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400">
              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400 dark:text-gray-500 group-hover:text-brand-500 dark:group-hover:text-brand-400 group-[.router-link-active]:text-brand-500 dark:group-[.router-link-active]:text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />

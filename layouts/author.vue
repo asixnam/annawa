@@ -18,7 +18,7 @@
             <img v-if="auth.user?.image_url" :src="auth.user.image_url" class="w-full h-full object-cover">
             <span v-else>{{ authorInitials }}</span>
           </div>
-          <span class="font-bold text-main tracking-tight truncate">{{ auth.user?.name || 'Author Panel' }}</span>
+          <span class="font-bold text-main tracking-tight truncate">{{ auth.user?.name?.split(' ')[0] || 'Author Panel' }}</span>
         </NuxtLink>
         <div class="flex items-center gap-2">
           <ThemeToggle />
