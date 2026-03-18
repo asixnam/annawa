@@ -6,7 +6,7 @@ export const useContentStore = defineStore('content', () => {
     const hero = ref({
         title: 'Selamat Datang di Khozinatul Ulum An-Nawa',
         subtitle: 'Lembaga pendidikan Islam yang menggabungkan tradisi pesantren dengan pendidikan modern untuk membentuk generasi Qur\'ani yang berakhlak mulia.',
-        image: '/images/hero-santri.png'
+        image: '/images/hero.png'
     })
 
     const partners = ref([
